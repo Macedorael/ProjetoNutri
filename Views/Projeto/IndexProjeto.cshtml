@@ -1,0 +1,44 @@
+@model IEnumerable<ProjetoNutri.Models.Projeto>
+
+
+@{
+    ViewData["Title"] = "Lista de Projetos";
+}
+
+<h1>Lista de Projetos</h1>
+
+<p>
+    <a asp-action="Index" asp-controller="Paciente" class="btn btn-primary">Voltar à Lista de Pacientes</a>
+    
+    <!-- Passando o pacienteId para o botão de criar projeto -->  
+</p>
+<p>
+    <a asp-action="CriarProjeto" asp-controller="Projeto" asp-route-pacienteId="@ViewData["PacienteId"]">Criar Projeto </a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome do Projeto</th>
+            <th>Data de Criação</th>
+            <th>Status</th>
+            <th>Paciente</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var projeto in Model)
+        {
+            <tr>
+                <td>@projeto.NomeProjeto</td>
+                <td>@projeto.DataCriacao.ToString("dd/MM/yyyy")</td>
+                <td>@(projeto.Ativo ? "Ativo" : "Inativo")</td>
+                <td>@projeto.Paciente?.Nome</td> <!-- Exibe o nome do paciente associado ao projeto -->
+                <td>
+                    <a asp-action="Detalhes" asp-route-id="@projeto.Id" class="btn btn-info">Ver Detalhes</a> <!-- Link para ver detalhes do projeto -->
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

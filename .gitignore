@@ -1,0 +1,62 @@
+# Visual Studio e arquivos de build
+.vscode/
+bin/
+obj/
+debug/
+release/
+
+# Dependências do NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+global.json
+
+# Configurações do usuário
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs, cache e arquivos temporários
+*.log
+*.cache
+*.pdb
+*.ilk
+*.aps
+*.ncb
+*.opendb
+*.tlog
+*.vspscc
+*.vssscc
+*.vspx
+
+# Configuração do IIS e publish
+.vs/
+.history/
+*.publishsettings
+*.pubxml
+*.publishproj
+
+# Arquivos de ambiente
+.env
+secrets.json
+appsettings.Development.json
+
+# Banco de dados local
+*.mdf
+*.ldf
+*.sqlite
+*.db
+
+# Docker
+docker-compose.override.yml
+docker-compose.*
+*.dockerignore
+
+# Node.js (se usar frontend com React ou Angular)
+node_modules/
+dist/
+npm-debug.log
+yarn-debug.log
+yarn-error.log

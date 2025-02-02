@@ -1,0 +1,20 @@
+@model ProjetoNutri.Models.Projeto
+
+@{
+    ViewData["Title"] = "Criar Novo Projeto";
+}
+
+<h1>Criar Novo Projeto</h1>
+
+<form asp-action="CriarProjeto" method="post">
+    <div class="form-group">
+        <label for="NomeProjeto">Nome do Projeto</label>
+        <input type="text" class="form-control" id="NomeProjeto" name="NomeProjeto" required />
+    </div>
+
+    <!-- Passa o pacienteId para o projeto -->
+    <input type="hidden" name="PacienteId" value="@Model.PacienteId" />
+
+    <button type="submit" class="btn btn-primary">Criar Projeto</button>
+</form>
+

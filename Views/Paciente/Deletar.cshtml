@@ -1,0 +1,89 @@
+@model ProjetoNutri.Models.Paciente
+
+@{
+    ViewData["Title"] = "Deletar Paciente";
+}
+
+<h1>Deletar Paciente</h1>
+<hr>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sobrenome)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sobrenome)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataNascimento)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataNascimento)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Sexo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Sexo)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telefone)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Instagram)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Instagram)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataCadastro)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataCadastro)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ativo)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Ativo)
+        </dd>
+    </dl>
+</div>
+
+<form id="deletar" asp-action="Deletar" method="post">
+    <input type="hidden" asp-for="Id" />
+    <input type="submit" value="Deletar" class="btn btn-danger" />
+</form>
+
+<br>
+<a asp-action="Index">Voltar para a lista</a>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#deletar").submit(function (e) {
+                if (!confirm("Tem certeza de que deseja deletar este paciente?")) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
