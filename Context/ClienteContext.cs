@@ -18,11 +18,14 @@ namespace ProjetoNutri.Context
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
 
+        public DbSet<Imc> Imcs { get; set; }
+
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Projeto>().HasOne(p => p.Paciente).WithMany().HasForeignKey(p => p.PacienteId)
             .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Imc>().HasOne(i => i.Projeto).WithMany(p => p.Imcs).HasForeignKey(i => i.IdProjeto).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

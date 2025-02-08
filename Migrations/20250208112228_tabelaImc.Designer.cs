@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoNutri.Context;
 
@@ -11,9 +12,11 @@ using ProjetoNutri.Context;
 namespace ProjetoNutri.Migrations
 {
     [DbContext(typeof(ClienteContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    [Migration("20250208112228_tabelaImc")]
+    partial class tabelaImc
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,11 +45,14 @@ namespace ProjetoNutri.Migrations
                     b.Property<double>("Peso")
                         .HasColumnType("float");
 
+                    b.Property<int?>("ProjetoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdProjeto");
+                    b.HasIndex("ProjetoId");
 
-                    b.ToTable("Imcs");
+                    b.ToTable("Imc");
                 });
 
             modelBuilder.Entity("ProjetoNutri.Models.Paciente", b =>
@@ -124,9 +130,7 @@ namespace ProjetoNutri.Migrations
                 {
                     b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
                         .WithMany("Imcs")
-                        .HasForeignKey("IdProjeto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ProjetoId");
 
                     b.Navigation("Projeto");
                 });

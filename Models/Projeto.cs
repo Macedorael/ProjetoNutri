@@ -26,6 +26,7 @@ namespace ProjetoNutri.Models
 
         // Indica se o projeto está ativo
         [Display(Name = "Ativo")]
-        public bool Ativo { get; set; } = true; // Valor padrão é true
+        public bool Ativo { get; set; } = true;
+        public ICollection<Imc> Imcs { get; set; } 
     }
 }
