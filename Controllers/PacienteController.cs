@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNutri.Models;
-using ProjetoNutriC_.Context;
+using ProjetoNutri.Context;
 
 
 namespace ProjetoNutri.Controllers

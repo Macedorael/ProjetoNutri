@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjetoNutriC_.Context;
+using ProjetoNutri.Context;
 
 #nullable disable
 
@@ -67,6 +67,12 @@ namespace ProjetoNutri.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("NomeProjeto")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -75,20 +81,29 @@ namespace ProjetoNutri.Migrations
                     b.Property<int>("PacienteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PacienteId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PacienteId");
 
-                    b.ToTable("Projeto");
+                    b.HasIndex("PacienteId1");
+
+                    b.ToTable("Projetos");
                 });
 
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Paciente", "Paciente")
-                        .WithMany("Projetos")
+                        .WithMany()
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ProjetoNutri.Models.Paciente", null)
+                        .WithMany("Projetos")
+                        .HasForeignKey("PacienteId1");
 
                     b.Navigation("Paciente");
                 });

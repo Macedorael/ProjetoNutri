@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ProjetoNutriC_.Context;
+using ProjetoNutri.Context;
 
 #nullable disable
 
 namespace ProjetoNutri.Migrations
 {
     [DbContext(typeof(ClienteContext))]
-    [Migration("20250201224521_AlterarCamposParaData")]
-    partial class AlterarCamposParaData
+    [Migration("20250202211155_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -60,6 +60,60 @@ namespace ProjetoNutri.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pacientes");
+                });
+
+            modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativo")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NomeProjeto")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PacienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("PacienteId1")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PacienteId");
+
+                    b.HasIndex("PacienteId1");
+
+                    b.ToTable("Projetos");
+                });
+
+            modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
+                {
+                    b.HasOne("ProjetoNutri.Models.Paciente", "Paciente")
+                        .WithMany()
+                        .HasForeignKey("PacienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoNutri.Models.Paciente", null)
+                        .WithMany("Projetos")
+                        .HasForeignKey("PacienteId1");
+
+                    b.Navigation("Paciente");
+                });
+
+            modelBuilder.Entity("ProjetoNutri.Models.Paciente", b =>
+                {
+                    b.Navigation("Projetos");
                 });
 #pragma warning restore 612, 618
         }

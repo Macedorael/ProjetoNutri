@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNutri.Models;
-using ProjetoNutriC_.Context;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
 
@@ -12,9 +11,9 @@ namespace ProjetoNutri.Controllers
 {
     public class ProjetoController : Controller
     {
-        private readonly FocoContext _context;
+        private readonly ClienteContext _context;
 
-        public ProjetoController(FocoContext context)
+        public ProjetoController(ClienteContext context)
         {
             _context = context;
         }
@@ -25,6 +24,7 @@ namespace ProjetoNutri.Controllers
             // Se pacienteId for fornecido, filtra os projetos para esse paciente específico
             var projetos = _context.Projetos.Where(p => p.PacienteId == pacienteId).ToList();
             ViewData["PacienteId"] = pacienteId;
+            projetos.ForEach(p => p.Paciente = _context.Pacientes.Find(p.PacienteId));
             return View(projetos);
         }
 

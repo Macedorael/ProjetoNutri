@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ProjetoNutri.Migrations.Foco
+namespace ProjetoNutri.Migrations
 {
     /// <inheritdoc />
-    public partial class AdicionarTabelaProjeto : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Paciente",
+                name: "Pacientes",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -28,7 +28,7 @@ namespace ProjetoNutri.Migrations.Foco
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Paciente", x => x.Id);
+                    table.PrimaryKey("PK_Pacientes", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -38,23 +38,36 @@ namespace ProjetoNutri.Migrations.Foco
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     NomeProjeto = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    PacienteId = table.Column<int>(type: "int", nullable: false)
+                    PacienteId = table.Column<int>(type: "int", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false),
+                    PacienteId1 = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projetos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projetos_Paciente_PacienteId",
+                        name: "FK_Projetos_Pacientes_PacienteId",
                         column: x => x.PacienteId,
-                        principalTable: "Paciente",
+                        principalTable: "Pacientes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Projetos_Pacientes_PacienteId1",
+                        column: x => x.PacienteId1,
+                        principalTable: "Pacientes",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projetos_PacienteId",
                 table: "Projetos",
                 column: "PacienteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Projetos_PacienteId1",
+                table: "Projetos",
+                column: "PacienteId1");
         }
 
         /// <inheritdoc />
@@ -64,7 +77,7 @@ namespace ProjetoNutri.Migrations.Foco
                 name: "Projetos");
 
             migrationBuilder.DropTable(
-                name: "Paciente");
+                name: "Pacientes");
         }
     }
 }

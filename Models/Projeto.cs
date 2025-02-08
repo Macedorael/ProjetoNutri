@@ -14,12 +14,11 @@ namespace ProjetoNutri.Models
         public string NomeProjeto { get; set; }
 
         // Chave estrangeira para o Paciente
+        [ForeignKey("Pacientes")]
         public int PacienteId { get; set; }
 
-        // Propriedade de navegação para o Paciente
-        [ForeignKey("PacienteId")]
+        // Propriedade de navegação para a entidade Pacientes
         public Paciente Paciente { get; set; }
-
         // Data de criação do projeto
         [DataType(DataType.Date)]
         [Display(Name = "Data de Criação")]

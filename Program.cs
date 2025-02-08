@@ -1,4 +1,4 @@
-using ProjetoNutriC_.Context;
+
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
 
@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
-builder.Services.AddDbContext<FocoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
+// builder.Services.AddDbContext<FocoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
 
 
