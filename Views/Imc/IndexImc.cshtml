@@ -1,0 +1,49 @@
+@model IEnumerable<ProjetoNutri.Models.Imc>
+
+@{
+    ViewData["Title"] = "Lista de IMCs";
+}
+
+<h1>Lista de IMCs</h1>
+
+<p>
+    <a asp-action="Index" asp-controller="Paciente" class="btn btn-primary">Voltar à Lista de Pacientes</a>
+</p>
+
+<p>
+    <a asp-action="CriarImc" asp-controller="Imc" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-success">Adicionar IMC</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Peso (kg)</th>
+            <th>Altura (m)</th>
+            <th>IMC</th>
+            <th>Data do Registro</th>
+            <th>Classificação</th>
+            <th>Projeto</th>
+            <th>Paciente</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var imc in Model)
+        {
+            <tr>
+                <td>@imc.Id</td>
+                <td>@imc.Peso</td>
+                <td>@imc.Altura</td>
+                <td>@imc.ValorImc</td> <!-- Cálculo do IMC com verificação de valores válidos -->
+                <td>@imc.DataCriacao.ToString("dd/MM/yyyy")</td>
+                <td>@imc.Classificacao</td>
+                <td>@imc.Projeto?.NomeProjeto</td> <!-- Nome do projeto relacionado -->
+                <td>@imc.Projeto?.Paciente?.Nome</td> <!-- Nome do paciente associado -->
+                <td>
+                    <a asp-action="DetalheImc" asp-route-id="@imc.Id" class="btn btn-info">Ver Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

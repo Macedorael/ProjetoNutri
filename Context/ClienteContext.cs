@@ -22,10 +22,17 @@ namespace ProjetoNutri.Context
 
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Projeto>().HasOne(p => p.Paciente).WithMany().HasForeignKey(p => p.PacienteId)
-            .OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Projeto>()
+            .HasOne(p => p.Paciente) // Relacionamento de um Projeto com um Paciente
+            .WithMany(p => p.Projetos) // Um Paciente pode ter muitos Projetos
+            .HasForeignKey(p => p.PacienteId) // Chave estrangeira
+            .OnDelete(DeleteBehavior.Cascade); // Comportamento de exclusão em cascata
 
-            modelBuilder.Entity<Imc>().HasOne(i => i.Projeto).WithMany(p => p.Imcs).HasForeignKey(i => i.IdProjeto).OnDelete(DeleteBehavior.Cascade);
+        modelBuilder.Entity<Imc>()
+            .HasOne(i => i.Projeto)  // Relacionamento de um IMC com um Projeto
+            .WithMany(p => p.Imcs)  // Um Projeto pode ter muitos IMCs
+            .HasForeignKey(i => i.IdProjeto)  // Definindo a chave estrangeira
+            .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

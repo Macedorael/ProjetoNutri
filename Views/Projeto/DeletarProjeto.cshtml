@@ -1,0 +1,39 @@
+@model ProjetoNutri.Models.Projeto
+
+@{
+    ViewData["Title"] = "Confirmar Exclusão do Projeto";
+}
+
+<h1>Confirmar Exclusão do Projeto</h1>
+
+<div>
+    <h3>Tem certeza que deseja excluir o projeto "@Model.NomeProjeto"?</h3>
+    <p>
+        <strong>Paciente:</strong> @Model.Paciente.Nome @Model.Paciente.Sobrenome
+    </p>
+
+    <!-- Adicionando id="deletar" ao formulário para garantir que o jQuery funcione -->
+    <form id="deletar" method="post" asp-action="DeletarProjeto" asp-route-id="@Model.Id">
+        <input type="hidden" name="PacienteId" value="@Model.PacienteId" />
+        <button type="submit" class="btn btn-danger">Excluir</button>
+        <a asp-action="IndexProjeto" asp-route-pacienteId="@Model.PacienteId" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+
+@section Scripts {
+    <!-- Incluindo o jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Certifique-se de que o id "deletar" esteja atribuído ao formulário
+            $("#deletar").submit(function (e) {
+                // Exibe a caixa de confirmação
+                if (!confirm("Tem certeza de que deseja deletar o projeto?")) {
+                    // Se o usuário cancelar, previne o envio do formulário
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

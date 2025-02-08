@@ -39,9 +39,7 @@
                 <td>@Html.DisplayFor(model => item.DataCadastro)</td>
                 <td>@Html.DisplayFor(model => item.Ativo)</td>
                 <td>
-                    <a asp-action="Editar" asp-route-id="@item.Id">Editar</a> |
-                    <a asp-action="Detalhe" asp-route-id="@item.Id">Detalhes</a> |
-                    <a asp-action="Deletar" asp-route-id="@item.Id" class="delete-link">Deletar</a>
+                    <a asp-action="Detalhe" asp-route-id="@item.Id">Detalhes</a>
                 </td>
             </tr>
         }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjetoNutri.Context;
 
@@ -11,9 +12,11 @@ using ProjetoNutri.Context;
 namespace ProjetoNutri.Migrations
 {
     [DbContext(typeof(ClienteContext))]
-    partial class ClienteContextModelSnapshot : ModelSnapshot
+    [Migration("20250208140623_AdicionarCamposImceClassifi")]
+    partial class AdicionarCamposImceClassifi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -114,9 +117,14 @@ namespace ProjetoNutri.Migrations
                     b.Property<int>("PacienteId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PacienteId1")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PacienteId");
+
+                    b.HasIndex("PacienteId1");
 
                     b.ToTable("Projetos");
                 });
@@ -135,10 +143,14 @@ namespace ProjetoNutri.Migrations
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Paciente", "Paciente")
-                        .WithMany("Projetos")
+                        .WithMany()
                         .HasForeignKey("PacienteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ProjetoNutri.Models.Paciente", null)
+                        .WithMany("Projetos")
+                        .HasForeignKey("PacienteId1");
 
                     b.Navigation("Paciente");
                 });

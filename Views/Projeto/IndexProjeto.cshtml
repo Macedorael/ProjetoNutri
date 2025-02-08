@@ -36,7 +36,7 @@
                 <td>@(projeto.Ativo ? "Ativo" : "Inativo")</td>
                 <td>@projeto.Paciente?.Nome</td> <!-- Exibe o nome do paciente associado ao projeto -->
                 <td>
-                    <a asp-action="Detalhes" asp-route-id="@projeto.Id" class="btn btn-info">Ver Detalhes</a> <!-- Link para ver detalhes do projeto -->
+                    <a asp-action="DetalheProjeto" asp-route-id="@projeto.Id">Ver Detalhes</a>
                 </td>
             </tr>
         }

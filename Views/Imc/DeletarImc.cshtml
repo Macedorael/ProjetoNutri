@@ -1,0 +1,17 @@
+@model ProjetoNutri.Models.Imc
+
+@{
+    ViewData["Title"] = "Confirmar Exclusão";
+}
+
+<h2>Confirmar Exclusão</h2>
+
+<p>Tem certeza de que deseja excluir o registro do IMC para o paciente <strong>@Model.Projeto?.Paciente?.Nome</strong> no projeto <strong>@Model.Projeto?.NomeProjeto</strong>?</p>
+
+<p><strong>IMC:</strong> @Model.ValorImc</p>
+<p><strong>Classificação:</strong> @Model.Classificacao</p>
+
+<form asp-action="DeletarImc" asp-route-id="@Model.Id" method="post">
+    <button type="submit" class="btn btn-danger">🗑️ Confirmar Exclusão</button>
+    <a asp-action="DetalheImc" asp-route-id="@Model.Id" class="btn btn-secondary">❌ Cancelar</a>
+</form>

@@ -1,0 +1,24 @@
+@model ProjetoNutri.Models.Imc
+
+@{
+    ViewData["Title"] = "Editar IMC";
+}
+
+<h2>Editar IMC</h2>
+
+<form asp-action="EditarImc" method="post">
+    <input type="hidden" asp-for="Id" />
+
+    <div class="form-group">
+        <label asp-for="Altura">Altura (m)</label>
+        <input asp-for="Altura" class="form-control" type="number" step="0.01" required />
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Peso">Peso (kg)</label>
+        <input asp-for="Peso" class="form-control" type="number" step="0.1" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="IndexImc" asp-route-projetoId="@Model.IdProjeto">Cancelar</a>
+</form>

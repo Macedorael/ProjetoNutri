@@ -1,0 +1,47 @@
+@model ProjetoNutri.Models.Projeto
+
+@{
+    ViewData["Title"] = "Detalhes do Projeto";
+}
+
+<h1>Detalhes do Projeto</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.NomeProjeto)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NomeProjeto)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DataCriacao)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DataCriacao)
+        </dd>
+
+        <dt class="col-sm-2">
+            Paciente
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Paciente != null)
+            {
+               @($"{Model.Paciente.Nome} {Model.Paciente.Sobrenome}")
+            }
+            else
+            {
+                <span>Paciente não informado</span>
+            }
+        </dd>
+    </dl>
+</div>
+
+ <div>
+        <a asp-action="EditarProjeto" asp-route-id="@Model.Id" >Editar</a> |
+        <a asp-action="IndexProjeto" asp-route-pacienteId="@Model.PacienteId" >Voltar para a lista</a> |
+        <a asp-action="IndexImc" asp-controller="Imc" asp-route-projetoId="@Model.Id" >Ver Registros de IMC</a> |
+        <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" >Deletar</a>
+</div>
+

@@ -1,0 +1,25 @@
+@model ProjetoNutri.Models.Imc
+
+@{
+    ViewData["Title"] = "Detalhes do IMC";
+}
+
+<h2>IMC</h2>
+
+<div>
+    <p><strong>Projeto:</strong> @Model.Projeto?.NomeProjeto</p>
+    <p><strong>Paciente:</strong> @Model.Projeto?.Paciente?.Nome</p>
+    <p><strong>Peso:</strong> @Model.Peso kg</p>
+    <p><strong>Altura:</strong> @Model.Altura m</p>
+    <p><strong>IMC:</strong> @Model.ValorImc</p>
+    <p><strong>Classificação:</strong> @Model.Classificacao</p>
+</div>
+
+<div>
+    <a asp-action="EditarImc" asp-route-id="@Model.Id" class="btn btn-warning">✏️ Editar</a>
+    
+    <a asp-action="DeletarImc" asp-route-id="@Model.Id" >🗑️ Excluir</a>
+    
+    
+    <a asp-action="IndexImc" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">⬅️ Voltar</a>
+</div>

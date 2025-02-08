@@ -70,5 +70,87 @@ namespace ProjetoNutri.Controllers
             return View(projeto);
         }
 
+        public IActionResult DetalheProjeto(int id)
+        {
+            var projeto = _context.Projetos
+                .Include(p => p.Paciente) // Para carregar os dados do paciente associado ao projeto
+                .FirstOrDefault(p => p.Id == id);
+
+            if (projeto == null)
+            {
+                return RedirectToAction(nameof(IndexProjeto));
+            }
+
+            return View(projeto);
+        }
+
+        public IActionResult EditarProjeto(int id)
+        {
+            var projeto = _context.Projetos.Find(id);
+            if (projeto == null)
+            {
+                return NotFound();
+            }
+            return View(projeto);
+        }
+        [HttpPost]
+        public IActionResult EditarProjeto(int id, Projeto projeto)
+        {
+            if (id != projeto.Id)
+            {
+                return BadRequest("O ID do projeto não corresponde.");
+            }
+
+            if (ModelState.IsValid)
+            {
+                // Encontrando o projeto que será atualizado
+                var projetoExistente = _context.Projetos.Find(id);
+                if (projetoExistente == null)
+                {
+                    return NotFound();
+                }
+
+                // Atualizando apenas o nome
+                projetoExistente.NomeProjeto = projeto.NomeProjeto;
+
+                _context.Projetos.Update(projetoExistente);
+                _context.SaveChanges();
+
+                return RedirectToAction("IndexProjeto", new { pacienteId = projetoExistente.PacienteId });
+            }
+
+            return View(projeto);
+        }
+
+        public IActionResult DeletarProjeto(int id)
+        {
+            var projeto = _context.Projetos.Include(p => p.Paciente).FirstOrDefault(p => p.Id == id);
+            if (projeto == null)
+            {
+                return RedirectToAction(nameof(IndexProjeto)); // Redireciona se o projeto não for encontrado
+            }
+
+            return View(projeto); // Exibe a confirmação de exclusão
+        }
+
+        [HttpPost]
+        public IActionResult DeletarProjeto(Projeto projeto)
+        {
+            var projetoBanco = _context.Projetos.Find(projeto.Id);
+            if (projetoBanco == null)
+            {
+                return RedirectToAction(nameof(IndexProjeto)); // Redireciona se o projeto não for encontrado
+            }
+
+            // Remove o projeto do banco de dados
+            _context.Projetos.Remove(projetoBanco);
+            _context.SaveChanges();
+
+            // Redireciona para a lista de projetos, usando o PacienteId correto
+            return RedirectToAction(nameof(IndexProjeto), new { pacienteId = projeto.PacienteId }); // Aqui você garante que o pacienteId correto seja passado
+        }
+
+
+
     }
 }

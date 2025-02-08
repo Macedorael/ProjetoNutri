@@ -68,6 +68,7 @@
 
 <div>
     <a asp-action="Editar" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Deletar" asp-route-id="@Model.Id" class="delete-link">Deletar</a> |
     <a asp-action="Index">Voltar para a lista</a> |
     <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id">Ver Lista de Projetos</a>
 </div>
