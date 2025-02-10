@@ -6,12 +6,11 @@
 
 <h1>Lista de IMCs</h1>
 
-<p>
-    <a asp-action="Index" asp-controller="Paciente" class="btn btn-primary">Voltar à Lista de Pacientes</a>
-</p>
+
 
 <p>
-    <a asp-action="CriarImc" asp-controller="Imc" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-success">Adicionar IMC</a>
+    <a asp-action="CriarImc" asp-controller="Imc" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Adicionar Medida</a>
+    <a asp-action="Index" asp-controller="Paciente" class="btn btn-secondary">Voltar à Lista de Pacientes</a>
 </p>
 
 <table class="table">
@@ -41,7 +40,7 @@
                 <td>@imc.Projeto?.NomeProjeto</td> <!-- Nome do projeto relacionado -->
                 <td>@imc.Projeto?.Paciente?.Nome</td> <!-- Nome do paciente associado -->
                 <td>
-                    <a asp-action="DetalheImc" asp-route-id="@imc.Id" class="btn btn-info">Ver Detalhes</a>
+                    <a asp-action="DetalheImc" asp-route-id="@imc.Id" class="btn btn-secondary">Detalhes</a>
                 </td>
             </tr>
         }

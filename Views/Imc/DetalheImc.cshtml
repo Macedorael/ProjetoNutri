@@ -16,10 +16,7 @@
 </div>
 
 <div>
-    <a asp-action="EditarImc" asp-route-id="@Model.Id" class="btn btn-warning">✏️ Editar</a>
-    
-    <a asp-action="DeletarImc" asp-route-id="@Model.Id" >🗑️ Excluir</a>
-    
-    
+    <a asp-action="EditarImc" asp-route-id="@Model.Id" class="btn btn-secondary">✏️ Editar</a>
+    <a asp-action="DeletarImc" asp-route-id="@Model.Id" class="btn btn-secondary">🗑️ Excluir</a>
     <a asp-action="IndexImc" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">⬅️ Voltar</a>
 </div>

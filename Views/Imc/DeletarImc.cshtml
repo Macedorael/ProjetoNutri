@@ -12,6 +12,6 @@
 <p><strong>Classificação:</strong> @Model.Classificacao</p>
 
 <form asp-action="DeletarImc" asp-route-id="@Model.Id" method="post">
-    <button type="submit" class="btn btn-danger">🗑️ Confirmar Exclusão</button>
+    <button type="submit" class="btn btn-secondary">🗑️ Confirmar Exclusão</button>
     <a asp-action="DetalheImc" asp-route-id="@Model.Id" class="btn btn-secondary">❌ Cancelar</a>
 </form>

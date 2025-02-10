@@ -6,6 +6,9 @@
 
 <h1>Detalhes do Projeto</h1>
 
+<a asp-action="IndexProjeto" asp-route-pacienteId="@Model.PacienteId" class="btn btn-secondary">Voltar para a lista</a> 
+<br>
+<br>
 <div>
     <dl class="row">
         <dt class="col-sm-2">
@@ -39,9 +42,8 @@
 </div>
 
  <div>
-        <a asp-action="EditarProjeto" asp-route-id="@Model.Id" >Editar</a> |
-        <a asp-action="IndexProjeto" asp-route-pacienteId="@Model.PacienteId" >Voltar para a lista</a> |
-        <a asp-action="IndexImc" asp-controller="Imc" asp-route-projetoId="@Model.Id" >Ver Registros de IMC</a> |
-        <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" >Deletar</a>
+        <a asp-action="EditarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>  
+        <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
+        <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Antropometria</a>
 </div>
 

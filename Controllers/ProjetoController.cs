@@ -149,7 +149,22 @@ namespace ProjetoNutri.Controllers
             // Redireciona para a lista de projetos, usando o PacienteId correto
             return RedirectToAction(nameof(IndexProjeto), new { pacienteId = projeto.PacienteId }); // Aqui você garante que o pacienteId correto seja passado
         }
+        public IActionResult AntropometriaProjeto(int projetoId)
+        {
+            Console.WriteLine($"ID recebido: {projetoId}"); // Depuração
 
+            var projeto = _context.Projetos
+                .Include(p => p.Paciente) // Certifica-se de que os dados do paciente são carregados
+                .FirstOrDefault(p => p.Id == projetoId);
+
+            if (projeto == null)
+            {
+                Console.WriteLine("Projeto não encontrado!");
+                return NotFound();
+            }
+
+            return View(projeto);
+        }
 
 
     }

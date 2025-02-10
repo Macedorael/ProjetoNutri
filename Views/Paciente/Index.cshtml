@@ -7,21 +7,17 @@
 <h2>Pacientes</h2>
 
 <p>
-    <a asp-action="Criar">Novo Paciente</a>
+    <a asp-action="Criar" class="btn btn-secondary">Novo Paciente</a>
 </p>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Id)</th>
             <th>@Html.DisplayNameFor(model => model.Nome)</th>
             <th>@Html.DisplayNameFor(model => model.Sobrenome)</th>
             <th>@Html.DisplayNameFor(model => model.DataNascimento)</th>
-            <th>@Html.DisplayNameFor(model => model.Sexo)</th>
             <th>@Html.DisplayNameFor(model => model.Telefone)</th>
             <th>@Html.DisplayNameFor(model => model.Instagram)</th>
-            <th>@Html.DisplayNameFor(model => model.DataCadastro)</th>
-            <th>@Html.DisplayNameFor(model => model.Ativo)</th>
             <th></th>
         </tr>
     </thead>
@@ -29,17 +25,13 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(model => item.Id)</td>
                 <td>@Html.DisplayFor(model => item.Nome)</td>
                 <td>@Html.DisplayFor(model => item.Sobrenome)</td>
                 <td>@Html.DisplayFor(model => item.DataNascimento)</td>
-                <td>@Html.DisplayFor(model => item.Sexo)</td>
                 <td>@Html.DisplayFor(model => item.Telefone)</td>
                 <td>@Html.DisplayFor(model => item.Instagram)</td>
-                <td>@Html.DisplayFor(model => item.DataCadastro)</td>
-                <td>@Html.DisplayFor(model => item.Ativo)</td>
                 <td>
-                    <a asp-action="Detalhe" asp-route-id="@item.Id">Detalhes</a>
+                    <a asp-action="Detalhe" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
                 </td>
             </tr>
         }

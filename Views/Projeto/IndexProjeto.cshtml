@@ -6,16 +6,12 @@
 }
 
 <h1>Lista de Projetos</h1>
+<br>
 
 <p>
-    <a asp-action="Index" asp-controller="Paciente" class="btn btn-primary">Voltar à Lista de Pacientes</a>
-    
-    <!-- Passando o pacienteId para o botão de criar projeto -->  
+    <a asp-action="CriarProjeto" asp-controller="Projeto" asp-route-pacienteId="@ViewData["PacienteId"]" class="btn btn-secondary">Criar Projeto </a>
+    <a asp-action="Index" asp-controller="Paciente" class="btn btn-secondary ">Voltar à Lista de Pacientes</a>
 </p>
-<p>
-    <a asp-action="CriarProjeto" asp-controller="Projeto" asp-route-pacienteId="@ViewData["PacienteId"]">Criar Projeto </a>
-</p>
-
 
 <table class="table">
     <thead>
@@ -36,9 +32,10 @@
                 <td>@(projeto.Ativo ? "Ativo" : "Inativo")</td>
                 <td>@projeto.Paciente?.Nome</td> <!-- Exibe o nome do paciente associado ao projeto -->
                 <td>
-                    <a asp-action="DetalheProjeto" asp-route-id="@projeto.Id">Ver Detalhes</a>
+                    <a asp-action="DetalheProjeto" asp-route-id="@projeto.Id" class="btn btn-secondary">Detalhes</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+

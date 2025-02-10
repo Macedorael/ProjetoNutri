@@ -1,0 +1,23 @@
+@model ProjetoNutri.Models.Projeto
+
+@{
+    ViewData["Title"] = "Antropometria do Projeto";
+}
+
+<h1>Antropometria</h1>
+
+<a asp-action="DetalhesProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Voltar para o Projeto</a>
+<br><br>
+
+<div>
+    <h4>Projeto: @Model.NomeProjeto</h4>
+    <h5>Paciente: @Model.Paciente.Nome @Model.Paciente.Sobrenome</h5>
+</div>
+
+<hr>
+
+<div>
+    <a asp-action="IndexImc" asp-controller="Imc" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Índice de Massa Corporal (IMC)</a>
+    <a asp-action="Circunferencias" asp-controller="Medidas" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Circunferências</a>
+    <a asp-action="PregasCutaneas" asp-controller="Medidas" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Pregas Cutâneas</a>
+</div>
