@@ -1,0 +1,32 @@
+@model IEnumerable<ProjetoNutri.Models.Circuferencia>
+
+@{
+    ViewData["Title"] = "Circuferencias do Projeto";
+}
+
+<h2>Circuferencias do Projeto</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>RCQ</th>
+            <th>Classificação</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var circulferencia in Model)
+        {
+            <tr>
+                <td>@circulferencia.Rcq</td>
+                <td>@circulferencia.Classificacao</td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@circulferencia.Id">Editar</a> |
+                    <a asp-action="Detalhes" asp-route-id="@circulferencia.Id">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a asp-action="CriarCircuferencia" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-primary">Adicionar Nova Circuferência</a>

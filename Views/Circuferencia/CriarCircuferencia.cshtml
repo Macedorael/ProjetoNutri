@@ -1,0 +1,56 @@
+@model ProjetoNutri.Models.Circuferencia
+
+@{
+    ViewData["Title"] = "Criar Circuferência";
+}
+
+<h2>Criar Circuferência</h2>
+
+<form asp-action="CriarCircuferencia" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="IdProjeto" />
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Cintura">Cintura:</label>
+                <input type="number" asp-for="Cintura" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Coxadistaldireita">Coxa Distal Direita:</label>
+                <input type="number" asp-for="Coxadistaldireita" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Coxamedialdireita">Coxa Medial Direita:</label>
+                <input type="number" asp-for="Coxamedialdireita" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Panturrilhadireita">Panturrilha Direita:</label>
+                <input type="number" asp-for="Panturrilhadireita" step="0.01" class="form-control" required />
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="Quadril">Quadril:</label>
+                <input type="number" asp-for="Quadril" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
+                <input type="number" asp-for="Coxadistalesquerda" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
+                <input type="number" asp-for="Coxamedialesquerda" step="0.01" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
+                <input type="number" asp-for="Panturrilhaesquerda" step="0.01" class="form-control" required />
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a asp-action="IndexCircuferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
