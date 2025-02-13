@@ -29,3 +29,44 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+/* Usando Flexbox para exibir os campos lado a lado, sem quebra */
+/* Usando Flexbox para exibir os campos lado a lado */
+.row {
+  display: flex;
+  flex-wrap: nowrap; /* Impede que os itens quebrem para a linha de baixo */
+  justify-content: flex-start; /* Alinha os itens à esquerda */
+  margin: 0; /* Remove qualquer margem extra */
+  gap: 10px; /* Espaçamento entre as colunas */
+}
+
+/* Ajusta o form-group para que fique mais compacto */
+.form-group {
+  display: flex;
+  flex-direction: column; /* Coloca o label em cima do input */
+  margin-bottom: 5px; /* Menos margem entre os campos */
+  margin-right: 10px; /* Reduz o espaço à direita */
+  width: 25%; /* Define a largura do campo como 25% */
+}
+
+/* Ajuste no label */
+.form-group label {
+  font-size: 0.85rem; /* Tamanho da fonte do label */
+  margin-bottom: 3px; /* Menos espaço entre o label e o input */
+}
+
+/* Ajuste no input para garantir que ocupe 100% do espaço disponível */
+.form-group input {
+  width: 100%; /* Faz o input ocupar todo o espaço disponível dentro da form-group */
+  padding: 6px 8px; /* Menos padding para o campo ser mais compacto */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 0.85rem; /* Tamanho da fonte do campo */
+  height: 32px; /* Altura do campo */
+}
+
+/* Coloca as colunas mais próximas uma das outras */
+.col-md-6 {
+  flex: 1 1 25%; /* Cada coluna ocupa 25% da largura, ajustando o layout */
+  margin-bottom: 10px; /* Espaço entre as linhas */
+}
