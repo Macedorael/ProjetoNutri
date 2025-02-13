@@ -19,7 +19,7 @@ namespace ProjetoNutri.Context
         public DbSet<Projeto> Projetos { get; set; }
 
         public DbSet<Imc> Imcs { get; set; }
-
+        public DbSet<Circuferencia> Circuferencias { get; set; }
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
         modelBuilder.Entity<Projeto>()
@@ -33,6 +33,13 @@ namespace ProjetoNutri.Context
             .WithMany(p => p.Imcs)  // Um Projeto pode ter muitos IMCs
             .HasForeignKey(i => i.IdProjeto)  // Definindo a chave estrangeira
             .OnDelete(DeleteBehavior.Cascade);
+
+        modelBuilder.Entity<Circuferencia>()
+            .HasOne(c => c.Projeto) // Relacionamento de uma Circuferencia com um Projeto
+            .WithMany(p => p.Circuferencias) // Um Projeto pode ter muitas Circuferencias
+            .HasForeignKey(c => c.IdProjeto) // Chave estrangeira
+            .OnDelete(DeleteBehavior.Cascade); 
+            
         }
     }
 }

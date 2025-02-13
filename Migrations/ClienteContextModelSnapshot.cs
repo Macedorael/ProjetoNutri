@@ -22,6 +22,112 @@ namespace ProjetoNutri.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjetoNutri.Models.Circuferencia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double>("Abdome")
+                        .HasColumnType("float")
+                        .HasColumnName("Abdome");
+
+                    b.Property<double>("Antebracodireito")
+                        .HasColumnType("float")
+                        .HasColumnName("Antebraçodireito");
+
+                    b.Property<double>("Antebracoesquerdo")
+                        .HasColumnType("float")
+                        .HasColumnName("Antebraçoesquerdo");
+
+                    b.Property<double>("Bracodireito")
+                        .HasColumnType("float")
+                        .HasColumnName("Braçodireito");
+
+                    b.Property<double>("Bracodireitocontraido")
+                        .HasColumnType("float")
+                        .HasColumnName("Braçodireitocontraido");
+
+                    b.Property<double>("Bracoesquerdo")
+                        .HasColumnType("float")
+                        .HasColumnName("Braçoesquerdo");
+
+                    b.Property<double>("Bracoesquerdocontraido")
+                        .HasColumnType("float")
+                        .HasColumnName("Braçoesquerdocontraido");
+
+                    b.Property<double>("Cintura")
+                        .HasColumnType("float")
+                        .HasColumnName("Cintura");
+
+                    b.Property<string>("Classificacao")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Classificação");
+
+                    b.Property<double>("Coxadistaldireita")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxadistaldireita");
+
+                    b.Property<double>("Coxadistalesquerda")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxadistalesquerda");
+
+                    b.Property<double>("Coxamedialdireita")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxamedialdireita");
+
+                    b.Property<double>("Coxamedialesquerda")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxamedialesquerda");
+
+                    b.Property<double>("Coxaproximaldireita")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxaproximaldireita");
+
+                    b.Property<double>("Coxaproximalesquerda")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxaproximalesquerda");
+
+                    b.Property<int>("IdProjeto")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Ombro")
+                        .HasColumnType("float")
+                        .HasColumnName("Ombro");
+
+                    b.Property<double>("Panturrilhadireita")
+                        .HasColumnType("float")
+                        .HasColumnName("Panturrilhadireita");
+
+                    b.Property<double>("Panturrilhaesquerda")
+                        .HasColumnType("float")
+                        .HasColumnName("Panturrilhaesquerda");
+
+                    b.Property<double>("Pescoco")
+                        .HasColumnType("float")
+                        .HasColumnName("Pescoço");
+
+                    b.Property<double>("Quadril")
+                        .HasColumnType("float")
+                        .HasColumnName("Quadril");
+
+                    b.Property<double>("Rcq")
+                        .HasColumnType("float")
+                        .HasColumnName("Rcq");
+
+                    b.Property<double>("Torax")
+                        .HasColumnType("float")
+                        .HasColumnName("Torax");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProjeto");
+
+                    b.ToTable("Circuferencias");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Imc", b =>
                 {
                     b.Property<int>("Id")
@@ -121,6 +227,17 @@ namespace ProjetoNutri.Migrations
                     b.ToTable("Projetos");
                 });
 
+            modelBuilder.Entity("ProjetoNutri.Models.Circuferencia", b =>
+                {
+                    b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
+                        .WithMany("Circuferencias")
+                        .HasForeignKey("IdProjeto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Imc", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
@@ -150,6 +267,8 @@ namespace ProjetoNutri.Migrations
 
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
+                    b.Navigation("Circuferencias");
+
                     b.Navigation("Imcs");
                 });
 #pragma warning restore 612, 618
