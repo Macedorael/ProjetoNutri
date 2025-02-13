@@ -30,43 +30,34 @@ body {
   text-align: start;
 }
 
-/* Usando Flexbox para exibir os campos lado a lado, sem quebra */
-/* Usando Flexbox para exibir os campos lado a lado */
+/* Ajusta o layout da row para ter 10px de espaço entre as colunas */
 .row {
   display: flex;
-  flex-wrap: nowrap; /* Impede que os itens quebrem para a linha de baixo */
-  justify-content: flex-start; /* Alinha os itens à esquerda */
-  margin: 0; /* Remove qualquer margem extra */
-  gap: 10px; /* Espaçamento entre as colunas */
+  gap: 10px; /* Define o espaçamento de 10px entre as colunas */
+  flex-wrap: wrap; /* Permite que as colunas se ajustem em telas menores */
 }
 
-/* Ajusta o form-group para que fique mais compacto */
+/* Ajuste a largura das colunas */
+.col-custom {
+  flex: 1 1 5%; /* Faz as colunas ocuparem 30% da largura da linha */
+  min-width: calc(30% - 10px); /* Garante que as colunas tenham um espaço de 10px entre elas */
+  box-sizing: border-box; /* Garante que o padding e bordas sejam considerados no cálculo da largura */
+}
+
+/* Ajusta o tamanho dos inputs */
+.input-small {
+  width: 100%; /* Faz os inputs ocuparem toda a largura disponível dentro da coluna */
+  max-width: 230px; /* Ajusta a largura máxima que você considera adequada */
+  font-size: 14px; /* Diminui o tamanho da fonte dos inputs */
+}
+
+/* Alinha os campos de formulário para que fiquem mais próximos */
 .form-group {
-  display: flex;
-  flex-direction: column; /* Coloca o label em cima do input */
-  margin-bottom: 5px; /* Menos margem entre os campos */
-  margin-right: 10px; /* Reduz o espaço à direita */
-  width: 25%; /* Define a largura do campo como 25% */
+  margin-bottom: 10px; /* Reduz o espaçamento entre os campos */
 }
 
-/* Ajuste no label */
-.form-group label {
-  font-size: 0.85rem; /* Tamanho da fonte do label */
-  margin-bottom: 3px; /* Menos espaço entre o label e o input */
-}
-
-/* Ajuste no input para garantir que ocupe 100% do espaço disponível */
-.form-group input {
-  width: 100%; /* Faz o input ocupar todo o espaço disponível dentro da form-group */
-  padding: 6px 8px; /* Menos padding para o campo ser mais compacto */
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 0.85rem; /* Tamanho da fonte do campo */
-  height: 32px; /* Altura do campo */
-}
-
-/* Coloca as colunas mais próximas uma das outras */
-.col-md-6 {
-  flex: 1 1 25%; /* Cada coluna ocupa 25% da largura, ajustando o layout */
-  margin-bottom: 10px; /* Espaço entre as linhas */
+/* Ajusta o tamanho dos botões */
+.btn-success, .btn-secondary {
+  padding: 10px 20px; /* Ajusta o tamanho dos botões */
+  font-size: 16px; /* Ajusta o tamanho da fonte */
 }
