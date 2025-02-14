@@ -86,8 +86,9 @@ namespace ProjetoNutri.Controllers
         public IActionResult DetalheCircunferencia(int id)
         {
             var circunferencia = _context.Circuferencias
-                .Include(c => c.Projeto) // Carrega os detalhes do Projeto associado
-                .FirstOrDefault(c => c.Id == id);
+            .Include(c => c.Projeto)       // Inclui o Projeto relacionado
+            .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
+            .FirstOrDefault(c => c.Id == id);
 
             if (circunferencia == null)
             {
