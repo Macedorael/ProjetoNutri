@@ -30,18 +30,16 @@ body {
   text-align: start;
 }
 
-/* Ajusta o layout da row para ter 10px de espaço entre as colunas */
-.row {
+.oi {
   display: flex;
-  gap: 10px; /* Define o espaçamento de 10px entre as colunas */
-  flex-wrap: wrap; /* Permite que as colunas se ajustem em telas menores */
+  flex-wrap: nowrap; /* Mantém os elementos na mesma linha */
+  gap: 0px; /* Remove qualquer espaçamento entre as colunas */
 }
 
-/* Ajuste a largura das colunas */
 .col-custom {
-  flex: 1 1 5%; /* Faz as colunas ocuparem 30% da largura da linha */
-  min-width: calc(30% - 10px); /* Garante que as colunas tenham um espaço de 10px entre elas */
-  box-sizing: border-box; /* Garante que o padding e bordas sejam considerados no cálculo da largura */
+  flex: none; /* Não deixa as colunas se expandirem */
+  width: auto; /* Ajusta a largura ao conteúdo */
+  padding-right: 10px; /* Dá um pequeno espaço entre os inputs e os rótulos da segunda coluna */
 }
 
 /* Ajusta o tamanho dos inputs */
@@ -60,4 +58,10 @@ body {
 .btn-success, .btn-secondary {
   padding: 10px 20px; /* Ajusta o tamanho dos botões */
   font-size: 16px; /* Ajusta o tamanho da fonte */
+}
+
+label {
+  display: inline-block; /* Mantém os rótulos alinhados horizontalmente */
+  white-space: nowrap; /* Impede que quebrem linha */
+  margin-right: 5px; /* Reduz o espaço à direita dos rótulos */
 }

@@ -83,5 +83,19 @@ namespace ProjetoNutri.Controllers
             return View(circulferencia);
         }
 
+        public IActionResult DetalheCircunferencia(int id)
+        {
+            var circunferencia = _context.Circuferencias
+                .Include(c => c.Projeto) // Carrega os detalhes do Projeto associado
+                .FirstOrDefault(c => c.Id == id);
+
+            if (circunferencia == null)
+            {
+                return RedirectToAction(nameof(Index)); // Redireciona para a listagem
+            }
+
+            return View(circunferencia);
+        }
+
     }
 }

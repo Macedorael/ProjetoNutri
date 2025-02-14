@@ -5,7 +5,9 @@
 }
 
 <h2>Circuferencias do Projeto</h2>
-
+<br>
+<a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Voltar</a>
+<br>    
 <table class="table">
     <thead>
         <tr>
@@ -21,12 +23,11 @@
                 <td>@circulferencia.Rcq</td>
                 <td>@circulferencia.Classificacao</td>
                 <td>
-                    <a asp-action="Editar" asp-route-id="@circulferencia.Id">Editar</a> |
-                    <a asp-action="Detalhes" asp-route-id="@circulferencia.Id">Detalhes</a>
+                    <a asp-action="Editar" asp-route-id="@circulferencia.Id" class="btn btn-secondary">Editar</a> 
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a asp-action="CriarCircuferencia" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-primary">Adicionar Nova Circuferência</a>
+<a asp-action="CriarCircuferencia" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Adicionar Nova Circuferência</a>
