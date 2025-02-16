@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoNutri.Models
 {
-    public class Circuferencia
+    public class Circunferencia
     {
         [Key]
         public int Id { get; set; }

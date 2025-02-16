@@ -1,4 +1,4 @@
-@model ProjetoNutri.Models.Circuferencia
+@model ProjetoNutri.Models.Circunferencia
 
 @{
     ViewData["Title"] = "Criar Circuferência";
@@ -6,7 +6,7 @@
 
 <h2>Criar Circuferência</h2>
 
-<form asp-action="CriarCircuferencia" method="post" class="form-horizontal">
+<form asp-action="CriarCircunferencia" method="post" class="form-horizontal">
     <input type="hidden" asp-for="IdProjeto" />
 
     <div class="oi">
@@ -137,6 +137,6 @@
 
     <div class="form-group">
         <button type="submit" class="btn btn-success">Salvar</button>
-        <a asp-action="IndexCircuferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Cancelar</a>
+        <a asp-action="IndexCircunferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>
