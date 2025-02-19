@@ -48,6 +48,7 @@ appsettings.Development.json
 *.ldf
 *.sqlite
 *.db
+migrations/
 
 # Docker
 docker-compose.override.yml

@@ -1,0 +1,28 @@
+@model ProjetoNutri.Models.Circunferencia
+
+@{
+    ViewData["Title"] = "Detalhes da Circunferência";
+}
+
+<h2>Detalhes da Circunferência</h2>
+
+<p><strong>Projeto:</strong> @Model.Projeto.NomeProjeto</p>
+<p><strong>Paciente:</strong> @Model.Projeto.Paciente.Nome</p>
+
+<h3>Medidas</h3>
+<p><strong>Pescoço:</strong> @Model.Pescoco cm</p>
+<p><strong>Ombro:</strong> @Model.Ombro cm</p>
+<p><strong>Tórax:</strong> @Model.Torax cm</p>
+<p><strong>Braço Direito:</strong> @Model.Bracodireito cm</p>
+<p><strong>Braço Esquerdo:</strong> @Model.Bracoesquerdo cm</p>
+<p><strong>Braço Direito Contraído:</strong> @Model.Bracodireitocontraido cm</p>
+<p><strong>Braço Esquerdo Contraído:</strong> @Model.Bracoesquerdocontraido cm</p>
+<p><strong>Cintura:</strong> @Model.Cintura cm</p>
+<p><strong>Quadril:</strong> @Model.Quadril cm</p>
+
+<h3>Índices e Classificação</h3>
+<p><strong>RCQ (Relação Cintura-Quadril):</strong> @Model.Rcq</p>
+<p><strong>Classificação:</strong> @Model.Classificacao</p>
+
+<a asp-action="EditarCircunferencia"  class="btn btn-secondary">Editar</a>
+<a asp-action="IndexCircunferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>

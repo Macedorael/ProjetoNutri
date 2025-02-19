@@ -22,7 +22,7 @@ namespace ProjetoNutri.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ProjetoNutri.Models.Circuferencia", b =>
+            modelBuilder.Entity("ProjetoNutri.Models.Circunferencia", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -125,7 +125,7 @@ namespace ProjetoNutri.Migrations
 
                     b.HasIndex("IdProjeto");
 
-                    b.ToTable("Circuferencias");
+                    b.ToTable("Circunferencias");
                 });
 
             modelBuilder.Entity("ProjetoNutri.Models.Imc", b =>
@@ -227,10 +227,10 @@ namespace ProjetoNutri.Migrations
                     b.ToTable("Projetos");
                 });
 
-            modelBuilder.Entity("ProjetoNutri.Models.Circuferencia", b =>
+            modelBuilder.Entity("ProjetoNutri.Models.Circunferencia", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
-                        .WithMany("Circuferencias")
+                        .WithMany("Circunferencias")
                         .HasForeignKey("IdProjeto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -267,7 +267,7 @@ namespace ProjetoNutri.Migrations
 
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
-                    b.Navigation("Circuferencias");
+                    b.Navigation("Circunferencias");
 
                     b.Navigation("Imcs");
                 });

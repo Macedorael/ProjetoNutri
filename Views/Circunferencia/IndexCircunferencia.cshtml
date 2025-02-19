@@ -1,4 +1,4 @@
-@model IEnumerable<ProjetoNutri.Models.Circuferencia>
+@model IEnumerable<ProjetoNutri.Models.Circunferencia>
 
 @{
     ViewData["Title"] = "Circuferencias do Projeto";
@@ -17,17 +17,17 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var circulferencia in Model)
+        @foreach (var circunferencia in Model)
         {
             <tr>
-                <td>@circulferencia.Rcq</td>
-                <td>@circulferencia.Classificacao</td>
-                <td>
-                    <a asp-action="Editar" asp-route-id="@circulferencia.Id" class="btn btn-secondary">Editar</a> 
+                <td>@circunferencia.Rcq</td>
+                <td>@circunferencia.Classificacao</td>
+                <td> 
+                    <a asp-action="DetalheCircunferencia" asp-route-id="@circunferencia.Id" class="btn btn-secondary">Detalhe</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
-<a asp-action="CriarCircuferencia" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Adicionar Nova Circuferência</a>
+<a asp-action="CriarCircunferencia" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Adicionar Nova Circuferência</a>

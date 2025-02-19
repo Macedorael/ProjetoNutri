@@ -28,6 +28,6 @@ namespace ProjetoNutri.Models
         [Display(Name = "Ativo")]
         public bool Ativo { get; set; } = true;
         public ICollection<Imc> Imcs { get; set; } 
-        public ICollection<Circuferencia> Circuferencias { get; set; }
+        public ICollection<Circunferencia> Circunferencias { get; set; }
     }
 }
