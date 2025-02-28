@@ -164,18 +164,7 @@ namespace ProjetoNutri.Controllers
                 return NotFound();
             }
 
-            var imcs = _context.Imcs.Where(i => i.IdProjeto == projetoId).ToList();
-            var circunferencias = _context.Circunferencias.Where(i => i.IdProjeto == projetoId).ToList();
-
-            // Crie o ViewModel com o Projeto e os IMCs
-            var viewModel = new ProjetoImcViewModel
-            {
-                Projeto = projeto,
-                Imcs = imcs,
-                Circunferencias = circunferencias
-            };
-
-            return View(viewModel); // Retorne o ViewModel para a view
+            return View(projeto);
         }
 
 

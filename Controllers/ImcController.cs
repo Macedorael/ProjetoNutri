@@ -39,6 +39,10 @@ namespace ProjetoNutri.Controllers
                 var projeto = _context.Projetos.Include(p => p.Paciente).FirstOrDefault(p => p.Id == imc.IdProjeto);
                 var paciente = projeto.Paciente;
                 var sexoDoPaciente = paciente.Sexo.ToLower();
+                
+
+                Console.WriteLine($"Peso: {imc.Peso}, Altura: {imc.Altura}");
+                Console.WriteLine($"Peso: {imc.Peso}, Altura: {imc.Altura}");
 
                 imc.ValorImc = imc.Peso / (imc.Altura * imc.Altura);
 
@@ -80,7 +84,7 @@ namespace ProjetoNutri.Controllers
                         imc.Classificacao = "Obesidade";
                     }
                 }
-
+                Console.WriteLine($"Peso: {imc.Peso}, Altura: {imc.Altura}");
                 _context.Imcs.Add(imc);
                 _context.SaveChanges();
 
