@@ -10,33 +10,267 @@
 <br><br>
 
 <div>
-    <h4>Projeto: @Model.NomeProjeto</h4>
-    <h5>Paciente: @Model.Paciente.Nome @Model.Paciente.Sobrenome</h5>
+    <h4>Projeto: @Model.Projeto.NomeProjeto</h4>
+    <h5>Paciente: @Model.Projeto.Paciente.Nome @Model.Projeto.Paciente.Sobrenome</h5>
+    <h5>IMC: @(Model.Imcs.FirstOrDefault()?.Classificacao ?? "IMC não disponível")</h5>
+    <h5>Circunferencia: @(Model.Circunferencias.FirstOrDefault()?.Classificacao ?? "Circunferência não disponível")</h5>   
 </div>
 
 <hr>
 
 <!-- Botões de navegação -->
 <div>
-    <a asp-action="IndexImc" asp-controller="Imc" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Índice de Massa Corporal (IMC)</a>
-    <a asp-action="IndexCircunferencia" asp-controller="Circunferencia" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Circunferências</a>
-    <a asp-action="PregasCutaneas" asp-controller="Medidas" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Pregas Cutâneas</a>
+    <a asp-action="IndexImc" asp-controller="Imc" asp-route-projetoId="@Model.Projeto.Id" class="btn btn-secondary">Índice de Massa Corporal (IMC)</a>
+   @foreach (var circunferencia in Model.Circunferencias)
+{
+    <a asp-action="DetalheCircunferencia" asp-controller="Circunferencia" asp-route-id="@circunferencia.Id" class="btn btn-secondary">
+        Detalhes da Circunferência
+    </a>
+}
+
+    <a asp-action="IndexPrega" asp-controller="Pregas" asp-route-projetoId="@Model.Projeto.Id" class="btn btn-secondary">Pregas Cutâneas</a>
 </div>
 
-<!-- Certifique-se de carregar o script jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Botão para abrir o formulário de IMC -->
+<button id="toggleFormImc" class="btn btn-secondary mt-4">IMC</button>
+<button id="toggleFormCircunferencia" class="btn btn-secondary mt-4">Circuferencia</button>
+<button id="toggleFormPrega" class="btn btn-secondary mt-4">Prega</button>
 
-<script>
-    $(document).ready(function () {
-        // Ao clicar no botão de toggle
-        $("#toggleForm").click(function () {
-            // Alterna a visibilidade do formulário
-            $("#formImc").toggle();
-        });
-    });
+<!-- Formulário de IMC (inicialmente oculto) -->
+<div id="formImc" style="display:none; margin-top: 20px;">
+    <form asp-action="CriarImc" asp-controller="Imc" method="post">
+        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+        <div class="oi">
+            <!-- Coluna do lado direito -->
+            <div class="col-md-6 col-custom">
+        
+                <div class="form-group">
+                        <label for="Peso">Peso</label>
+                        <input type="text" class="form-control" id="Peso" name="Peso" step="0.001" min="0"  />
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="Altura">Altura</label>
+                        <input  type="text" class="form-control" id="Altura" name="Altura" step="0.01" min="0" />
+                    </div>
+        </div>
+            </div>
+    <button type="submit" class="btn btn-secondary mt-3">Salvar IMC</button>
+    </form>
+</div>
 
+<div id="formCircunferencia" style="display:none; margin-top: 20px;">
+    <form asp-action="CriarCircunferencia" asp-controller="Circunferencia" method="post" class="form-horizontal">
+        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
 
-</script>
+        <div class="oi">
+            <!-- Coluna do lado direito -->
+            <div class="col-md-6 col-custom">
+                <!-- Pescoço -->
+                <div class="form-group">
+                    <label for="Pescoco">Pescoço:</label>
+                    <input type="number" class="form-control" id="Pescoco" name="Pescoco" step="0.01" required />
+                </div>
+
+                <!-- Tórax -->
+                <div class="form-group">
+                    <label for="Torax">Tórax:</label>
+                    <input type="number" id="Torax" name="Torax" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Braço Direito -->
+                <div class="form-group">
+                    <label for="Bracodireito">Braço Direito:</label>
+                    <input type="number" id="Bracodireito" name="Bracodireito" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Braço Direito Contraído -->
+                <div class="form-group">
+                    <label for="Bracodireitocontraido">Braço Direito Contraído:</label>
+                    <input type="number" id="Bracodireitocontraido" name="Bracodireitocontraido" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Antebraço Direito -->
+                <div class="form-group">
+                    <label for="Antebracodireito">Antebraço Direito:</label>
+                    <input type="number" id="Antebracodireito" name="Antebracodireito" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Cintura -->
+                <div class="form-group">
+                    <label for="Cintura">Cintura:</label>
+                    <input type="number" id="Cintura" name="Cintura" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Distal Direita -->
+                <div class="form-group">
+                    <label for="Coxadistaldireita">Coxa Distal Direita:</label>
+                    <input type="number" id="Coxadistaldireita" name="Coxadistaldireita" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Medial Direita -->
+                <div class="form-group">
+                    <label for="Coxamedialdireita">Coxa Medial Direita:</label>
+                    <input type="number" id="Coxamedialdireita" name="Coxamedialdireita" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Panturrilha Direita -->
+                <div class="form-group">
+                    <label for="Panturrilhadireita">Panturrilha Direita:</label>
+                    <input type="number" id="Panturrilhadireita" name="Panturrilhadireita" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Proximal Direita -->
+                <div class="form-group">
+                    <label for="Coxaproximaldireita">Coxa Proximal Direita:</label>
+                    <input type="number" id="Coxaproximaldireita" name="Coxaproximaldireita" step="0.01" class="form-control" required />
+                </div>
+            </div>
+
+            <!-- Coluna do lado esquerdo -->
+            <div class="col-md-6 col-custom">
+                <div class="form-group">
+                    <label for="Ombro">Ombro:</label>
+                    <input type="number" id="Ombro" name="Ombro" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Braço Esquerdo -->
+                <div class="form-group">
+                    <label for="Bracoesquerdo">Braço Esquerdo:</label>
+                    <input type="number" id="Bracoesquerdo" name="Bracoesquerdo" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Braço Esquerdo Contraído -->
+                <div class="form-group">
+                    <label for="Bracoesquerdocontraido">Braço Esquerdo Contraído:</label>
+                    <input type="number" id="Bracoesquerdocontraido" name="Bracoesquerdocontraido" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Antebraço Esquerdo -->
+                <div class="form-group">
+                    <label for="Antebracoesquerdo">Antebraço Esquerdo:</label>
+                    <input type="number" id="Antebracoesquerdo" name="Antebracoesquerdo" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Quadril -->
+                <div class="form-group">
+                    <label for="Quadril">Quadril:</label>
+                    <input type="number" id="Quadril" name="Quadril" step="0.01" class="form-control" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Abdome">Abdome:</label>
+                    <input type="number" id="Abdome" name="Abdome" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Distal Esquerda -->
+                <div class="form-group">
+                    <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
+                    <input type="number" id="Coxadistalesquerda" name="Coxadistalesquerda" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Medial Esquerda -->
+                <div class="form-group">
+                    <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
+                    <input type="number" id="Coxamedialesquerda" name="Coxamedialesquerda" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Panturrilha Esquerda -->
+                <div class="form-group">
+                    <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
+                    <input type="number" id="Panturrilhaesquerda" name="Panturrilhaesquerda" step="0.01" class="form-control" required />
+                </div>
+
+                <!-- Coxa Proximal Esquerda -->
+                <div class="form-group">
+                    <label for="Coxaproximalesquerda">Coxa Proximal Esquerda:</label>
+                    <input type="number" id="Coxaproximalesquerda" name="Coxaproximalesquerda" step="0.01" class="form-control" required />
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-secondary">Salvar</button>
+        </div>
+    </form>
+</div>
+<div id="formPrega" style="display:none; margin-top: 20px;">
+    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+
+        <div class="oi">
+            <!-- Coluna do lado direito -->
+            <div class="col-md-6 col-custom">
+                <!-- Tricipital -->
+                <div class="form-group">
+                    <label for="Tricipital">Tricipital:</label>
+                    <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                </div>
+
+                <!-- Abdominal -->
+                <div class="form-group">
+                    <label for="Abdominal">Abdominal:</label>
+                    <input type="number" name="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                </div>
+
+                <!-- Axilar Média -->
+                <div class="form-group">
+                    <label for="AxilarMedia">Axilar Média:</label>
+                    <input type="number" name="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Torácica -->
+                <div class="form-group">
+                    <label for="Toracica">Torácica:</label>
+                    <input type="number" name="Toracica" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Panturrilha -->
+                <div class="form-group">
+                    <label for="Panturrilha">Panturrilha:</label>
+                    <input type="number" name="Panturrilha" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                </div>
+            </div>
+
+            <!-- Coluna do lado esquerdo -->
+            <div class="col-md-6 col-custom">
+                <div class="form-group">
+                    <label for="Bicipital">Bicipital:</label>
+                    <input type="number" name="Bicipital" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Subescapular -->
+                <div class="form-group">
+                    <label for="Subescapular">Subescapular:</label>
+                    <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Coxa -->
+                <div class="form-group">
+                    <label for="Coxa">Coxa:</label>
+                    <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Supra Iliaca -->
+                <div class="form-group">
+                    <label for="SupraIliaca">Suprailiaca:</label>
+                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+
+                <!-- Supra Espinal -->
+                <div class="form-group">
+                    <label for="SupraEspinal">Supraespinal:</label>
+                    <input type="number" name="SupraEspinal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a href="@Url.Action("IndexPrega", new { id = @Model.Projeto.Id })" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
 
 
 
