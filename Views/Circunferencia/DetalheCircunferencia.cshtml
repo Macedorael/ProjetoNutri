@@ -9,20 +9,36 @@
 <p><strong>Projeto:</strong> @Model.Projeto.NomeProjeto</p>
 <p><strong>Paciente:</strong> @Model.Projeto.Paciente.Nome</p>
 
-<h3>Medidas</h3>
-<p><strong>Pescoço:</strong> @Model.Pescoco cm</p>
-<p><strong>Ombro:</strong> @Model.Ombro cm</p>
-<p><strong>Tórax:</strong> @Model.Torax cm</p>
-<p><strong>Braço Direito:</strong> @Model.Bracodireito cm</p>
-<p><strong>Braço Esquerdo:</strong> @Model.Bracoesquerdo cm</p>
-<p><strong>Braço Direito Contraído:</strong> @Model.Bracodireitocontraido cm</p>
-<p><strong>Braço Esquerdo Contraído:</strong> @Model.Bracoesquerdocontraido cm</p>
-<p><strong>Cintura:</strong> @Model.Cintura cm</p>
-<p><strong>Quadril:</strong> @Model.Quadril cm</p>
+<h3>Medidas e Índices</h3>
 
-<h3>Índices e Classificação</h3>
-<p><strong>RCQ (Relação Cintura-Quadril):</strong> @Model.Rcq</p>
-<p><strong>Classificação:</strong> @Model.Classificacao</p>
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+    <div>
+        <p><strong>Pescoço:</strong> @Model.Pescoco cm</p>
+        <p><strong>Ombro:</strong> @Model.Ombro cm</p>
+        <p><strong>Tórax:</strong> @Model.Torax cm</p>
+        <p><strong>Braço Direito:</strong> @Model.Bracodireito cm</p>
+        <p><strong>Braço Esquerdo:</strong> @Model.Bracoesquerdo cm</p>
+        <p><strong>Braço Direito Contraído:</strong> @Model.Bracodireitocontraido cm</p>
+        <p><strong>Braço Esquerdo Contraído:</strong> @Model.Bracoesquerdocontraido cm</p>
+    </div>
+    <div>
+        <p><strong>Cintura:</strong> @Model.Cintura cm</p>
+        <p><strong>Quadril:</strong> @Model.Quadril cm</p>
+        <p><strong>Abdome:</strong> @Model.Abdome cm</p>
+        <p><strong>Coxa Distal Direita:</strong> @Model.Coxadistaldireita cm</p>
+        <p><strong>Coxa Distal Esquerda:</strong> @Model.Coxadistalesquerda cm</p>
+        <p><strong>Coxa Medial Direita:</strong> @Model.Coxamedialdireita cm</p>
+        <p><strong>Coxa Medial Esquerda:</strong> @Model.Coxamedialesquerda cm</p>
+    </div>
+    <div>
+        <p><strong>Coxa Proximal Direita:</strong> @Model.Coxaproximaldireita cm</p>
+        <p><strong>Coxa Proximal Esquerda:</strong> @Model.Coxaproximalesquerda cm</p>
+        <p><strong>Panturrilha Direita:</strong> @Model.Panturrilhadireita cm</p>
+        <p><strong>Panturrilha Esquerda:</strong> @Model.Panturrilhaesquerda cm</p>
+        <p><strong>RCQ (Relação Cintura-Quadril):</strong> @Model.Rcq</p>
+        <p><strong>Classificação:</strong> @Model.Classificacao</p>
+    </div>
+</div>
 
-<a asp-action="EditarCircunferencia"  class="btn btn-secondary">Editar</a>
+<a asp-action="EditarCircunferencia" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
 <a asp-action="IndexCircunferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>

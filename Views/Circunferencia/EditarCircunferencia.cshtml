@@ -1,0 +1,145 @@
+@model ProjetoNutri.Models.Circunferencia
+
+@{
+    ViewData["Title"] = "Editar Circunferência";
+}
+
+<h2>Editar Circunferência</h2>
+
+<form asp-action="EditarCircunferencia" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="IdProjeto" />
+
+    <div class="oi">
+        <!-- Coluna do lado direito -->
+        <div class="col-md-6 col-custom">
+            <!-- Pescoço -->
+            <div class="form-group">
+                <label for="Pescoco">Pescoço:</label>
+                <input type="number" asp-for="Pescoco" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Tórax -->
+            <div class="form-group">
+                <label for="Torax">Tórax:</label>
+                <input type="number" asp-for="Torax" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Braço Direito -->
+            <div class="form-group">
+                <label for="Braçodireito">Braço Direito:</label>
+                <input type="number" asp-for="Bracodireito" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Braço Direito Contraído -->
+            <div class="form-group">
+                <label for="Braçodireitocontraido">Braço Direito Contraído:</label>
+                <input type="number" asp-for="Bracodireitocontraido" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Antebraço Direito -->
+            <div class="form-group">
+                <label for="Antebraçodireito">Antebraço Direito:</label>
+                <input type="number" asp-for="Antebracodireito" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Cintura -->
+            <div class="form-group">
+                <label for="Cintura">Cintura:</label>
+                <input type="number" asp-for="Cintura" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Distal Direita -->
+            <div class="form-group">
+                <label for="Coxadistaldireita">Coxa Distal Direita:</label>
+                <input type="number" asp-for="Coxadistaldireita" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Medial Direita -->
+            <div class="form-group">
+                <label for="Coxamedialdireita">Coxa Medial Direita:</label>
+                <input type="number" asp-for="Coxamedialdireita" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Panturrilha Direita -->
+            <div class="form-group">
+                <label for="Panturrilhadireita">Panturrilha Direita:</label>
+                <input type="number" asp-for="Panturrilhadireita" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Proximal Direita -->
+            <div class="form-group">
+                <label for="Coxaproximaldireita">Coxa Proximal Direita:</label>
+                <input type="number" asp-for="Coxaproximaldireita" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+        </div>
+
+        <!-- Coluna do lado esquerdo -->
+        <div class="col-md-6 col-custom">
+            <!-- Ombro -->
+            <div class="form-group">
+                <label for="Ombro">Ombro:</label>
+                <input type="number" asp-for="Ombro" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Braço Esquerdo -->
+            <div class="form-group">
+                <label for="Braçoesquerdo">Braço Esquerdo:</label>
+                <input type="number" asp-for="Bracoesquerdo" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Braço Esquerdo Contraído -->
+            <div class="form-group">
+                <label for="Braçoesquerdocontraido">Braço Esquerdo Contraído:</label>
+                <input type="number" asp-for="Bracoesquerdocontraido" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Antebraço Esquerdo -->
+            <div class="form-group">
+                <label for="Antebraçoesquerdo">Antebraço Esquerdo:</label>
+                <input type="number" asp-for="Antebracoesquerdo" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Quadril -->
+            <div class="form-group">
+                <label for="Quadril">Quadril:</label>
+                <input type="number" asp-for="Quadril" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Abdome -->
+            <div class="form-group">
+                <label for="Abdome">Abdome:</label>
+                <input type="number" asp-for="Abdome" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Distal Esquerda -->
+            <div class="form-group">
+                <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
+                <input type="number" asp-for="Coxadistalesquerda" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Medial Esquerda -->
+            <div class="form-group">
+                <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
+                <input type="number" asp-for="Coxamedialesquerda" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Panturrilha Esquerda -->
+            <div class="form-group">
+                <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
+                <input type="number" asp-for="Panturrilhaesquerda" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+
+            <!-- Coxa Proximal Esquerda -->
+            <div class="form-group">
+                <label for="Coxaproximalesquerda">Coxa Proximal Esquerda:</label>
+                <input type="number" asp-for="Coxaproximalesquerda" step="0.01" class="form-control form-control-sm mb-2 input-small" required />
+            </div>
+        </div>
+    </div>
+
+    <!-- Botões de ação -->
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Salvar</button>
+        <a asp-action="IndexCircunferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

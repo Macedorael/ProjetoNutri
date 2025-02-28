@@ -198,6 +198,67 @@ namespace ProjetoNutri.Migrations
                     b.ToTable("Pacientes");
                 });
 
+            modelBuilder.Entity("ProjetoNutri.Models.Pregas", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<double?>("Abdominal")
+                        .HasColumnType("float")
+                        .HasColumnName("Abdominal");
+
+                    b.Property<double?>("AxilarMedia")
+                        .HasColumnType("float")
+                        .HasColumnName("AxilarMedia");
+
+                    b.Property<double?>("Bicipital")
+                        .HasColumnType("float")
+                        .HasColumnName("Bicipital");
+
+                    b.Property<double?>("Coxa")
+                        .HasColumnType("float")
+                        .HasColumnName("Coxa");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("IdProjeto")
+                        .HasColumnType("int");
+
+                    b.Property<double?>("Panturrilha")
+                        .HasColumnType("float")
+                        .HasColumnName("Panturrilha");
+
+                    b.Property<double?>("Subescapular")
+                        .HasColumnType("float")
+                        .HasColumnName("Subescapular");
+
+                    b.Property<double?>("SupraEspinal")
+                        .HasColumnType("float")
+                        .HasColumnName("SupraEspinal");
+
+                    b.Property<double?>("SupraIliaca")
+                        .HasColumnType("float")
+                        .HasColumnName("SupraIliaca");
+
+                    b.Property<double?>("Toracica")
+                        .HasColumnType("float")
+                        .HasColumnName("Toracica");
+
+                    b.Property<double?>("Tricipital")
+                        .HasColumnType("float")
+                        .HasColumnName("Tricipital");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdProjeto");
+
+                    b.ToTable("Pregas");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
                     b.Property<int>("Id")
@@ -249,6 +310,17 @@ namespace ProjetoNutri.Migrations
                     b.Navigation("Projeto");
                 });
 
+            modelBuilder.Entity("ProjetoNutri.Models.Pregas", b =>
+                {
+                    b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
+                        .WithMany("Pregas")
+                        .HasForeignKey("IdProjeto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Projeto", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Paciente", "Paciente")
@@ -270,6 +342,8 @@ namespace ProjetoNutri.Migrations
                     b.Navigation("Circunferencias");
 
                     b.Navigation("Imcs");
+
+                    b.Navigation("Pregas");
                 });
 #pragma warning restore 612, 618
         }

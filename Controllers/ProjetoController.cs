@@ -149,13 +149,14 @@ namespace ProjetoNutri.Controllers
             // Redireciona para a lista de projetos, usando o PacienteId correto
             return RedirectToAction(nameof(IndexProjeto), new { pacienteId = projeto.PacienteId }); // Aqui você garante que o pacienteId correto seja passado
         }
-        public IActionResult AntropometriaProjeto(int projetoId)
+       public IActionResult AntropometriaProjeto(int projetoId)
         {
             Console.WriteLine($"ID recebido: {projetoId}"); // Depuração
 
             var projeto = _context.Projetos
-                .Include(p => p.Paciente) // Certifica-se de que os dados do paciente são carregados
+                .Include(p => p.Paciente) // Certifique-se de que os dados do paciente são carregados
                 .FirstOrDefault(p => p.Id == projetoId);
+ 
 
             if (projeto == null)
             {
@@ -163,7 +164,18 @@ namespace ProjetoNutri.Controllers
                 return NotFound();
             }
 
-            return View(projeto);
+            var imcs = _context.Imcs.Where(i => i.IdProjeto == projetoId).ToList();
+            var circunferencias = _context.Circunferencias.Where(i => i.IdProjeto == projetoId).ToList();
+
+            // Crie o ViewModel com o Projeto e os IMCs
+            var viewModel = new ProjetoImcViewModel
+            {
+                Projeto = projeto,
+                Imcs = imcs,
+                Circunferencias = circunferencias
+            };
+
+            return View(viewModel); // Retorne o ViewModel para a view
         }
 
 

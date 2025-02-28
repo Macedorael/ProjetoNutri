@@ -27,7 +27,9 @@ namespace ProjetoNutri.Models
         // Indica se o projeto está ativo
         [Display(Name = "Ativo")]
         public bool Ativo { get; set; } = true;
-        public ICollection<Imc> Imcs { get; set; } 
+        public ICollection<Imc> Imcs { get; set; }
         public ICollection<Circunferencia> Circunferencias { get; set; }
+        public ICollection<Pregas> Pregas { get; set; }
+        
     }
 }

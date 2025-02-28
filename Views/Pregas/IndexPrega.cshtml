@@ -1,0 +1,58 @@
+@model IEnumerable<ProjetoNutri.Models.Pregas>
+
+@{
+    ViewData["Title"] = "Lista de Pregas";
+}
+
+<h1>Lista de Pregas</h1>
+
+<p>
+    <a asp-action="CriarPrega" asp-controller="Pregas" asp-route-projetoId="@ViewData["ProjetoId"]" class="btn btn-secondary">Adicionar Prega</a>
+    <a asp-action="IndexPrega" asp-controller="Pregas" class="btn btn-secondary">Voltar à Lista de Pregas</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nome do Paciente</th>
+            <th>Nome do Projeto</th>
+            <th>Tricipital (mm)</th>
+            <th>Bicipital (mm)</th>
+            <th>Abdominal (mm)</th>
+            <th>Subescapular (mm)</th>
+            <th>Axilar Média (mm)</th>
+            <th>Coxa (mm)</th>
+            <th>Torácica (mm)</th>
+            <th>Supra-Iliaca (mm)</th>
+            <th>Supra-Espinal (mm)</th>
+            <th>Panturrilha (mm)</th>
+            <th>Data do Registro</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prega in Model)
+        {
+            <tr>
+                <td>@prega.Id</td>
+                <td>@prega.Projeto.Paciente.Nome</td>
+                <td>@prega.Projeto.NomeProjeto</td> 
+                <td>@(prega.Tricipital.HasValue ? prega.Tricipital.Value : "-")</td>
+                <td>@(prega.Bicipital.HasValue ? prega.Bicipital.Value : "-")</td>
+                <td>@(prega.Abdominal.HasValue ? prega.Abdominal.Value : "-")</td>
+                <td>@(prega.Subescapular.HasValue ? prega.Subescapular.Value : "-")</td>
+                <td>@(prega.AxilarMedia.HasValue ? prega.AxilarMedia.Value : "-")</td>
+                <td>@(prega.Coxa.HasValue ? prega.Coxa.Value : "-")</td>
+                <td>@(prega.Toracica.HasValue ? prega.Toracica.Value : "-")</td>
+                <td>@(prega.SupraIliaca.HasValue ? prega.SupraIliaca.Value : "-")</td>
+                <td>@(prega.SupraEspinal.HasValue ? prega.SupraEspinal.Value: "-")</td>
+                <td>@(prega.Panturrilha.HasValue ? prega.Panturrilha.Value : "-")</td>
+                <td>@prega.DataCriacao.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-action="DetalhePregas" asp-route-id="@prega.Id" class="btn btn-secondary">Detalhes</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

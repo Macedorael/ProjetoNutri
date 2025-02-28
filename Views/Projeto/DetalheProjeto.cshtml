@@ -12,17 +12,17 @@
 <div>
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.NomeProjeto)
+            Nome do Projeto
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NomeProjeto)
+            @Model.NomeProjeto
         </dd>
 
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataCriacao)
+            Data de Criação
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataCriacao)
+            @Model.DataCriacao.ToString("dd/MM/yyyy")  <!-- Formatação de data, se necessário -->
         </dd>
 
         <dt class="col-sm-2">
@@ -41,9 +41,8 @@
     </dl>
 </div>
 
- <div>
-        <a asp-action="EditarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>  
-        <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
-        <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Antropometria</a>
+<div>
+    <a asp-action="EditarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>  
+    <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
+    <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Antropometria</a>
 </div>
-

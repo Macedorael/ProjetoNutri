@@ -84,7 +84,7 @@ namespace ProjetoNutri.Controllers
                 _context.Imcs.Add(imc);
                 _context.SaveChanges();
 
-                return RedirectToAction("IndexImc", new { projetoId = imc.IdProjeto });
+                return RedirectToAction("AntropometriaProjeto","Projeto", new { projetoId = imc.IdProjeto });
             }
 
             return View(imc);
