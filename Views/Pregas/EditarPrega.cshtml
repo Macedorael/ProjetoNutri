@@ -1,0 +1,89 @@
+@model ProjetoNutri.Models.Pregas
+
+@{
+    ViewData["Title"] = "Editar Prega";
+}
+
+<h2>Editar Prega</h2>
+
+<form asp-action="EditarPrega" method="post" class="form-horizontal">
+    <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="IdProjeto" />
+
+    <div class="form-group">
+        <label for="Tricipital" class="col-md-2 control-label">Tricipital:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Bicipital" class="col-md-2 control-label">Bicipital:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Bicipital" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Abdominal" class="col-md-2 control-label">Abdominal:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Subescapular" class="col-md-2 control-label">Subescapular:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="AxilarMedia" class="col-md-2 control-label">Axilar Média:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Coxa" class="col-md-2 control-label">Coxa:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Toracica" class="col-md-2 control-label">Torácica:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Toracica" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="SupraIliaca" class="col-md-2 control-label">Supra-Iliaca:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="SupraEspinal" class="col-md-2 control-label">Supra-Espinal:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="SupraEspinal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="Panturrilha" class="col-md-2 control-label">Panturrilha:</label>
+        <div class="col-md-10">
+            <input type="number" asp-for="Panturrilha" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-success">Salvar</button>
+            <a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-id="@Model.Id" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </div>
+</form>

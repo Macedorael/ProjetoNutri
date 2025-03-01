@@ -153,23 +153,27 @@ namespace ProjetoNutri.Controllers
         {
             Console.WriteLine($"ID recebido: {projetoId}"); // Depuração
 
+            // Buscar o projeto específico
             var projeto = _context.Projetos
-                .Include(p => p.Paciente) // Certifique-se de que os dados do paciente são carregados
+                .Include(p => p.Paciente) // Carregar os dados do paciente
                 .FirstOrDefault(p => p.Id == projetoId);
- 
 
+            // Carregar dados das tabelas associadas (Imcs, Circunferencias, Pregas)
             var imcs = _context.Imcs.Where(i => i.IdProjeto == projetoId).ToList();
             var circunferencias = _context.Circunferencias.Where(i => i.IdProjeto == projetoId).ToList();
+            var pregas = _context.Pregas.Where(i => i.IdProjeto == projetoId).ToList();  // Isso retorna uma lista de objetos Pregas
 
-            // Crie o ViewModel com o Projeto e os IMCs
+            // Criar o ViewModel com os dados carregados
             var viewModel = new ProjetoImcViewModel
             {
                 Projeto = projeto,
                 Imcs = imcs,
-                Circunferencias = circunferencias
+                Circunferencias = circunferencias,
+                Prega = pregas  // Passando a lista de Pregas para o ViewModel
             };
 
-            return View(viewModel); // Retorne o ViewModel para a view
+            // Retorne a view com o ViewModel
+            return View(viewModel);
         }
 
 

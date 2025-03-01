@@ -1,0 +1,56 @@
+@model ProjetoNutri.Models.Pregas
+
+@{
+    ViewData["Title"] = "Detalhes da Prega";
+}
+
+<h2>Detalhes da Prega</h2>
+
+<p><strong>Projeto:</strong> @Model.Projeto.NomeProjeto</p>
+<p><strong>Paciente:</strong> @Model.Projeto.Paciente.Nome</p>
+
+<h3>Medidas das Pregas</h3>
+
+<div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+    <div>
+        <p><strong>Tricipital:</strong> @(Model.Tricipital.HasValue ? Model.Tricipital.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Bicipital:</strong> @(Model.Bicipital.HasValue ? Model.Bicipital.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Abdominal:</strong> @(Model.Abdominal.HasValue ? Model.Abdominal.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Subescapular:</strong> @(Model.Subescapular.HasValue ? Model.Subescapular.Value.ToString() + " mm" : "-")</p>
+    </div>
+    <div>
+        <p><strong>Axilar Média:</strong> @(Model.AxilarMedia.HasValue ? Model.AxilarMedia.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Coxa:</strong> @(Model.Coxa.HasValue ? Model.Coxa.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Torácica:</strong> @(Model.Toracica.HasValue ? Model.Toracica.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Supra-Iliaca:</strong> @(Model.SupraIliaca.HasValue ? Model.SupraIliaca.Value.ToString() + " mm" : "-")</p>
+    </div>
+    <div>
+        <p><strong>Supra-Espinal:</strong> @(Model.SupraEspinal.HasValue ? Model.SupraEspinal.Value.ToString() + " mm" : "-")</p>
+        <p><strong>Panturrilha:</strong> @(Model.Panturrilha.HasValue ? Model.Panturrilha.Value.ToString() + " mm" : "-")</p>
+    </div>
+</div>
+
+<p><strong>Data do Registro:</strong> @Model.DataCriacao.ToString("dd/MM/yyyy")</p>
+
+<a asp-action="EditarPrega" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
+
+<form asp-action="DeletarPrega" method="post" style="display:inline;">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-secondary delete-button">Deletar</button>
+</form>
+
+<a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                var confirmed = confirm('Você tem certeza que deseja deletar esta prega?');
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

@@ -41,4 +41,24 @@
 </div>
 
 <a asp-action="EditarCircunferencia" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
-<a asp-action="IndexCircunferencia" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>
+
+<form asp-action="DeletarCircunferencia" method="post" style="display:inline;">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-secondary delete-button">Deletar</button>
+</form>
+
+<a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                var confirmed = confirm('Você tem certeza que deseja deletar esta circunferência?');
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}

@@ -90,7 +90,7 @@ namespace ProjetoNutri.Controllers
             .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
             .FirstOrDefault(c => c.Id == id);
 
-            
+
 
             if (circunferencia == null)
             {
@@ -99,7 +99,7 @@ namespace ProjetoNutri.Controllers
 
             return View(circunferencia);
         }
-        
+
         // GET: Editar Circunferência
         public IActionResult EditarCircunferencia(int id)
         {
@@ -190,6 +190,20 @@ namespace ProjetoNutri.Controllers
             return View(circunferencia);
         }
 
+        [HttpPost]
+        public IActionResult DeletarCircunferencia(int id)
+        {
+            var circunferencia = _context.Circunferencias.Find(id);
 
+            if (circunferencia == null)
+            {
+                return NotFound();
+            }
+
+            _context.Circunferencias.Remove(circunferencia);
+            _context.SaveChanges();
+
+            return RedirectToAction("AntropometriaProjeto","Projeto", new { projetoId = circunferencia.IdProjeto });
+        }
     }
 }

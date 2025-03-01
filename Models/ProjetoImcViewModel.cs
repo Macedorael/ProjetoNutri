@@ -12,7 +12,6 @@ namespace ProjetoNutri.Models
         public List<Imc> Imcs { get; set; }
         public Circunferencia Circunferencia { get; set; }
         public List<Circunferencia> Circunferencias { get; set; }
-        public Pregas Pregas { get; set; }
         public List<Pregas> Prega { get; set; }
     }
 }
