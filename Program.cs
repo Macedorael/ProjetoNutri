@@ -1,7 +1,6 @@
 
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
-using ProjetoNutri.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +11,7 @@ builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(bu
 
 // builder.Services.AddDbContext<FocoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
-// Adiciona o serviço CalculosDobras para injeção de dependência
-builder.Services.AddScoped<CalculosDobras>();
+
 
 builder.Services.AddControllersWithViews();
 
@@ -33,10 +31,19 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapStaticAssets();
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/")
+    {
+        context.Response.Redirect("/Paciente");
+        return;
+    }
+    await next();
+});
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}")
+    pattern: "{controller=Paciente}/{action=Index}/{id?}")
     .WithStaticAssets();
 
 
