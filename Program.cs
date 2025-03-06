@@ -1,6 +1,7 @@
 
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
+using ProjetoNutri.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +12,8 @@ builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(bu
 
 // builder.Services.AddDbContext<FocoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
-
+// Adiciona o serviço CalculosDobras para injeção de dependência
+builder.Services.AddScoped<CalculosDobras>();
 
 builder.Services.AddControllersWithViews();
 

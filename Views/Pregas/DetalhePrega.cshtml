@@ -41,6 +41,35 @@
 
 <a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>
 
+<h2>Detalhes da Prega</h2>
+
+<div>
+    <p><strong>Tricipital:</strong> @Model.Tricipital</p>
+    <p><strong>Abdominal:</strong> @Model.Abdominal</p>
+    <p><strong>SupraIliaca:</strong> @Model.SupraIliaca</p>
+    <!-- Adicione as outras pregas aqui -->
+
+   @if (ViewBag.MensagemErroPollock3 != null)
+{
+    <p class="text-danger">@ViewBag.MensagemErroPollock3</p>
+}
+
+@if (ViewBag.MensagemErroPollock7 != null)
+{
+    <p class="text-danger">@ViewBag.MensagemErroPollock7</p>
+}
+
+@if (ViewBag.PercentualGorduraPollock3 != null)
+{
+    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3 %</p>
+}
+
+@if (ViewBag.PercentualGorduraPollock7 != null)
+{
+    <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7 %</p>
+}
+</div>
+
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>

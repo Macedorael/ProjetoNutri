@@ -2,16 +2,19 @@ using Microsoft.AspNetCore.Mvc;
 using ProjetoNutri.Context;
 using ProjetoNutri.Models;
 using Microsoft.EntityFrameworkCore;
+using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
 {
     public class PregasController : Controller
     {
         private readonly ClienteContext _context;
+        private readonly CalculosDobras _calculosDobras;
 
-        public PregasController(ClienteContext context)
+        public PregasController(ClienteContext context, CalculosDobras calculosDobras)
         {
             _context = context;
+            _calculosDobras = calculosDobras;
         }
 
         // Ação IndexPrega
@@ -26,6 +29,33 @@ namespace ProjetoNutri.Controllers
             {
                 return NotFound();
             }
+
+            // Chama o método de cálculo do percentual de gordura e armazena o valor na variável
+            double? percentualGorduraPollock3 = _calculosDobras.CalculoPollock3(prega);
+            double? percentualGorduraPollock7 = _calculosDobras.CalculoPollock7(prega);
+
+            // Se o cálculo foi bem-sucedido, exibe o resultado
+            if (percentualGorduraPollock3.HasValue)
+            {
+                ViewBag.PercentualGorduraPollock3 = percentualGorduraPollock3.Value;
+            }
+            else
+            {
+                // Se o cálculo do Pollock3 falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroPollock3 = "Não foi possível calcular o percentual de gordura usando o método Pollock3. Faltam dados necessários.";
+            }
+
+            if (percentualGorduraPollock7.HasValue)
+            {
+                ViewBag.PercentualGorduraPollock7 = percentualGorduraPollock7.Value;
+            }
+            else
+            {
+                // Se o cálculo do Pollock7 falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroPollock7 = "Não foi possível calcular o percentual de gordura usando o método Pollock7. Faltam dados necessários.";
+            }
+
+
 
             return View(prega);
         }
@@ -107,7 +137,7 @@ namespace ProjetoNutri.Controllers
 
             return View(prega);
         }
-        
+
         [HttpPost]
         public IActionResult DeletarPrega(int id)
         {
@@ -121,7 +151,7 @@ namespace ProjetoNutri.Controllers
             _context.Pregas.Remove(prega);
             _context.SaveChanges();
 
-            return RedirectToAction("AntropometriaProjeto","Projeto", new { projetoId = prega.IdProjeto });
+            return RedirectToAction("AntropometriaProjeto", "Projeto", new { projetoId = prega.IdProjeto });
         }
 
     }
