@@ -88,6 +88,10 @@ namespace ProjetoNutri.Controllers
             {
                 return RedirectToAction(nameof(Index));
             }
+            int idade = ProjetoNutri.Services.CalculoIdade.Calcular(paciente.DataNascimento);
+
+    // Enviando para a View via ViewBag
+            ViewBag.Idade = idade;
             return View(paciente);
         }
 

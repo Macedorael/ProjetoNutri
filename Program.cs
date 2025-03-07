@@ -14,6 +14,8 @@ builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(bu
 
 
 builder.Services.AddControllersWithViews();
+// Registro do serviço CalculosDobras
+builder.Services.AddScoped<ProjetoNutri.Services.CalculosDobras>();
 
 var app = builder.Build();
 

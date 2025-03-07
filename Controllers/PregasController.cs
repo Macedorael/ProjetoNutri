@@ -33,6 +33,10 @@ namespace ProjetoNutri.Controllers
             // Chama o método de cálculo do percentual de gordura e armazena o valor na variável
             double? percentualGorduraPollock3 = _calculosDobras.CalculoPollock3(prega);
             double? percentualGorduraPollock7 = _calculosDobras.CalculoPollock7(prega);
+            double? PercentualGorduraPetroski = _calculosDobras.CalculoPetroski(prega);
+            double? PercentualGorduraGuedes = _calculosDobras.CalculoGuedes(prega);
+            double? PercentualGorduraDurnin = _calculosDobras.CalculoDurnin(prega);
+            double? PercentualGorduraFaulkner = _calculosDobras.CalculoFaulkner(prega);
 
             // Se o cálculo foi bem-sucedido, exibe o resultado
             if (percentualGorduraPollock3.HasValue)
@@ -55,8 +59,46 @@ namespace ProjetoNutri.Controllers
                 ViewBag.MensagemErroPollock7 = "Não foi possível calcular o percentual de gordura usando o método Pollock7. Faltam dados necessários.";
             }
 
+            if (PercentualGorduraPetroski.HasValue)
+            {
+                ViewBag.PercentualGorduraPetroski = PercentualGorduraPetroski.Value;
+            }
+            else
+            {
+                // Se o cálculo do Petroski falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroPetroski = "Não foi possível calcular o percentual de gordura usando o método Petroski. Faltam dados necessários.";
+            }
 
+            if (PercentualGorduraGuedes.HasValue)
+            {
+                ViewBag.PercentualGorduraGuedes = PercentualGorduraGuedes.Value;
+            }
+            else
+            {
+                // Se o cálculo do Guedes falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroGuedes = "Não foi possível calcular o percentual de gordura usando o método Guedes. Faltam dados necessários.";
+            }   
 
+            if (PercentualGorduraDurnin.HasValue)
+            {
+                ViewBag.PercentualGorduraDurnin = PercentualGorduraDurnin.Value;
+            }
+            else
+            {
+                // Se o cálculo do Durnin falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroDurnin = "Não foi possível calcular o percentual de gordura usando o método Durnin. Faltam dados necessários.";
+            }
+
+            if (PercentualGorduraFaulkner.HasValue)
+            {
+                ViewBag.PercentualGorduraFaulkner = PercentualGorduraFaulkner.Value;
+            }
+            else
+            {
+                // Se o cálculo do Faulkner falhar, exibe uma mensagem de erro
+                ViewBag.MensagemErroFaulkner = "Não foi possível calcular o percentual de gordura usando o método Faulkner. Faltam dados necessários.";
+            }
+            
             return View(prega);
         }
 
