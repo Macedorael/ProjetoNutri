@@ -62,10 +62,6 @@ namespace ProjetoNutri.Migrations
                         .HasColumnType("float")
                         .HasColumnName("Cintura");
 
-                    b.Property<string>("Classificacao")
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Classificação");
-
                     b.Property<double>("Coxadistaldireita")
                         .HasColumnType("float")
                         .HasColumnName("Coxadistaldireita");
@@ -112,10 +108,6 @@ namespace ProjetoNutri.Migrations
                     b.Property<double>("Quadril")
                         .HasColumnType("float")
                         .HasColumnName("Quadril");
-
-                    b.Property<double>("Rcq")
-                        .HasColumnType("float")
-                        .HasColumnName("Rcq");
 
                     b.Property<double>("Torax")
                         .HasColumnType("float")

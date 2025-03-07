@@ -77,11 +77,5 @@ namespace ProjetoNutri.Models
 
         [Column("Panturrilhaesquerda")]
         public double Panturrilhaesquerda { get; set; }
-
-        [Column("Classificação")]
-        public string Classificacao { get; set; }
-
-        [Column("Rcq")]
-        public double Rcq { get; set; }
     }
 }

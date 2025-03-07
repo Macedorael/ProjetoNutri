@@ -6,16 +6,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
 using ProjetoNutri.Models;
+using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
 {
     public class CircunferenciaController : Controller
     {
         private readonly ClienteContext _context;
+        private readonly CalculosCircunferencia _calculosCircunferencia;
 
-        public CircunferenciaController(ClienteContext context)
+        public CircunferenciaController(ClienteContext context, CalculosCircunferencia calculosCircunferencia)
         {
             _context = context;
+            _calculosCircunferencia = calculosCircunferencia;
         }
 
         public IActionResult IndexCircunferencia(int projetoId)
@@ -45,32 +48,6 @@ namespace ProjetoNutri.Controllers
                 var projeto = _context.Projetos.Include(p => p.Paciente).FirstOrDefault(p => p.Id == circunferencia.IdProjeto);
                 var paciente = projeto.Paciente;
 
-                // Calcular o RCQ
-                circunferencia.Rcq = circunferencia.Cintura / circunferencia.Quadril;
-
-                // Classificação do RCQ
-                if (paciente.Sexo.ToLower() == "masculino")
-                {
-                    if (circunferencia.Rcq < 0.90)
-                    {
-                        circunferencia.Classificacao = "Normal";
-                    }
-                    else
-                    {
-                        circunferencia.Classificacao = "Risco aumentado";
-                    }
-                }
-                else if (paciente.Sexo.ToLower() == "feminino")
-                {
-                    if (circunferencia.Rcq < 0.85)
-                    {
-                        circunferencia.Classificacao = "Normal";
-                    }
-                    else
-                    {
-                        circunferencia.Classificacao = "Risco aumentado";
-                    }
-                }
 
                 // Adicionar à base de dados
                 _context.Circunferencias.Add(circunferencia);
@@ -159,19 +136,6 @@ namespace ProjetoNutri.Controllers
                 circunferenciaBanco.Coxaproximalesquerda = circunferencia.Coxaproximalesquerda;
                 circunferenciaBanco.Panturrilhadireita = circunferencia.Panturrilhadireita;
                 circunferenciaBanco.Panturrilhaesquerda = circunferencia.Panturrilhaesquerda;
-
-                circunferenciaBanco.Rcq = circunferencia.Cintura / circunferencia.Quadril;
-
-                // Classificação RCQ baseado no sexo do paciente
-                var paciente = circunferenciaBanco.Projeto.Paciente;
-                if (paciente.Sexo.ToLower() == "masculino")
-                {
-                    circunferenciaBanco.Classificacao = circunferenciaBanco.Rcq < 0.90 ? "Normal" : "Risco aumentado";
-                }
-                else if (paciente.Sexo.ToLower() == "feminino")
-                {
-                    circunferenciaBanco.Classificacao = circunferenciaBanco.Rcq < 0.85 ? "Normal" : "Risco aumentado";
-                }
 
                 // Desanexa a circunferência do contexto se estiver sendo rastreada
                 _context.Entry(circunferenciaBanco).State = EntityState.Detached;
