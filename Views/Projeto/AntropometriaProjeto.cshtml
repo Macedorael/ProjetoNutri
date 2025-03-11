@@ -13,10 +13,117 @@
     <h4>Projeto: @Model.Projeto.NomeProjeto</h4>
     <h5>Paciente: @Model.Projeto.Paciente.Nome @Model.Projeto.Paciente.Sobrenome</h5>
     <h5>IMC: @(Model.Imcs.FirstOrDefault()?.Classificacao ?? "IMC não disponível")</h5>
-       
+    <hr class="my-2" />
+    <div class="d-flex justify-content-start">
+        @if (ViewBag.PercentualGorduraPollock3 != null)
+        {
+            <p class="menu-item" id="pollock3">Pollock 3</p>
+           
+        }
+            
+        @if (ViewBag.PercentualGorduraPollock7 != null)
+        {
+            <p class="menu-item" id="pollock7">Pollock 7</p>
+        }
+
+        @if (ViewBag.PercentualGorduraPetroski != null)
+        { 
+            <p class="menu-item" id="petroski">Petroski</p>
+        }
+
+        @if (ViewBag.PercentualGorduraGuedes != null)
+        {
+            <p class="menu-item" id="guedes">Guedes</p>
+        }
+
+        @if (ViewBag.PercentualGorduraDurnin != null)
+        { 
+            <p class="menu-item" id="durnin">Durnin</p>
+        }
+
+        @if (ViewBag.PercentualGorduraFaulkner != null)
+        { 
+            <p class="menu-item" id="faulkner">Faulkner</p>
+        }
+    </div>
+
+    <div id="DisplayPollock3" >
+        @if (ViewBag.PercentualGorduraPollock3 != null)
+        {
+            
+            <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3%</p>
+            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+            <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+            <hr class="my-2" />
+        }
+        
+    </div>
+    <div id="DisplayPollock7" style="display:none; margin-top: 20px;">
+        @if (ViewBag.PercentualGorduraPollock7 != null)
+        {
+            <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7 %</p>
+            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPollock7.ToString("F2") kg</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock7.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock7.ToString("F2") kg</p>
+            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPollock7.ToString("F3") kg/L</p>
+            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPollock7.ToString("F2") mm</p>
+            <p><strong>Referencia usanda</strong> Pollock 7, 1978</p>
+            <hr class="my-2" />
+        }
+
+    </div>
+    <div id="DisplayPetroski" style="display:none; margin-top: 20px;">
+        @if (ViewBag.PercentualGorduraPetroski != null)
+        {
+            <p><strong>Percentual de Gordura (Petroski):</strong> @ViewBag.PercentualGorduraPetroski %</p>
+            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPetroski.ToString("F2") kg</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPetroski.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPetroski.ToString("F2") kg</p>
+            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPetroski.ToString("F3") kg/L</p>
+            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPetroski.ToString("F2") mm</p>
+            <p><strong>Referencia usanda</strong> Petroski, 1978</p>
+            <hr class="my-2" />
+        }
+
+    </div>
+    <div id="DisplayGuedes" style="display:none; margin-top: 20px;">
+        @if (ViewBag.PercentualGorduraGuedes != null)
+        {
+            <p><strong>Percentual de Gordura (Guedes):</strong> @ViewBag.PercentualGorduraGuedes %</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraGuedes.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraGuedes.ToString("F2") kg</p>
+            <hr class="my-2" />
+        }
+
+
+    </div>
+    <div id="DisplayDurnin" style="display:none; margin-top: 20px;">
+        @if (ViewBag.PercentualGorduraDurnin != null)
+        {
+            <p><strong>Percentual de Gordura (Durnin):</strong> @ViewBag.PercentualGorduraDurnin %</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraDurnin.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraDurnin.ToString("F2") kg</p>
+            <hr class="my-2" />
+        }
+
+    </div>
+    <div id="DisplayFaulkner" style="display:none; margin-top: 20px;">
+        @if (ViewBag.PercentualGorduraFaulkner != null)
+        {
+            <p><strong>Percentual de Gordura (Faulkner):</strong> @ViewBag.PercentualGorduraFaulkner %</p>
+            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraFaulkner.ToString("F2") kg</p>
+            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraFaulkner.ToString("F2") kg</p>
+        }
+        <hr class="my-2" />
+    </div>
+    
 </div>
 
-<hr>
+
 
 <!-- Botões de navegação -->
 <div>
@@ -54,8 +161,8 @@
     <button id="toggleFormPregaPollock7" class="btn btn-secondary mt-4">Pollock7</button>
     <button id="toggleFormPregaPetroski" class="btn btn-secondary mt-4">Petroski</button>
     <button id="toggleFormPregaGuedes" class="btn btn-secondary mt-4">Guedes</button>
-    <button id="toggleFormPregaDrunin" class="btn btn-secondary mt-4">Drunin</button>
-    <button id="toggleFormPregaFalkner" class="btn btn-secondary mt-4">Falkner</button>
+    <button id="toggleFormPregaDurnin" class="btn btn-secondary mt-4">Durnin</button>
+    <button id="toggleFormPregaFaulkner" class="btn btn-secondary mt-4">Falkner</button>
 </div>
 
 <!-- Formulário de IMC (inicialmente oculto) -->
@@ -91,61 +198,61 @@
                 <!-- Pescoço -->
                 <div class="form-group">
                     <label for="Pescoco">Pescoço:</label>
-                    <input type="number" class="form-control" id="Pescoco" name="Pescoco" step="0.01" required />
+                    <input type="text" class="form-control" id="Pescoco" name="Pescoco" step="0.01" required />
                 </div>
 
                 <!-- Tórax -->
                 <div class="form-group">
                     <label for="Torax">Tórax:</label>
-                    <input type="number" id="Torax" name="Torax" step="0.01" class="form-control" required />
+                    <input type="text" id="Torax" name="Torax" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Braço Direito -->
                 <div class="form-group">
                     <label for="Bracodireito">Braço Direito:</label>
-                    <input type="number" id="Bracodireito" name="Bracodireito" step="0.01" class="form-control" required />
+                    <input type="text" id="Bracodireito" name="Bracodireito" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Braço Direito Contraído -->
                 <div class="form-group">
                     <label for="Bracodireitocontraido">Braço Direito Contraído:</label>
-                    <input type="number" id="Bracodireitocontraido" name="Bracodireitocontraido" step="0.01" class="form-control" required />
+                    <input type="text" id="Bracodireitocontraido" name="Bracodireitocontraido" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Antebraço Direito -->
                 <div class="form-group">
                     <label for="Antebracodireito">Antebraço Direito:</label>
-                    <input type="number" id="Antebracodireito" name="Antebracodireito" step="0.01" class="form-control" required />
+                    <input type="text" id="Antebracodireito" name="Antebracodireito" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Cintura -->
                 <div class="form-group">
                     <label for="Cintura">Cintura:</label>
-                    <input type="number" id="Cintura" name="Cintura" step="0.01" class="form-control" required />
+                    <input type="text" id="Cintura" name="Cintura" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Distal Direita -->
                 <div class="form-group">
                     <label for="Coxadistaldireita">Coxa Distal Direita:</label>
-                    <input type="number" id="Coxadistaldireita" name="Coxadistaldireita" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxadistaldireita" name="Coxadistaldireita" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Medial Direita -->
                 <div class="form-group">
                     <label for="Coxamedialdireita">Coxa Medial Direita:</label>
-                    <input type="number" id="Coxamedialdireita" name="Coxamedialdireita" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxamedialdireita" name="Coxamedialdireita" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Panturrilha Direita -->
                 <div class="form-group">
                     <label for="Panturrilhadireita">Panturrilha Direita:</label>
-                    <input type="number" id="Panturrilhadireita" name="Panturrilhadireita" step="0.01" class="form-control" required />
+                    <input type="text" id="Panturrilhadireita" name="Panturrilhadireita" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Proximal Direita -->
                 <div class="form-group">
                     <label for="Coxaproximaldireita">Coxa Proximal Direita:</label>
-                    <input type="number" id="Coxaproximaldireita" name="Coxaproximaldireita" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxaproximaldireita" name="Coxaproximaldireita" step="0.01" class="form-control" required />
                 </div>
             </div>
 
@@ -153,60 +260,60 @@
             <div class="col-md-6 col-custom">
                 <div class="form-group">
                     <label for="Ombro">Ombro:</label>
-                    <input type="number" id="Ombro" name="Ombro" step="0.01" class="form-control" required />
+                    <input type="text" id="Ombro" name="Ombro" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Braço Esquerdo -->
                 <div class="form-group">
                     <label for="Bracoesquerdo">Braço Esquerdo:</label>
-                    <input type="number" id="Bracoesquerdo" name="Bracoesquerdo" step="0.01" class="form-control" required />
+                    <input type="text" id="Bracoesquerdo" name="Bracoesquerdo" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Braço Esquerdo Contraído -->
                 <div class="form-group">
                     <label for="Bracoesquerdocontraido">Braço Esquerdo Contraído:</label>
-                    <input type="number" id="Bracoesquerdocontraido" name="Bracoesquerdocontraido" step="0.01" class="form-control" required />
+                    <input type="text" id="Bracoesquerdocontraido" name="Bracoesquerdocontraido" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Antebraço Esquerdo -->
                 <div class="form-group">
                     <label for="Antebracoesquerdo">Antebraço Esquerdo:</label>
-                    <input type="number" id="Antebracoesquerdo" name="Antebracoesquerdo" step="0.01" class="form-control" required />
+                    <input type="text" id="Antebracoesquerdo" name="Antebracoesquerdo" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Quadril -->
                 <div class="form-group">
                     <label for="Quadril">Quadril:</label>
-                    <input type="number" id="Quadril" name="Quadril" step="0.01" class="form-control" required />
+                    <input type="text" id="Quadril" name="Quadril" step="0.01" class="form-control" required />
                 </div>
 
                 <div class="form-group">
                     <label for="Abdome">Abdome:</label>
-                    <input type="number" id="Abdome" name="Abdome" step="0.01" class="form-control" required />
+                    <input type="text" id="Abdome" name="Abdome" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Distal Esquerda -->
                 <div class="form-group">
                     <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
-                    <input type="number" id="Coxadistalesquerda" name="Coxadistalesquerda" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxadistalesquerda" name="Coxadistalesquerda" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Medial Esquerda -->
                 <div class="form-group">
                     <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
-                    <input type="number" id="Coxamedialesquerda" name="Coxamedialesquerda" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxamedialesquerda" name="Coxamedialesquerda" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Panturrilha Esquerda -->
                 <div class="form-group">
                     <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
-                    <input type="number" id="Panturrilhaesquerda" name="Panturrilhaesquerda" step="0.01" class="form-control" required />
+                    <input type="text" id="Panturrilhaesquerda" name="Panturrilhaesquerda" step="0.01" class="form-control" required />
                 </div>
 
                 <!-- Coxa Proximal Esquerda -->
                 <div class="form-group">
                     <label for="Coxaproximalesquerda">Coxa Proximal Esquerda:</label>
-                    <input type="number" id="Coxaproximalesquerda" name="Coxaproximalesquerda" step="0.01" class="form-control" required />
+                    <input type="text" id="Coxaproximalesquerda" name="Coxaproximalesquerda" step="0.01" class="form-control" required />
                 </div>
             </div>
         </div>
@@ -340,7 +447,7 @@
     </form>
 </div>
 
-<div id="formDrunin" style="display:none; margin-top: 20px;">
+<div id="formDurnin" style="display:none; margin-top: 20px;">
     <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
         <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
         <div class="oi">
@@ -370,7 +477,7 @@
     </form>
 </div>
 
-<div id="formFalkner" style="display:none; margin-top: 20px;">
+<div id="formFaulkner" style="display:none; margin-top: 20px;">
     <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
         <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
         <div class="oi">
@@ -413,8 +520,8 @@ $(document).ready(function () {
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     // Quando clicar em "Circunferência", fecha o formulário de Dobras
@@ -426,8 +533,8 @@ $(document).ready(function () {
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     // Quando clicar em "Dobras", abre o formulário de Dobras
@@ -439,8 +546,8 @@ $(document).ready(function () {
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     // Formulários de Prega para cada tipo (Pollock3, Pollock7, etc.)
@@ -451,8 +558,8 @@ $(document).ready(function () {
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     $("#toggleFormPregaPollock7").click(function () {
@@ -462,8 +569,8 @@ $(document).ready(function () {
         $("#formPollock3").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     $("#toggleFormPregaPetroski").click(function () {
@@ -473,8 +580,8 @@ $(document).ready(function () {
         $("#formPollock3").hide();
         $("#formPollock7").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
     $("#toggleFormPregaGuedes").click(function () {
@@ -484,31 +591,92 @@ $(document).ready(function () {
         $("#formPollock3").hide();
         $("#formPollock7").hide();
         $("#formPetroski").hide();
-        $("#formDrunin").hide();
-        $("#formFalkner").hide();
+        $("#formDurnin").hide();
+        $("#formFaulkner").hide();
     });
 
-    $("#toggleFormPregaDrunin").click(function () {
-        $("#formDrunin").toggle();
+    $("#toggleFormPregaDurnin").click(function () {
+        $("#formDurnin").toggle();
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formFalkner").hide();
+        $("#formFaulkner").hide();
     });
 
-    $("#toggleFormPregaFalkner").click(function () {
-        $("#formFalkner").toggle();
+    $("#toggleFormPregaFaulkner").click(function () {
+        $("#formFaulkner").toggle();
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
         $("#formPollock7").hide();
         $("#formPetroski").hide();
         $("#formGuedes").hide();
-        $("#formDrunin").hide();
+        $("#formDurnin").hide();
     });
+
+    $("#pollock3").click(function () {
+        $("#DisplayPollock3").toggle();
+        $("#DisplayPollock7").hide();
+        $("#DisplayPetroski").hide();
+        $("#DisplayGuedes").hide();
+        $("#DisplayDurnin").hide();
+        $("#DisplayFaulkner").hide();
+    });
+    $("#pollock7").click(function () {
+        $("#DisplayPollock3").hide();
+        $("#DisplayPollock7").toggle();
+        $("#DisplayPetroski").hide();
+        $("#DisplayGuedes").hide();
+        $("#DisplayDurnin").hide();
+        $("#DisplayFaulkner").hide();
+    });
+    $("#petroski").click(function () {
+        $("#DisplayPollock3").hide();
+        $("#DisplayPollock7").hide();
+        $("#DisplayPetroski").toggle();
+        $("#DisplayGuedes").hide();
+        $("#DisplayDurnin").hide();
+        $("#DisplayFaulkner").hide();
+    });
+    $("#guedes").click(function () {
+        $("#DisplayPollock3").hide();
+        $("#DisplayPollock7").hide();
+        $("#DisplayPetroski").hide();
+        $("#DisplayGuedes").toggle();
+        $("#DisplayDurnin").hide();
+        $("#DisplayFaulkner").hide();
+    });
+    $("#durnin").click(function () {
+        $("#DisplayPollock3").hide();
+        $("#DisplayPollock7").hide();
+        $("#DisplayPetroski").hide();
+        $("#DisplayGuedes").hide();
+        $("#DisplayDurnin").toggle();
+        $("#DisplayFaulkner").hide();
+    });
+    $("#faulkner").click(function () {
+        $("#DisplayPollock3").hide();
+        $("#DisplayPollock7").hide();
+        $("#DisplayPetroski").hide();
+        $("#DisplayGuedes").hide();
+        $("#DisplayDurnin").hide();
+        $("#DisplayFaulkner").toggle();
+    });
+    
+    $('.menu-item').first().addClass('active');
+    
+    // Quando qualquer item da lista for clicado
+    $('.menu-item').click(function() {
+        // Remove a classe 'active' de todos os itens
+        $('.menu-item').removeClass('active');
+            
+        // Adiciona a classe 'active' ao item clicado
+        $(this).addClass('active');
+    });
+
 });
 
 </script>

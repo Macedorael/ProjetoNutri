@@ -16,7 +16,7 @@ builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(bu
 builder.Services.AddControllersWithViews();
 // Registro do serviço CalculosDobras
 builder.Services.AddScoped<ProjetoNutri.Services.CalculosDobras>();
-
+builder.Services.AddScoped<ProjetoNutri.Services.CalculosCircunferencia>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

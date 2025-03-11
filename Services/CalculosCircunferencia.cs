@@ -19,48 +19,32 @@ namespace ProjetoNutri.Services
         {
             if (sexo.ToLower() == "masculino")
             {
-                if (rcq < 0.85)
+                if (rcq < 0.95)
                 {
-                    return "Normal";
+                    return "Baixo risco";
                 }
-                else if (rcq >= 0.85 && rcq < 0.90)
-                {
-                    return "Risco baixo";
-                }
-                else if (rcq >= 0.90 && rcq < 0.95)
+                else if (rcq >= 0.96 && rcq < 1.0)
                 {
                     return "Risco moderado";
                 }
-                else if (rcq >= 0.95 && rcq < 1.00)
-                {
-                    return "Risco alto";
-                }
                 else
                 {
-                    return "Risco muito alto";
+                    return "Alto risco";
                 }
             }
             else if (sexo.ToLower() == "feminino")
             {
                 if (rcq < 0.80)
                 {
-                    return "Normal";
+                    return "Baixo risco";
                 }
-                else if (rcq >= 0.80 && rcq < 0.85)
-                {
-                    return "Risco baixo";
-                }
-                else if (rcq >= 0.85 && rcq < 0.90)
+                else if (rcq >= 0.81 && rcq < 0.85)
                 {
                     return "Risco moderado";
                 }
-                else if (rcq >= 0.90 && rcq < 0.95)
-                {
-                    return "Risco alto";
-                }
                 else
                 {
-                    return "Risco muito alto";
+                    return "Alto risco";
                 }
             }
             else

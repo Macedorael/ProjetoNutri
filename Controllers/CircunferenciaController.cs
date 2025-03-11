@@ -66,13 +66,19 @@ namespace ProjetoNutri.Controllers
             .Include(c => c.Projeto)       // Inclui o Projeto relacionado
             .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
             .FirstOrDefault(c => c.Id == id);
-
+            
 
 
             if (circunferencia == null)
             {
                 return RedirectToAction(nameof(Index)); // Redireciona para a listagem
             }
+            var (rcq, classificacao) = _calculosCircunferencia.CalcularRCQ(circunferencia.Cintura, circunferencia.Quadril, circunferencia.Projeto.Paciente.Sexo);
+
+        // Passa os resultados para a View
+            ViewBag.RCQ = rcq;
+            ViewBag.ClassificacaoRCQ = classificacao;
+
 
             return View(circunferencia);
         }
@@ -147,7 +153,7 @@ namespace ProjetoNutri.Controllers
                 _context.SaveChanges();
 
                 // Redireciona para a página de listagem de circunferências após salvar
-                return RedirectToAction("IndexCircunferencia", new { projetoId = circunferenciaBanco.IdProjeto });
+                return RedirectToAction("AntropometriaProjeto", "Projeto", new { projetoId = circunferenciaBanco.IdProjeto });
             }
 
             // Se o modelo for inválido, retorna o formulário de edição com erros

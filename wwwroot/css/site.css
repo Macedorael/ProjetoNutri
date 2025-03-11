@@ -65,3 +65,21 @@ label {
   white-space: nowrap; /* Impede que quebrem linha */
   margin-right: 5px; /* Reduz o espaço à direita dos rótulos */
 }
+
+.d-flex {
+  display: flex;
+  justify-content: start;
+  gap: 30px; /* Aumenta o espaço entre os itens */
+}
+
+.menu-item {
+ 
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: bold
+}
+.menu-item.active {
+  color: #ff6347; /* Cor de destaque quando clicado */
+  font-weight: bold; /* Destaca ainda mais */
+}
+
