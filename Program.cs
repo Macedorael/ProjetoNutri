@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews();
 // Registro do serviço CalculosDobras
 builder.Services.AddScoped<ProjetoNutri.Services.CalculosDobras>();
 builder.Services.AddScoped<ProjetoNutri.Services.CalculosCircunferencia>();
+builder.Services.AddScoped<ProjetoNutri.Services.CalculoImc>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

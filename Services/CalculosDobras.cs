@@ -268,5 +268,38 @@ namespace ProjetoNutri.Services
                 throw new ArgumentException("Sexo inválido. Use 'masculino' ou 'feminino'.");
             }
         }
+
+        public string ClassificarGordura(double percentualGordura, string sexo)
+        {
+            if (sexo == "Masculino")
+            {
+                {
+            if (percentualGordura < 6)
+                return "Baixo";
+            else if (percentualGordura >= 6 && percentualGordura <= 14)
+                return $"Atleta";
+            else if (percentualGordura > 14 && percentualGordura <= 20)
+                return "Percentual Ideal";
+            else if (percentualGordura > 20 && percentualGordura <= 25)
+                return $"Acima do Ideal";
+            else
+                return $"Obesidade";
+        }
+            }
+            else // Feminino
+            {
+                 if (percentualGordura < 14)
+                return "Baixo";
+            else if (percentualGordura >= 14 && percentualGordura <= 21)
+                return $"Atleta";
+            else if (percentualGordura > 21 && percentualGordura <= 30)
+                return "Percentual Ideal";
+            else if (percentualGordura > 30 && percentualGordura <= 35)
+                return $"Acima do Ideal";
+            else
+                return $"Obesidade";
+            }
+        }
+
     }
 }

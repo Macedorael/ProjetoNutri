@@ -15,11 +15,14 @@ namespace ProjetoNutri.Controllers
         private readonly ClienteContext _context;
         private readonly CalculosCircunferencia _calculosCircunferencia;
         private readonly CalculosDobras _calculosDobras;
-        public ProjetoController(ClienteContext context, CalculosCircunferencia calculosCircunferencia, CalculosDobras calculosDobras)
+        private readonly CalculoImc _calculoImc;
+    
+        public ProjetoController(ClienteContext context, CalculosCircunferencia calculosCircunferencia, CalculosDobras calculosDobras, CalculoImc calculoImc)
         {
             _context = context;
             _calculosCircunferencia = calculosCircunferencia;
             _calculosDobras = calculosDobras;
+            _calculoImc = calculoImc;
         }
 
         // Ação que lista os projetos de um paciente
@@ -161,7 +164,7 @@ namespace ProjetoNutri.Controllers
             var projeto = _context.Projetos
                 .Include(p => p.Paciente) // Carregar os dados do paciente
                 .FirstOrDefault(p => p.Id == projetoId);
-            var imc = _context.Imcs.Include(i => i.Projeto).ThenInclude(p => p.Paciente).FirstOrDefault(i => i.Id == projetoId);
+            var imc = _context.Imcs.Include(i => i.Projeto).ThenInclude(p => p.Paciente).FirstOrDefault(i => i.IdProjeto == projetoId);
             // Carregar dados das tabelas associadas (Imcs, Circunferencias, Pregas)
             var imcs = _context.Imcs.Where(i => i.IdProjeto == projetoId).ToList();
             var circunferencias = _context.Circunferencias.Where(i => i.IdProjeto == projetoId).ToList();
@@ -169,9 +172,13 @@ namespace ProjetoNutri.Controllers
             var prega = _context.Pregas
             .Include(p => p.Projeto)
             .ThenInclude(projeto => projeto.Paciente)
-            .FirstOrDefault(p => p.IdProjeto == projetoId); // A consulta retorna um único objeto Pregas, não uma lista
+            .FirstOrDefault(p => p.IdProjeto == projetoId);
+            var circunferencia = _context.Circunferencias
+            .Include(c => c.Projeto)       // Inclui o Projeto relacionado
+            .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
+            .FirstOrDefault(c => c.IdProjeto == projetoId);
 
-            Console.WriteLine($"Prega encontrada: {prega?.Tricipital}, {prega?.Bicipital}, {prega?.Abdominal}");
+        
 
             
             var PercentualGorduraPollock3 = _calculosDobras.CalculoPollock3(prega);
@@ -181,7 +188,21 @@ namespace ProjetoNutri.Controllers
             double? PercentualGorduraGuedes = _calculosDobras.CalculoGuedes(prega);
             double? PercentualGorduraDurnin = _calculosDobras.CalculoDurnin(prega);
             double? PercentualGorduraFaulkner = _calculosDobras.CalculoFaulkner(prega);
-           
+            var (rcq, classificacao) = _calculosCircunferencia.CalcularRCQ(circunferencia.Cintura, circunferencia.Quadril, circunferencia.Projeto.Paciente.Sexo); 
+            var (imcNovo, classificacaoImc, pesoIdeal) = _calculoImc.CalcularImc(imc.Peso, imc.Altura, projeto.Paciente.Sexo);
+            var (cmb, precentagemCmb, classificacaoCmb) = _calculoImc.CalcularCMBCompleto(circunferencia.Bracodireito, imc.Altura, projeto.Paciente.Sexo);
+
+
+            ViewBag.Peso = imc?.Peso;
+            ViewBag.Altura = imc?.Altura;
+            ViewBag.ValorImc = imcNovo;
+            ViewBag.ClassificacaoImc = classificacaoImc;
+            ViewBag.RCQ = rcq;
+            ViewBag.ClassificacaoRCQ = classificacao;
+            ViewBag.PesoIdeal = pesoIdeal;
+            ViewBag.CMB = cmb;
+            ViewBag.PorcentagemCMB = precentagemCmb;
+            ViewBag.ClassificacaoCMB = classificacaoCmb;
            
              
             // Se o cálculo foi bem-sucedido, exibe o resultado
@@ -202,8 +223,10 @@ namespace ProjetoNutri.Controllers
                         int idade = ProjetoNutri.Services.CalculoIdade.Calcular(dataNascimento);
                         var (pesoGordura, pesoMassaMagra) = _calculosDobras.CalcularPesoGorduraEMassaMagra(imc.Peso, PercentualGorduraPollock3.PercentualGordura.Value);
                         double pesoResidual = _calculosDobras.CalcularPesoResidual(imc.Peso, imc.Altura, idade, projeto.Paciente.Sexo);
+                        var classificacaoGordura = _calculosDobras.ClassificarGordura(PercentualGorduraPollock3.PercentualGordura.Value, projeto.Paciente.Sexo);
+                    
 
-
+                        ViewBag.ClassificacaoGorduraPollock3 = classificacaoGordura;
                         ViewBag.PercentualGorduraPollock3 = PercentualGorduraPollock3.PercentualGordura.Value;
                         ViewBag.PercentualDensidadeCorporal = PercentualGorduraPollock3.DensidadeCorporal.Value;
                         ViewBag.SomaPregas = PercentualGorduraPollock3.SomaPrega.Value;
@@ -244,8 +267,10 @@ namespace ProjetoNutri.Controllers
                         int idade = ProjetoNutri.Services.CalculoIdade.Calcular(dataNascimento);
                         var (pesoGordura, pesoMassaMagra) = _calculosDobras.CalcularPesoGorduraEMassaMagra(imc.Peso, PercentualGorduraPollock7.PercentualGordura.Value);
                         double pesoResidual = _calculosDobras.CalcularPesoResidual(imc.Peso, imc.Altura, idade, projeto.Paciente.Sexo);
+                        var classificacaoGordura = _calculosDobras.ClassificarGordura(PercentualGorduraPollock7.PercentualGordura.Value, projeto.Paciente.Sexo);
+                        
 
-
+                        ViewBag.ClassificacaoGorduraPollock7 = classificacaoGordura;
                         ViewBag.PercentualGorduraPollock7 = PercentualGorduraPollock7.PercentualGordura.Value;
                         ViewBag.PercentualDensidadeCorporalPollock7 = PercentualGorduraPollock7.DensidadeCorporal.Value;
                         ViewBag.SomaPregasPollock7 = PercentualGorduraPollock7.SomaPrega.Value;

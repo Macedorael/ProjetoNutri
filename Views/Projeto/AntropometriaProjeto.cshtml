@@ -14,11 +14,13 @@
     <h5>Paciente: @Model.Projeto.Paciente.Nome @Model.Projeto.Paciente.Sobrenome</h5>
     <h5>IMC: @(Model.Imcs.FirstOrDefault()?.Classificacao ?? "IMC não disponível")</h5>
     <hr class="my-2" />
+
     <div class="d-flex justify-content-start">
         @if (ViewBag.PercentualGorduraPollock3 != null)
         {
             <p class="menu-item" id="pollock3">Pollock 3</p>
            
+    
         }
             
         @if (ViewBag.PercentualGorduraPollock7 != null)
@@ -47,24 +49,30 @@
         }
     </div>
 
-    <div id="DisplayPollock3" >
+  
+
+    <div id="DisplayPollock3" style="display:none; margin-top: 20px;" >
         @if (ViewBag.PercentualGorduraPollock3 != null)
         {
-            
-            <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3%</p>
+            <h3 id="titulo">Análises por dobras</h3>
+            <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+            <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+            <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
             <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
             <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
             <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
             <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
             <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
             <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-            <hr class="my-2" />
+            
         }
         
     </div>
     <div id="DisplayPollock7" style="display:none; margin-top: 20px;">
         @if (ViewBag.PercentualGorduraPollock7 != null)
         {
+            <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+            <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock7</p>
             <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7 %</p>
             <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPollock7.ToString("F2") kg</p>
             <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock7.ToString("F2") kg</p>
@@ -72,7 +80,7 @@
             <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPollock7.ToString("F3") kg/L</p>
             <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPollock7.ToString("F2") mm</p>
             <p><strong>Referencia usanda</strong> Pollock 7, 1978</p>
-            <hr class="my-2" />
+            
         }
 
     </div>
@@ -86,7 +94,7 @@
             <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPetroski.ToString("F3") kg/L</p>
             <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPetroski.ToString("F2") mm</p>
             <p><strong>Referencia usanda</strong> Petroski, 1978</p>
-            <hr class="my-2" />
+            
         }
 
     </div>
@@ -96,7 +104,7 @@
             <p><strong>Percentual de Gordura (Guedes):</strong> @ViewBag.PercentualGorduraGuedes %</p>
             <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraGuedes.ToString("F2") kg</p>
             <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraGuedes.ToString("F2") kg</p>
-            <hr class="my-2" />
+            
         }
 
 
@@ -107,7 +115,7 @@
             <p><strong>Percentual de Gordura (Durnin):</strong> @ViewBag.PercentualGorduraDurnin %</p>
             <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraDurnin.ToString("F2") kg</p>
             <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraDurnin.ToString("F2") kg</p>
-            <hr class="my-2" />
+            
         }
 
     </div>
@@ -118,9 +126,20 @@
             <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraFaulkner.ToString("F2") kg</p>
             <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraFaulkner.ToString("F2") kg</p>
         }
-        <hr class="my-2" />
+        
     </div>
-    
+      <div id="imc">
+        <h3 id="titulo">Análises de pesos e medidas</h3>
+        <p><strong>Peso atual: </strong>@ViewBag.Altura M</p>
+        <p><strong>Altura atual: </strong>@ViewBag.Peso Kg</p>
+        <p><strong>Índice de Massa Corporal: </strong>@ViewBag.ValorImc.ToString("F2") Kg/m2</p>
+        <p><strong>Classificação do IMC: </strong>@ViewBag.ClassificacaoImc</p>
+        <p><strong>Faixa de peso ideal: </strong>@ViewBag.pesoIdeal</p>
+        <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@ViewBag.RCQ.ToString("F2")</p>
+        <p><strong>Risco Metabólico por RCQ: </strong>@ViewBag.ClassificacaoRCQ</p>
+        <p><strong>CMB (cm): </strong>@ViewBag.CMB.ToString("F2") cm (@ViewBag.PorcentagemCMB.ToString("F2")%)</p>
+        <p><strong>Classificação CMB: </strong>@ViewBag.ClassificacaoCMB</p>
+    </div>
 </div>
 
 

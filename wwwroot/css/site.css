@@ -83,3 +83,26 @@ label {
   font-weight: bold; /* Destaca ainda mais */
 }
 
+#DisplayPollock3 {
+  background-color: #e6dbf4;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+#titulo {
+  font-size: 25px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+#imc {
+  background-color: #e6dbf4;
+  border: 1px solid #000;
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
