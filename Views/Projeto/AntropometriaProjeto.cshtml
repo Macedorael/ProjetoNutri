@@ -3,527 +3,558 @@
 @{
     ViewData["Title"] = "Antropometria do Projeto";
 }
-
-<h1>Antropometria</h1>
-
-<a asp-action="DetalheProjeto" asp-route-id="@Model.Projeto.Id" class="btn btn-secondary">Voltar para o Projeto</a>
-<br><br>
-
 <div>
-    <h4>Projeto: @Model.Projeto.NomeProjeto</h4>
-    <h5>Paciente: @Model.Projeto.Paciente.Nome @Model.Projeto.Paciente.Sobrenome</h5>
-    <h5>IMC: @(Model.Imcs.FirstOrDefault()?.Classificacao ?? "IMC não disponível")</h5>
+    <h1>Antropometria</h1>
+
+    <a asp-action="DetalheProjeto" asp-route-id="@Model.Projeto.Id" class="btn btn-secondary">Voltar para o Projeto</a>
+    <img src="../Imagens/adesivos.png" alt="Descrição da imagem">
+
+    <br><br>
+</div>
+
+<div > 
+    <h4>Paciente: @Model.Projeto.Paciente.Nome @Model.Projeto.Paciente.Sobrenome</h4>
+    <h5>Projeto: @Model.Projeto.NomeProjeto</h5>
+    <h5>Data da avaliação: @Model.Projeto.DataCriacao.ToString("dd/MM/yyyy")</h5>
+    
+<br>
+    <div id="link">
+        @foreach (var imc in Model.Imcs)
+            {
+                <a asp-action="DetalheImc" asp-controller="Imc" asp-route-id="@imc.Id" class="link">
+                    Detalhes da IMC
+                </a> <span>|</span>
+            } 
+                
+            @foreach (var circunferencia in Model.Circunferencias)
+            {
+                <a asp-action="DetalheCircunferencia" asp-controller="Circunferencia" asp-route-id="@circunferencia.Id" class="link">
+                     Detalhes da Circunferência
+                </a> <span>|</span>
+            } 
+
+                @foreach (var prega in Model.Prega)
+            {
+                <a asp-action="DetalhePrega" asp-controller="Pregas" asp-route-id="@prega.Id" class="link">
+                     Detalhes da prega 
+                </a>
+            }
+    </div>
     <hr class="my-2" />
-
-    <div class="d-flex justify-content-start">
-        @if (ViewBag.PercentualGorduraPollock3 != null)
-        {
-            <p class="menu-item" id="pollock3">Pollock 3</p>
-           
-    
-        }
-            
-        @if (ViewBag.PercentualGorduraPollock7 != null)
-        {
-            <p class="menu-item" id="pollock7">Pollock 7</p>
-        }
-
-        @if (ViewBag.PercentualGorduraPetroski != null)
-        { 
-            <p class="menu-item" id="petroski">Petroski</p>
-        }
-
-        @if (ViewBag.PercentualGorduraGuedes != null)
-        {
-            <p class="menu-item" id="guedes">Guedes</p>
-        }
-
-        @if (ViewBag.PercentualGorduraDurnin != null)
-        { 
-            <p class="menu-item" id="durnin">Durnin</p>
-        }
-
-        @if (ViewBag.PercentualGorduraFaulkner != null)
-        { 
-            <p class="menu-item" id="faulkner">Faulkner</p>
-        }
-    </div>
-
-  
-
-    <div id="DisplayPollock3" style="display:none; margin-top: 20px;" >
-        @if (ViewBag.PercentualGorduraPollock3 != null)
-        {
-            <h3 id="titulo">Análises por dobras</h3>
-            <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-            <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-            <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-            <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-            
-        }
-        
-    </div>
-    <div id="DisplayPollock7" style="display:none; margin-top: 20px;">
-        @if (ViewBag.PercentualGorduraPollock7 != null)
-        {
-            <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-            <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock7</p>
-            <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7 %</p>
-            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPollock7.ToString("F2") kg</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock7.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock7.ToString("F2") kg</p>
-            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPollock7.ToString("F3") kg/L</p>
-            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPollock7.ToString("F2") mm</p>
-            <p><strong>Referencia usanda</strong> Pollock 7, 1978</p>
-            
-        }
-
-    </div>
-    <div id="DisplayPetroski" style="display:none; margin-top: 20px;">
-        @if (ViewBag.PercentualGorduraPetroski != null)
-        {
-            <p><strong>Percentual de Gordura (Petroski):</strong> @ViewBag.PercentualGorduraPetroski %</p>
-            <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPetroski.ToString("F2") kg</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPetroski.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPetroski.ToString("F2") kg</p>
-            <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPetroski.ToString("F3") kg/L</p>
-            <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPetroski.ToString("F2") mm</p>
-            <p><strong>Referencia usanda</strong> Petroski, 1978</p>
-            
-        }
-
-    </div>
-    <div id="DisplayGuedes" style="display:none; margin-top: 20px;">
-        @if (ViewBag.PercentualGorduraGuedes != null)
-        {
-            <p><strong>Percentual de Gordura (Guedes):</strong> @ViewBag.PercentualGorduraGuedes %</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraGuedes.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraGuedes.ToString("F2") kg</p>
-            
-        }
-
-
-    </div>
-    <div id="DisplayDurnin" style="display:none; margin-top: 20px;">
-        @if (ViewBag.PercentualGorduraDurnin != null)
-        {
-            <p><strong>Percentual de Gordura (Durnin):</strong> @ViewBag.PercentualGorduraDurnin %</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraDurnin.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraDurnin.ToString("F2") kg</p>
-            
-        }
-
-    </div>
-    <div id="DisplayFaulkner" style="display:none; margin-top: 20px;">
-        @if (ViewBag.PercentualGorduraFaulkner != null)
-        {
-            <p><strong>Percentual de Gordura (Faulkner):</strong> @ViewBag.PercentualGorduraFaulkner %</p>
-            <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraFaulkner.ToString("F2") kg</p>
-            <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraFaulkner.ToString("F2") kg</p>
-        }
-        
-    </div>
-      <div id="imc">
-        <h3 id="titulo">Análises de pesos e medidas</h3>
-        <p><strong>Peso atual: </strong>@ViewBag.Altura M</p>
-        <p><strong>Altura atual: </strong>@ViewBag.Peso Kg</p>
-        <p><strong>Índice de Massa Corporal: </strong>@ViewBag.ValorImc.ToString("F2") Kg/m2</p>
-        <p><strong>Classificação do IMC: </strong>@ViewBag.ClassificacaoImc</p>
-        <p><strong>Faixa de peso ideal: </strong>@ViewBag.pesoIdeal</p>
-        <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@ViewBag.RCQ.ToString("F2")</p>
-        <p><strong>Risco Metabólico por RCQ: </strong>@ViewBag.ClassificacaoRCQ</p>
-        <p><strong>CMB (cm): </strong>@ViewBag.CMB.ToString("F2") cm (@ViewBag.PorcentagemCMB.ToString("F2")%)</p>
-        <p><strong>Classificação CMB: </strong>@ViewBag.ClassificacaoCMB</p>
-    </div>
 </div>
-
-
-
-<!-- Botões de navegação -->
 <div>
-    @foreach (var imc in Model.Imcs)
-{
-    <a asp-action="DetalheImc" asp-controller="Imc" asp-route-id="@imc.Id" class="btn btn-secondary">
-        Detalhes da IMC
-    </a>
-}
-    
-   @foreach (var circunferencia in Model.Circunferencias)
-{
-    <a asp-action="DetalheCircunferencia" asp-controller="Circunferencia" asp-route-id="@circunferencia.Id" class="btn btn-secondary">
-        Detalhes da Circunferência
-    </a>
-}
-
-    @foreach (var prega in Model.Prega)
-{
-    <a asp-action="DetalhePrega" asp-controller="Pregas" asp-route-id="@prega.Id" class="btn btn-secondary">
-        Detalhes da prega
-    </a>
-}
-    
-</div>
-
-<!-- Botão para abrir o formulário de IMC -->
-<button id="toggleFormImc" class="btn btn-secondary mt-4">IMC</button>
-<button id="toggleFormCircunferencia" class="btn btn-secondary mt-4">Circuferencia</button>
-<button id="toggleFormDobras" class="btn btn-secondary mt-4">Dobras</button>
-
-<!-- Botões que aparecem quando o botão "Dobras" for clicado -->
-<div id="formDobras" style="display: none;">
-    <button id="toggleFormPregaPollock3" class="btn btn-secondary mt-4">Pollock3</button>
-    <button id="toggleFormPregaPollock7" class="btn btn-secondary mt-4">Pollock7</button>
-    <button id="toggleFormPregaPetroski" class="btn btn-secondary mt-4">Petroski</button>
-    <button id="toggleFormPregaGuedes" class="btn btn-secondary mt-4">Guedes</button>
-    <button id="toggleFormPregaDurnin" class="btn btn-secondary mt-4">Durnin</button>
-    <button id="toggleFormPregaFaulkner" class="btn btn-secondary mt-4">Falkner</button>
-</div>
-
-<!-- Formulário de IMC (inicialmente oculto) -->
-<div id="formImc" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarImc" asp-controller="Imc" method="post">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <!-- Coluna do lado direito -->
-            <div class="col-md-6 col-custom">
-        
-                <div class="form-group">
-                        <label for="Peso">Peso</label>
-                        <input type="text" class="form-control" id="Peso" name="Peso" step="0.001" min="0"  />
-                    </div>
+    <div style="display: flex; gap: 20px;">
+        <!-- Div da esquerda (conteúdo principal) -->
+        <div style="flex: 2;">
+            <div class="d-flex justify-content-start">
+                @if (ViewBag.PercentualGorduraPollock3 != null)
+                {
+                    <p class="menu-item" id="pollock3">Pollock 3</p>
+                
+            
+                }
                     
-                    <div class="form-group">
-                        <label for="Altura">Altura</label>
-                        <input  type="text" class="form-control" id="Altura" name="Altura" step="0.01" min="0" />
+                @if (ViewBag.PercentualGorduraPollock7 != null)
+                {
+                    <p class="menu-item" id="pollock7">Pollock 7</p>
+                }
+
+                @if (ViewBag.PercentualGorduraPetroski != null)
+                { 
+                    <p class="menu-item" id="petroski">Petroski</p>
+                }
+
+                @if (ViewBag.PercentualGorduraGuedes != null)
+                {
+                    <p class="menu-item" id="guedes">Guedes</p>
+                }
+
+                @if (ViewBag.PercentualGorduraDurnin != null)
+                { 
+                    <p class="menu-item" id="durnin">Durnin</p>
+                }
+
+                @if (ViewBag.PercentualGorduraFaulkner != null)
+                { 
+                    <p class="menu-item" id="faulkner">Faulkner</p>
+                }
+            </div>
+                           
+            <div style="flex: 2;">
+                <div>
+                    <button id="toggleFormImc" class="btn btn-outline-dark mt-4">Dados antropométricos básicos  <i class="fas fa-chevron-down" id="toggleIconImc"></i></button>
+                    <button id="toggleFormCircunferencia" class="btn btn-outline-dark mt-4">Circunferências corporais (cm)  <i class="fas fa-chevron-down" id="toggleIconCircunferencia"></i></button>
+                    <button id="toggleFormDobras" class="btn btn-outline-dark mt-4">Dobras cutâneas (mm) <i class="fas fa-chevron-down" id="toggleIconDobras"></i></button>
+                </div>
+                <div id="formDobras" style="display: none;">
+                    <button id="toggleFormPregaPollock3" class="btn btn-outline-dark mt-4">Pollock3 <i class="fas fa-chevron-down" id="toggleIconPollock3"></i></button>
+                    <button id="toggleFormPregaPollock7" class="btn btn-outline-dark mt-4">Pollock7 <i class="fas fa-chevron-down" id="toggleIconPollock7"></i></button>
+                    <button id="toggleFormPregaPetroski" class="btn btn-outline-dark mt-4">Petroski <i class="fas fa-chevron-down" id="toggleIconPetroski"></i></button>
+                    <button id="toggleFormPregaGuedes" class="btn btn-outline-dark mt-4">Guedes <i class="fas fa-chevron-down" id="toggleIconGuedes"></i></button>
+                    <button id="toggleFormPregaDurnin" class="btn btn-outline-dark mt-4">Durnin <i class="fas fa-chevron-down" id="toggleIconDurnin"></i></button>
+                    <button id="toggleFormPregaFaulkner" class="btn btn-outline-dark mt-4">Faulkner <i class="fas fa-chevron-down" id="toggleIconFaulkner"></i></button>
+                </div>
+            </div>
+            <div id="formImc" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarImc" asp-controller="Imc" method="post">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <!-- Coluna do lado direito -->
+                        <div class="col-md-6 col-custom">
+                    
+                            <div class="form-group">
+                                    <label for="Peso">Peso</label>
+                                    <input type="text" class="form-control" id="Peso" name="Peso" step="0.001" min="0"  />
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="Altura">Altura</label>
+                                    <input  type="text" class="form-control" id="Altura" name="Altura" step="0.01" min="0" />
+                                </div>
                     </div>
-        </div>
-            </div>
-    <button type="submit" class="btn btn-secondary mt-3">Salvar IMC</button>
-    </form>
-</div>
-
-<div id="formCircunferencia" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarCircunferencia" asp-controller="Circunferencia" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-
-        <div class="oi">
-            <!-- Coluna do lado direito -->
-            <div class="col-md-6 col-custom">
-                <!-- Pescoço -->
-                <div class="form-group">
-                    <label for="Pescoco">Pescoço:</label>
-                    <input type="text" class="form-control" id="Pescoco" name="Pescoco" step="0.01" required />
-                </div>
-
-                <!-- Tórax -->
-                <div class="form-group">
-                    <label for="Torax">Tórax:</label>
-                    <input type="text" id="Torax" name="Torax" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Braço Direito -->
-                <div class="form-group">
-                    <label for="Bracodireito">Braço Direito:</label>
-                    <input type="text" id="Bracodireito" name="Bracodireito" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Braço Direito Contraído -->
-                <div class="form-group">
-                    <label for="Bracodireitocontraido">Braço Direito Contraído:</label>
-                    <input type="text" id="Bracodireitocontraido" name="Bracodireitocontraido" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Antebraço Direito -->
-                <div class="form-group">
-                    <label for="Antebracodireito">Antebraço Direito:</label>
-                    <input type="text" id="Antebracodireito" name="Antebracodireito" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Cintura -->
-                <div class="form-group">
-                    <label for="Cintura">Cintura:</label>
-                    <input type="text" id="Cintura" name="Cintura" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Coxa Distal Direita -->
-                <div class="form-group">
-                    <label for="Coxadistaldireita">Coxa Distal Direita:</label>
-                    <input type="text" id="Coxadistaldireita" name="Coxadistaldireita" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Coxa Medial Direita -->
-                <div class="form-group">
-                    <label for="Coxamedialdireita">Coxa Medial Direita:</label>
-                    <input type="text" id="Coxamedialdireita" name="Coxamedialdireita" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Panturrilha Direita -->
-                <div class="form-group">
-                    <label for="Panturrilhadireita">Panturrilha Direita:</label>
-                    <input type="text" id="Panturrilhadireita" name="Panturrilhadireita" step="0.01" class="form-control" required />
-                </div>
-
-                <!-- Coxa Proximal Direita -->
-                <div class="form-group">
-                    <label for="Coxaproximaldireita">Coxa Proximal Direita:</label>
-                    <input type="text" id="Coxaproximaldireita" name="Coxaproximaldireita" step="0.01" class="form-control" required />
-                </div>
+                        </div>
+                <button type="submit" class="btn btn-secondary mt-3">Salvar IMC</button>
+                </form>
             </div>
 
-            <!-- Coluna do lado esquerdo -->
-            <div class="col-md-6 col-custom">
-                <div class="form-group">
-                    <label for="Ombro">Ombro:</label>
-                    <input type="text" id="Ombro" name="Ombro" step="0.01" class="form-control" required />
-                </div>
+            <div id="formCircunferencia" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarCircunferencia" asp-controller="Circunferencia" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
 
-                <!-- Braço Esquerdo -->
-                <div class="form-group">
-                    <label for="Bracoesquerdo">Braço Esquerdo:</label>
-                    <input type="text" id="Bracoesquerdo" name="Bracoesquerdo" step="0.01" class="form-control" required />
-                </div>
+                    <div class="oi">
+                        <!-- Coluna do lado direito -->
+                        <div class="col-md-6 col-custom">
+                            <!-- Pescoço -->
+                            <div class="form-group">
+                                <label for="Pescoco">Pescoço:</label>
+                                <input type="text" class="form-control" id="Pescoco" name="Pescoco" step="0.01" required />
+                            </div>
 
-                <!-- Braço Esquerdo Contraído -->
-                <div class="form-group">
-                    <label for="Bracoesquerdocontraido">Braço Esquerdo Contraído:</label>
-                    <input type="text" id="Bracoesquerdocontraido" name="Bracoesquerdocontraido" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Tórax -->
+                            <div class="form-group">
+                                <label for="Torax">Tórax:</label>
+                                <input type="text" id="Torax" name="Torax" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Antebraço Esquerdo -->
-                <div class="form-group">
-                    <label for="Antebracoesquerdo">Antebraço Esquerdo:</label>
-                    <input type="text" id="Antebracoesquerdo" name="Antebracoesquerdo" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Braço Direito -->
+                            <div class="form-group">
+                                <label for="Bracodireito">Braço Direito:</label>
+                                <input type="text" id="Bracodireito" name="Bracodireito" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Quadril -->
-                <div class="form-group">
-                    <label for="Quadril">Quadril:</label>
-                    <input type="text" id="Quadril" name="Quadril" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Braço Direito Contraído -->
+                            <div class="form-group">
+                                <label for="Bracodireitocontraido">Braço Direito Contraído:</label>
+                                <input type="text" id="Bracodireitocontraido" name="Bracodireitocontraido" step="0.01" class="form-control" required />
+                            </div>
 
-                <div class="form-group">
-                    <label for="Abdome">Abdome:</label>
-                    <input type="text" id="Abdome" name="Abdome" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Antebraço Direito -->
+                            <div class="form-group">
+                                <label for="Antebracodireito">Antebraço Direito:</label>
+                                <input type="text" id="Antebracodireito" name="Antebracodireito" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Coxa Distal Esquerda -->
-                <div class="form-group">
-                    <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
-                    <input type="text" id="Coxadistalesquerda" name="Coxadistalesquerda" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Cintura -->
+                            <div class="form-group">
+                                <label for="Cintura">Cintura:</label>
+                                <input type="text" id="Cintura" name="Cintura" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Coxa Medial Esquerda -->
-                <div class="form-group">
-                    <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
-                    <input type="text" id="Coxamedialesquerda" name="Coxamedialesquerda" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Coxa Distal Direita -->
+                            <div class="form-group">
+                                <label for="Coxadistaldireita">Coxa Distal Direita:</label>
+                                <input type="text" id="Coxadistaldireita" name="Coxadistaldireita" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Panturrilha Esquerda -->
-                <div class="form-group">
-                    <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
-                    <input type="text" id="Panturrilhaesquerda" name="Panturrilhaesquerda" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Coxa Medial Direita -->
+                            <div class="form-group">
+                                <label for="Coxamedialdireita">Coxa Medial Direita:</label>
+                                <input type="text" id="Coxamedialdireita" name="Coxamedialdireita" step="0.01" class="form-control" required />
+                            </div>
 
-                <!-- Coxa Proximal Esquerda -->
-                <div class="form-group">
-                    <label for="Coxaproximalesquerda">Coxa Proximal Esquerda:</label>
-                    <input type="text" id="Coxaproximalesquerda" name="Coxaproximalesquerda" step="0.01" class="form-control" required />
-                </div>
+                            <!-- Panturrilha Direita -->
+                            <div class="form-group">
+                                <label for="Panturrilhadireita">Panturrilha Direita:</label>
+                                <input type="text" id="Panturrilhadireita" name="Panturrilhadireita" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Coxa Proximal Direita -->
+                            <div class="form-group">
+                                <label for="Coxaproximaldireita">Coxa Proximal Direita:</label>
+                                <input type="text" id="Coxaproximaldireita" name="Coxaproximaldireita" step="0.01" class="form-control" required />
+                            </div>
+                        </div>
+
+                        <!-- Coluna do lado esquerdo -->
+                        <div class="col-md-6 col-custom">
+                            <div class="form-group">
+                                <label for="Ombro">Ombro:</label>
+                                <input type="text" id="Ombro" name="Ombro" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Braço Esquerdo -->
+                            <div class="form-group">
+                                <label for="Bracoesquerdo">Braço Esquerdo:</label>
+                                <input type="text" id="Bracoesquerdo" name="Bracoesquerdo" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Braço Esquerdo Contraído -->
+                            <div class="form-group">
+                                <label for="Bracoesquerdocontraido">Braço Esquerdo Contraído:</label>
+                                <input type="text" id="Bracoesquerdocontraido" name="Bracoesquerdocontraido" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Antebraço Esquerdo -->
+                            <div class="form-group">
+                                <label for="Antebracoesquerdo">Antebraço Esquerdo:</label>
+                                <input type="text" id="Antebracoesquerdo" name="Antebracoesquerdo" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Quadril -->
+                            <div class="form-group">
+                                <label for="Quadril">Quadril:</label>
+                                <input type="text" id="Quadril" name="Quadril" step="0.01" class="form-control" required />
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Abdome">Abdome:</label>
+                                <input type="text" id="Abdome" name="Abdome" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Coxa Distal Esquerda -->
+                            <div class="form-group">
+                                <label for="Coxadistalesquerda">Coxa Distal Esquerda:</label>
+                                <input type="text" id="Coxadistalesquerda" name="Coxadistalesquerda" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Coxa Medial Esquerda -->
+                            <div class="form-group">
+                                <label for="Coxamedialesquerda">Coxa Medial Esquerda:</label>
+                                <input type="text" id="Coxamedialesquerda" name="Coxamedialesquerda" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Panturrilha Esquerda -->
+                            <div class="form-group">
+                                <label for="Panturrilhaesquerda">Panturrilha Esquerda:</label>
+                                <input type="text" id="Panturrilhaesquerda" name="Panturrilhaesquerda" step="0.01" class="form-control" required />
+                            </div>
+
+                            <!-- Coxa Proximal Esquerda -->
+                            <div class="form-group">
+                                <label for="Coxaproximalesquerda">Coxa Proximal Esquerda:</label>
+                                <input type="text" id="Coxaproximalesquerda" name="Coxaproximalesquerda" step="0.01" class="form-control" required />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+            <div id="formPollock3" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Pollock3: Dobra triciptal, Dobra coxa, Dobra suprailíaca -->
+                            <div class="form-group">
+                                <label for="Tricipital">Dobra Triciptal:</label>
+                                <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Coxa">Dobra Coxa:</label>
+                                <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="formPollock7" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Pollock7: Dobra triciptal, Abdominal, axilar média, torácica, subescapular, coxa, suprailíaca -->
+                            <div class="form-group">
+                                <label for="Tricipital">Dobra Triciptal:</label>
+                                <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Abdominal">Dobra Abdominal:</label>
+                                <input type="number" name="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="AxilarMedia">Dobra Axilar Média:</label>
+                                <input type="number" name="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Toracica">Dobra Torácica:</label>
+                                <input type="number" name="Toracica" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Subescapular">Dobra Subescapular:</label>
+                                <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Coxa">Dobra Coxa:</label>
+                                <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="formPetroski" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Petroski: Axilar média, panturrilha, coxa, suprailíaca -->
+                            <div class="form-group">
+                                <label for="AxilarMedia">Dobra Axilar Média:</label>
+                                <input type="number" name="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Panturrilha">Panturrilha:</label>
+                                <input type="number" name="Panturrilha" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Coxa">Dobra Coxa:</label>
+                                <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="formGuedes" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Guedes: Subescapular, coxa, suprailíaca -->
+                            <div class="form-group">
+                                <label for="Subescapular">Dobra Subescapular:</label>
+                                <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Coxa">Dobra Coxa:</label>
+                                <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="formDurnin" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Drunin: Triciptal, Bicipital, Subescapular, Suprailíaca -->
+                            <div class="form-group">
+                                <label for="Tricipital">Dobra Triciptal:</label>
+                                <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Bicipital">Dobra Bicipital:</label>
+                                <input type="number" name="Bicipital" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Subescapular">Dobra Subescapular:</label>
+                                <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="formFaulkner" style="display:none; margin-top: 20px;">
+                <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
+                    <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
+                    <div class="oi">
+                        <div class="col-md-6 col-custom">
+                            <!-- Falkner: Triciptal, Abdominal, Subescapular, Suprailíaca -->
+                            <div class="form-group">
+                                <label for="Tricipital">Dobra Triciptal:</label>
+                                <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
+                            </div>
+                            <div class="form-group">
+                                <label for="Abdominal">Dobra Abdominal:</label>
+                                <input type="number" name="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="Subescapular">Dobra Subescapular:</label>
+                                <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="SupraIliaca">Dobra Suprailíaca:</label>
+                                <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-secondary">Salvar</button>
+                    </div>
+                </form>
             </div>
         </div>
+  
+        <div id="colunadireita">
+            <div id="DisplayPollock3" class="DisplayDobras" >
+                @if (ViewBag.PercentualGorduraPollock3 != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+                    
+                }
+                
+            </div>
+            <div id="DisplayPollock7" style="display:none;" class="DisplayDobras">
+                @if (ViewBag.PercentualGorduraPollock7 != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock7</p>
+                    <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPollock7.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock7.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock7.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPollock7.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPollock7.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 7, 1978</p>
+                    
+                }
 
-        <div class="form-group">
-            <button type="submit" class="btn btn-secondary">Salvar</button>
+            </div>
+            <div id="DisplayPetroski" style="display:none;" class="DisplayDobras">
+                @if (ViewBag.PercentualGorduraPetroski != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+                    
+                }
+
+            </div>
+            <div id="DisplayGuedes" style="display:none;" class="DisplayDobras">
+                @if (ViewBag.PercentualGorduraGuedes != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+                    
+                }
+
+
+            </div>
+            <div id="DisplayDurnin" style="display:none;" class="DisplayDobras">
+                @if (ViewBag.PercentualGorduraDurnin != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+                    
+                }
+
+            </div>
+            <div id="DisplayFaulkner" style="display:none;" class="DisplayDobras">
+                @if (ViewBag.PercentualGorduraFaulkner != null)
+                {
+                    <h3 id="titulo">Análises por dobras</h3>
+                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
+                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
+                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
+                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
+                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
+                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
+                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
+                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
+                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
+                }
+            
         </div>
-    </form>
-</div>
-<div id="formPollock3" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Pollock3: Dobra triciptal, Dobra coxa, Dobra suprailíaca -->
-                <div class="form-group">
-                    <label for="Tricipital">Dobra Triciptal:</label>
-                    <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
-                </div>
-                <div class="form-group">
-                    <label for="Coxa">Dobra Coxa:</label>
-                    <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
+        <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+            <div id="imc">
+                <h3 id="titulo">Análises de pesos e medidas</h3>
+                <p><strong>Peso atual: </strong>@ViewBag.Altura M</p>
+                <p><strong>Altura atual: </strong>@ViewBag.Peso Kg</p>
+                <p><strong>Índice de Massa Corporal: </strong>@ViewBag.ValorImc.ToString("F2") Kg/m2</p>
+                <p><strong>Classificação do IMC: </strong>@ViewBag.ClassificacaoImc</p>
+                <p><strong>Faixa de peso ideal: </strong>@ViewBag.pesoIdeal kg</p>
+                <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@ViewBag.RCQ.ToString("F2")</p>
+                <p><strong>Risco Metabólico por RCQ: </strong>@ViewBag.ClassificacaoRCQ</p>
+                <p><strong>CMB (cm): </strong>@ViewBag.CMB.ToString("F2") cm (@ViewBag.PorcentagemCMB.ToString("F2")%)</p>
+                <p><strong>Classificação CMB: </strong>@ViewBag.ClassificacaoCMB</p>
             </div>
         </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
-</div>
-
-<div id="formPollock7" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Pollock7: Dobra triciptal, Abdominal, axilar média, torácica, subescapular, coxa, suprailíaca -->
-                <div class="form-group">
-                    <label for="Tricipital">Dobra Triciptal:</label>
-                    <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
-                </div>
-                <div class="form-group">
-                    <label for="Abdominal">Dobra Abdominal:</label>
-                    <input type="number" name="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="AxilarMedia">Dobra Axilar Média:</label>
-                    <input type="number" name="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Toracica">Dobra Torácica:</label>
-                    <input type="number" name="Toracica" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Subescapular">Dobra Subescapular:</label>
-                    <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Coxa">Dobra Coxa:</label>
-                    <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
-</div>
-
-<div id="formPetroski" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Petroski: Axilar média, panturrilha, coxa, suprailíaca -->
-                <div class="form-group">
-                    <label for="AxilarMedia">Dobra Axilar Média:</label>
-                    <input type="number" name="AxilarMedia" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Panturrilha">Panturrilha:</label>
-                    <input type="number" name="Panturrilha" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Coxa">Dobra Coxa:</label>
-                    <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
-</div>
-
-<div id="formGuedes" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Guedes: Subescapular, coxa, suprailíaca -->
-                <div class="form-group">
-                    <label for="Subescapular">Dobra Subescapular:</label>
-                    <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Coxa">Dobra Coxa:</label>
-                    <input type="number" name="Coxa" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
-</div>
-
-<div id="formDurnin" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Drunin: Triciptal, Bicipital, Subescapular, Suprailíaca -->
-                <div class="form-group">
-                    <label for="Tricipital">Dobra Triciptal:</label>
-                    <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
-                </div>
-                <div class="form-group">
-                    <label for="Bicipital">Dobra Bicipital:</label>
-                    <input type="number" name="Bicipital" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Subescapular">Dobra Subescapular:</label>
-                    <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
-</div>
-
-<div id="formFaulkner" style="display:none; margin-top: 20px;">
-    <form asp-action="CriarPrega" asp-controller="Pregas" method="post" class="form-horizontal">
-        <input type="hidden" name="IdProjeto" value="@Model.Projeto.Id" />
-        <div class="oi">
-            <div class="col-md-6 col-custom">
-                <!-- Falkner: Triciptal, Abdominal, Subescapular, Suprailíaca -->
-                <div class="form-group">
-                    <label for="Tricipital">Dobra Triciptal:</label>
-                    <input type="number" name="Tricipital" step="0.01" class="form-control form-control-sm mb-2 input-small" />
-                </div>
-                <div class="form-group">
-                    <label for="Abdominal">Dobra Abdominal:</label>
-                    <input type="number" name="Abdominal" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="Subescapular">Dobra Subescapular:</label>
-                    <input type="number" name="Subescapular" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-                <div class="form-group">
-                    <label for="SupraIliaca">Dobra Suprailíaca:</label>
-                    <input type="number" name="SupraIliaca" step="0.01" class="form-control form-control-sm mb-2 input-small"/>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <button type="submit" class="btn btn-success">Salvar</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 <!-- JavaScript (jQuery) para controlar a exibição -->
@@ -533,6 +564,7 @@ $(document).ready(function () {
     // Quando clicar em "IMC", fecha o formulário de Dobras
     $("#toggleFormImc").click(function () {
         $("#formImc").toggle();
+        $('#toggleIconImc').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formCircunferencia").hide();
         $("#formDobras").hide(); // Esconde o formulário de Dobras
         $("#formPollock3").hide();
@@ -546,6 +578,7 @@ $(document).ready(function () {
     // Quando clicar em "Circunferência", fecha o formulário de Dobras
     $("#toggleFormCircunferencia").click(function () {
         $("#formCircunferencia").toggle();
+        $('#toggleIconCircunferencia').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formDobras").hide(); // Esconde o formulário de Dobras
         $("#formPollock3").hide();
@@ -559,6 +592,7 @@ $(document).ready(function () {
     // Quando clicar em "Dobras", abre o formulário de Dobras
     $("#toggleFormDobras").click(function () {
         $("#formDobras").toggle();
+        $('#toggleIconDobras').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -572,6 +606,7 @@ $(document).ready(function () {
     // Formulários de Prega para cada tipo (Pollock3, Pollock7, etc.)
     $("#toggleFormPregaPollock3").click(function () {
         $("#formPollock3").toggle();
+        $('#toggleIconPollock3').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock7").hide();
@@ -583,6 +618,7 @@ $(document).ready(function () {
 
     $("#toggleFormPregaPollock7").click(function () {
         $("#formPollock7").toggle();
+        $('#toggleIconPollock7').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -594,6 +630,7 @@ $(document).ready(function () {
 
     $("#toggleFormPregaPetroski").click(function () {
         $("#formPetroski").toggle();
+        $('#toggleIconPetroski').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -605,6 +642,7 @@ $(document).ready(function () {
 
     $("#toggleFormPregaGuedes").click(function () {
         $("#formGuedes").toggle();
+        $('#toggleIconGuedes').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -616,6 +654,7 @@ $(document).ready(function () {
 
     $("#toggleFormPregaDurnin").click(function () {
         $("#formDurnin").toggle();
+        $('#toggleIconDurnin').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -627,6 +666,7 @@ $(document).ready(function () {
 
     $("#toggleFormPregaFaulkner").click(function () {
         $("#formFaulkner").toggle();
+        $('#toggleIconFaulkner').toggleClass('fa-chevron-down fa-chevron-up');
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -637,7 +677,7 @@ $(document).ready(function () {
     });
 
     $("#pollock3").click(function () {
-        $("#DisplayPollock3").toggle();
+        $("#DisplayPollock3").show();
         $("#DisplayPollock7").hide();
         $("#DisplayPetroski").hide();
         $("#DisplayGuedes").hide();
@@ -646,7 +686,7 @@ $(document).ready(function () {
     });
     $("#pollock7").click(function () {
         $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").toggle();
+        $("#DisplayPollock7").show();
         $("#DisplayPetroski").hide();
         $("#DisplayGuedes").hide();
         $("#DisplayDurnin").hide();
@@ -655,7 +695,7 @@ $(document).ready(function () {
     $("#petroski").click(function () {
         $("#DisplayPollock3").hide();
         $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").toggle();
+        $("#DisplayPetroski").show();
         $("#DisplayGuedes").hide();
         $("#DisplayDurnin").hide();
         $("#DisplayFaulkner").hide();
@@ -664,7 +704,7 @@ $(document).ready(function () {
         $("#DisplayPollock3").hide();
         $("#DisplayPollock7").hide();
         $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").toggle();
+        $("#DisplayGuedes").show();
         $("#DisplayDurnin").hide();
         $("#DisplayFaulkner").hide();
     });
@@ -673,7 +713,7 @@ $(document).ready(function () {
         $("#DisplayPollock7").hide();
         $("#DisplayPetroski").hide();
         $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").toggle();
+        $("#DisplayDurnin").show();
         $("#DisplayFaulkner").hide();
     });
     $("#faulkner").click(function () {
@@ -682,19 +722,25 @@ $(document).ready(function () {
         $("#DisplayPetroski").hide();
         $("#DisplayGuedes").hide();
         $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").toggle();
+        $("#DisplayFaulkner").show();
     });
     
-    $('.menu-item').first().addClass('active');
+    $('.menu-item').first().addClass('active').css('border-bottom', '2px solid #4d00ab');
+   
     
     // Quando qualquer item da lista for clicado
     $('.menu-item').click(function() {
         // Remove a classe 'active' de todos os itens
         $('.menu-item').removeClass('active');
+
+        $('.menu-item').css('border-bottom', 'none');
             
         // Adiciona a classe 'active' ao item clicado
         $(this).addClass('active');
+        $(this).css('border-bottom', '2px solid #4d00ab');
     });
+
+
 
 });
 

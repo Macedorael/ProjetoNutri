@@ -19,6 +19,9 @@ html {
 
 body {
   margin-bottom: 60px;
+  background-color: #c9b0e9;
+  
+
 }
 
 .form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
@@ -78,17 +81,21 @@ label {
   cursor: pointer;
   font-weight: bold
 }
+
+.menu-item:hover {
+  color: #4d00ab; /* Cor de destaque ao passar o mouse */
+}
+
 .menu-item.active {
-  color: #ff6347; /* Cor de destaque quando clicado */
+  color: #4d00ab; /* Cor de destaque quando clicado */
   font-weight: bold; /* Destaca ainda mais */
 }
 
-#DisplayPollock3 {
+.DisplayDobras{
   background-color: #e6dbf4;
   border: 1px solid #000;
   border-radius: 5px;
   padding: 10px;
-  display: inline-block;
   margin-bottom: 20px;
 }
 #titulo {
@@ -104,5 +111,57 @@ label {
   padding: 10px;
   display: inline-block;
   margin-bottom: 20px;
+}
+.link {
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+.link:hover {
+  color: #4d00ab;
+  font-weight: bold;
+  border-bottom: 2px solid #4d00ab;
+}
+
+span {
+  margin-left: 10px; /* Espaço à esquerda do pipe */
+  margin-right: 10px; /* Espaço à direita do pipe */
+  color: #000; /* Cor do pipe */
+  font-size: 25px;
+}
+
+#link {
+  background-color: #e6dbf4d3;
+  border: 1px ;
+  border-radius: 5px;
+  padding: 10px;
+  display: inline-block;
+
+}
+.my-2 {
+  height: 10px;
+  background-color: #14002b;
+}
+img {
+  position: absolute;  /* Posiciona a imagem em relação ao documento */
+    top: 70px;              /* A imagem ficará no topo da página */
+    right: 300px;            /* A imagem ficará no lado direito da página */
+    width: 450px;        /* Ajuste do tamanho, se necessário */
+    height: auto;  
+}
+
+.btn-outline-dark{
+  background-color: #e6dbf4;
+}
+
+.btn-secondary{
+  background-color: #a15aff;
+}
+
+.nav{
+  background-color: #c9b0e9 ;
 }
 
