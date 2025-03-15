@@ -5,7 +5,7 @@ namespace ProjetoNutri.Services
     public class CalculosCircunferencia
     {
         // Método para calcular o RCQ e a classificação
-        public (double Rcq, string Classificacao) CalcularRCQ(double cintura, double quadril, string sexo)
+        public (double? Rcq, string Classificacao) CalcularRCQ(double cintura, double quadril, string sexo)
         {
             double rcq = cintura / quadril;  // Cálculo do RCQ
 

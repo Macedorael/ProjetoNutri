@@ -22,21 +22,21 @@
         @foreach (var imc in Model.Imcs)
             {
                 <a asp-action="DetalheImc" asp-controller="Imc" asp-route-id="@imc.Id" class="link">
-                    Detalhes da IMC
+                    Detalhes do IMC
                 </a> <span>|</span>
             } 
                 
             @foreach (var circunferencia in Model.Circunferencias)
             {
                 <a asp-action="DetalheCircunferencia" asp-controller="Circunferencia" asp-route-id="@circunferencia.Id" class="link">
-                     Detalhes da Circunferência
+                     Detalhes das Circunferências Corporais
                 </a> <span>|</span>
             } 
 
                 @foreach (var prega in Model.Prega)
             {
                 <a asp-action="DetalhePrega" asp-controller="Pregas" asp-route-id="@prega.Id" class="link">
-                     Detalhes da prega 
+                     Detalhes da Dobras Cutâneas> 
                 </a>
             }
     </div>
@@ -436,124 +436,96 @@
                 </form>
             </div>
         </div>
-  
         <div id="colunadireita">
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
+                <div id="imc">
+                    <h3 id="titulo">Análises de pesos e medidas</h3>
+                    <p><strong>Peso atual: </strong>@(ViewBag.Peso ?? "—") Kg</p>
+                    <p><strong>Altura atual: </strong>@(ViewBag.Altura ?? "—") M</p>
+                    <p><strong>Índice de Massa Corporal: </strong>@(ViewBag.ValorImc?.ToString("F2") ?? "—") Kg/m2</p>
+                    <p><strong>Classificação do IMC: </strong>@(ViewBag.ClassificacaoImc ?? "—")</p>
+                    <p><strong>Faixa de peso ideal: </strong>@(ViewBag.PesoIdeal ?? "—") kg</p>
+                    <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@(ViewBag.RCQ?.ToString("F2") ?? "—")</p>
+                    <p><strong>Risco Metabólico por RCQ: </strong>@(ViewBag.ClassificacaoRCQ ?? "—")</p>
+                    <p><strong>CMB (cm): </strong>@(ViewBag.CMB?.ToString("F2") ?? "—") cm (@(ViewBag.PorcentagemCMB?.ToString("F2") ?? "—")%)</p>
+                    <p><strong>Classificação CMB: </strong>@(ViewBag.ClassificacaoCMB ?? "—")</p>
+                </div>
+            </div>
             <div id="DisplayPollock3" class="DisplayDobras" >
-                @if (ViewBag.PercentualGorduraPollock3 != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-                    
-                }
+                <h3 id="titulo">Análises por dobras</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraPollock3 ?? "—")</p>
+                <p><strong>Percentual de Gordura (Pollock3):</strong> @(ViewBag.PercentualGorduraPollock3?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidual?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraPollock3?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraPollock3?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporal?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregas?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Pollock 3, 1978</p>
                 
             </div>
             <div id="DisplayPollock7" style="display:none;" class="DisplayDobras">
-                @if (ViewBag.PercentualGorduraPollock7 != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock7</p>
-                    <p><strong>Percentual de Gordura (Pollock7):</strong> @ViewBag.PercentualGorduraPollock7.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidualPollock7.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock7.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock7.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporalPollock7.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregasPollock7.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 7, 1978</p>
-                    
-                }
+                <h3 id="titulo">Análises por dobras</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraPollock7 ?? "—")</p>
+                <p><strong>Percentual de Gordura (Pollock7):</strong> @(ViewBag.PercentualGorduraPollock7?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidualPollock7?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraPollock7?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraPollock7?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporalPollock7?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregasPollock7?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Pollock 7, 1978</p>
+                
 
             </div>
             <div id="DisplayPetroski" style="display:none;" class="DisplayDobras">
-                @if (ViewBag.PercentualGorduraPetroski != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-                    
-                }
-
+                <h3 id="titulo">Análises por dobras</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraPetroski ?? "—")</p>
+                <p><strong>Percentual de Gordura (Petroski):</strong> @(ViewBag.PercentualGorduraPetroski?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidualPetroski?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraPetroski?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraPetroski?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporalPetroski?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregasPetroski?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Petroski, 1978</p>
             </div>
             <div id="DisplayGuedes" style="display:none;" class="DisplayDobras">
-                @if (ViewBag.PercentualGorduraGuedes != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-                    
-                }
-
-
-            </div>
+                <h3 id="titulo">Análises por dobras (Guedes)</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraGuedes ?? "—")</p>
+                <p><strong>Percentual de Gordura (Guedes):</strong> @(ViewBag.PercentualGorduraGuedes?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidualGuedes?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraGuedes?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraGuedes?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporalGuedes?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregasGuedes?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Guedes, 1978</p>
+                </div>
             <div id="DisplayDurnin" style="display:none;" class="DisplayDobras">
-                @if (ViewBag.PercentualGorduraDurnin != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-                    
-                }
-
+                <h3 id="titulo">Análises por dobras (Durnin)</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraDurnin ?? "—")</p>
+                <p><strong>Percentual de Gordura (Durnin):</strong> @(ViewBag.PercentualGorduraDurnin?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidualDurnin?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraDurnin?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraDurnin?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporalDurnin?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregasDurnin?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Durnin, 1978</p>
             </div>
             <div id="DisplayFaulkner" style="display:none;" class="DisplayDobras">
-                @if (ViewBag.PercentualGorduraFaulkner != null)
-                {
-                    <h3 id="titulo">Análises por dobras</h3>
-                    <p><strong>Percentual IdealEntre: </strong> 14% e 20%</p>
-                    <p><strong>Classif. do % GC: </strong> @ViewBag.ClassificacaoGorduraPollock3</p>
-                    <p><strong>Percentual de Gordura (Pollock3):</strong> @ViewBag.PercentualGorduraPollock3.ToString("F2")%</p>
-                    <p><strong>Peso Residual:</strong> @ViewBag.PesoResidual.ToString("F2") kg</p>
-                    <p><strong>Peso de gordura:</strong> @ViewBag.PesoGorduraPollock3.ToString("F2") kg</p>
-                    <p><strong>Peso de massa magra:</strong> @ViewBag.PesoMassaMagraPollock3.ToString("F2") kg</p>
-                    <p><strong>Densidade:</strong> @ViewBag.PercentualDensidadeCorporal.ToString("F3") kg/L</p>
-                    <p><strong>Tota de dobras:</strong> @ViewBag.SomaPregas.ToString("F2") mm</p>
-                    <p><strong>Referencia usanda</strong> Pollock 3, 1978</p>
-                }
-            
-        </div>
-        <div style="flex: 1; display: flex; flex-direction: column; gap: 20px;">
-            <div id="imc">
-                <h3 id="titulo">Análises de pesos e medidas</h3>
-                <p><strong>Peso atual: </strong>@ViewBag.Altura M</p>
-                <p><strong>Altura atual: </strong>@ViewBag.Peso Kg</p>
-                <p><strong>Índice de Massa Corporal: </strong>@ViewBag.ValorImc.ToString("F2") Kg/m2</p>
-                <p><strong>Classificação do IMC: </strong>@ViewBag.ClassificacaoImc</p>
-                <p><strong>Faixa de peso ideal: </strong>@ViewBag.pesoIdeal kg</p>
-                <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@ViewBag.RCQ.ToString("F2")</p>
-                <p><strong>Risco Metabólico por RCQ: </strong>@ViewBag.ClassificacaoRCQ</p>
-                <p><strong>CMB (cm): </strong>@ViewBag.CMB.ToString("F2") cm (@ViewBag.PorcentagemCMB.ToString("F2")%)</p>
-                <p><strong>Classificação CMB: </strong>@ViewBag.ClassificacaoCMB</p>
+                <h3 id="titulo">Análises por dobras (Faulkner)</h3>
+                <p><strong>Percentual Ideal Entre: </strong> 14% e 20%</p>
+                <p><strong>Classif. do % GC: </strong>@(ViewBag.ClassificacaoGorduraFaulkner ?? "—")</p>
+                <p><strong>Percentual de Gordura (Faulkner):</strong> @(ViewBag.PercentualGorduraFaulkner?.ToString("F2") ?? "—")%</p>
+                <p><strong>Peso Residual:</strong> @(ViewBag.PesoResidualFaulkner?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de gordura:</strong> @(ViewBag.PesoGorduraFaulkner?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Peso de massa magra:</strong> @(ViewBag.PesoMassaMagraFaulkner?.ToString("F2") ?? "—") kg</p>
+                <p><strong>Densidade:</strong> @(ViewBag.PercentualDensidadeCorporalFaulkner?.ToString("F3") ?? "—") kg/L</p>
+                <p><strong>Total de dobras:</strong> @(ViewBag.SomaPregasFaulkner?.ToString("F2") ?? "—") mm</p>
+                <p><strong>Referência usada:</strong> Faulkner, 1978</p>
             </div>
-        </div>
     </div>
 </div>
 
@@ -561,10 +533,31 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function () {
+
+    function atualizarSetas(iconeAtivo) {
+        let icones = ["#toggleIconPollock3", "#toggleIconPollock7", "#toggleIconPetroski", "#toggleIconGuedes", "#toggleIconDurnin", "#toggleIconFaulkner", "#toggleIconImc","#toggleIconCircunferencia", "#toggleIconDobras"];
+
+        icones.forEach((icone) => {
+            if (icone !== iconeAtivo) {
+                $(icone).removeClass('fa-chevron-up').addClass('fa-chevron-down'); // Fecha os outros
+            }
+        });
+    }
+    
+
+
     // Quando clicar em "IMC", fecha o formulário de Dobras
     $("#toggleFormImc").click(function () {
         $("#formImc").toggle();
-        $('#toggleIconImc').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
+
         $("#formCircunferencia").hide();
         $("#formDobras").hide(); // Esconde o formulário de Dobras
         $("#formPollock3").hide();
@@ -578,7 +571,14 @@ $(document).ready(function () {
     // Quando clicar em "Circunferência", fecha o formulário de Dobras
     $("#toggleFormCircunferencia").click(function () {
         $("#formCircunferencia").toggle();
-        $('#toggleIconCircunferencia').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formDobras").hide(); // Esconde o formulário de Dobras
         $("#formPollock3").hide();
@@ -592,7 +592,14 @@ $(document).ready(function () {
     // Quando clicar em "Dobras", abre o formulário de Dobras
     $("#toggleFormDobras").click(function () {
         $("#formDobras").toggle();
-        $('#toggleIconDobras').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -602,11 +609,19 @@ $(document).ready(function () {
         $("#formDurnin").hide();
         $("#formFaulkner").hide();
     });
-
+    
     // Formulários de Prega para cada tipo (Pollock3, Pollock7, etc.)
     $("#toggleFormPregaPollock3").click(function () {
         $("#formPollock3").toggle();
-        $('#toggleIconPollock3').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
+
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock7").hide();
@@ -618,7 +633,14 @@ $(document).ready(function () {
 
     $("#toggleFormPregaPollock7").click(function () {
         $("#formPollock7").toggle();
-        $('#toggleIconPollock7').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        } 
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -630,7 +652,14 @@ $(document).ready(function () {
 
     $("#toggleFormPregaPetroski").click(function () {
         $("#formPetroski").toggle();
-        $('#toggleIconPetroski').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -642,7 +671,14 @@ $(document).ready(function () {
 
     $("#toggleFormPregaGuedes").click(function () {
         $("#formGuedes").toggle();
-        $('#toggleIconGuedes').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -654,7 +690,14 @@ $(document).ready(function () {
 
     $("#toggleFormPregaDurnin").click(function () {
         $("#formDurnin").toggle();
-        $('#toggleIconDurnin').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -666,7 +709,14 @@ $(document).ready(function () {
 
     $("#toggleFormPregaFaulkner").click(function () {
         $("#formFaulkner").toggle();
-        $('#toggleIconFaulkner').toggleClass('fa-chevron-down fa-chevron-up');
+        let iconeAtual = $(this).find("i"); // Encontra o ícone dentro do botão clicado
+
+        if (iconeAtual.hasClass("fa-chevron-down")) {
+            atualizarSetas(`#${iconeAtual.attr("id")}`); // Fecha todos, menos o clicado
+            iconeAtual.removeClass("fa-chevron-down").addClass("fa-chevron-up"); // Abre o clicado
+        } else {
+            iconeAtual.removeClass("fa-chevron-up").addClass("fa-chevron-down"); // Fecha o clicado
+        }
         $("#formImc").hide();
         $("#formCircunferencia").hide();
         $("#formPollock3").hide();
@@ -676,55 +726,45 @@ $(document).ready(function () {
         $("#formDurnin").hide();
     });
 
+    function toggleDisplay(activeElement) {
+    const elements = [
+        "#DisplayPollock3", "#DisplayPollock7", "#DisplayPetroski", 
+        "#DisplayGuedes", "#DisplayDurnin", "#DisplayFaulkner"
+    ];
+
+    // Esconde todos os elementos
+    elements.forEach(function(element) {
+        $(element).hide();
+    });
+
+    // Mostra o elemento ativo
+    $(activeElement).show();
+    }
+
     $("#pollock3").click(function () {
-        $("#DisplayPollock3").show();
-        $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").hide();
+        toggleDisplay("#DisplayPollock3");
     });
+
     $("#pollock7").click(function () {
-        $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").show();
-        $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").hide();
+        toggleDisplay("#DisplayPollock7");
     });
+
     $("#petroski").click(function () {
-        $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").show();
-        $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").hide();
+        toggleDisplay("#DisplayPetroski");
     });
+
     $("#guedes").click(function () {
-        $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").show();
-        $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").hide();
+        toggleDisplay("#DisplayGuedes");
     });
+
     $("#durnin").click(function () {
-        $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").show();
-        $("#DisplayFaulkner").hide();
+        toggleDisplay("#DisplayDurnin");
     });
+
     $("#faulkner").click(function () {
-        $("#DisplayPollock3").hide();
-        $("#DisplayPollock7").hide();
-        $("#DisplayPetroski").hide();
-        $("#DisplayGuedes").hide();
-        $("#DisplayDurnin").hide();
-        $("#DisplayFaulkner").show();
+        toggleDisplay("#DisplayFaulkner");
     });
-    
+        
     $('.menu-item').first().addClass('active').css('border-bottom', '2px solid #4d00ab');
    
     

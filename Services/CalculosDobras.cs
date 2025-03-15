@@ -121,18 +121,18 @@ namespace ProjetoNutri.Services
             return (percentualGordura, somaPregas, densidadeCorporal);
         }
 
-        public double? CalculoGuedes(Pregas prega)
+        public (double? PercentualGordura, double? SomaPrega, double? DensidadeCorporal) CalculoGuedes(Pregas prega)
         {
             // Verifica se o sexo está definido
             if (prega?.Projeto?.Paciente?.Sexo == null)
             {
-                return null; // Retorna null se o sexo não estiver definido
+                return (null, null, null); // Retorna null se o sexo não estiver definido
             }
 
             // Verifica se todas as pregas necessárias estão presentes
             if (prega.Subescapular == null || prega.SupraIliaca == null || prega.Coxa == null)
             {
-                return null;
+                return (null, null, null);
             }
 
             // Soma das pregas
@@ -159,21 +159,21 @@ namespace ProjetoNutri.Services
             // Adicionando logs de depuração
             
 
-            return percentualGordura;
+            return (percentualGordura, somaPregas, densidadeCorporal);
         }
 
-        public double? CalculoDurnin(Pregas prega)
+        public (double? PercentualGordura, double? SomaPrega, double? DensidadeCorporal) CalculoDurnin(Pregas prega)
         {
             // Verifica se o sexo está definido
             if (prega?.Projeto?.Paciente?.Sexo == null)
             {
-                return null; // Retorna null se o sexo não estiver definido
+                return (null, null, null); // Retorna null se o sexo não estiver definido
             }
 
             // Verifica se todas as pregas necessárias estão presentes
             if (prega.Tricipital == null || prega.Bicipital == null || prega.Subescapular == null || prega.SupraIliaca == null)
             {
-                return null;
+                return (null, null, null);
             }
 
             // Soma das pregas
@@ -199,21 +199,21 @@ namespace ProjetoNutri.Services
 
           
 
-            return percentualGordura;
+            return (percentualGordura, somaPregas, densidadeCorporal);
         }
 
-        public double? CalculoFaulkner(Pregas prega)
+        public (double? PercentualGordura, double? SomaPrega, double? DensidadeCorporal) CalculoFaulkner(Pregas prega)
         {
             // Verifica se o sexo está definido
             if (prega?.Projeto?.Paciente?.Sexo == null)
             {
-                return null; // Retorna null se o sexo não estiver definido
+                return (null, null, null); // Retorna null se o sexo não estiver definido
             }
 
             // Verifica se todas as pregas necessárias estão presentes
             if (prega.Tricipital == null || prega.Subescapular == null || prega.SupraIliaca == null || prega.Abdominal == null)
             {
-                return null;
+                return (null, null, null);
             }
 
             // Soma das pregas
@@ -239,7 +239,7 @@ namespace ProjetoNutri.Services
             percentualGordura = Math.Round(percentualGordura * 100, 2);  // Multiplica por 100 para obter o percentual
 
 
-            return percentualGordura;
+            return (percentualGordura, somaPregas, densidadeCorporal);
         }
 
         public (double PesoGordura, double PesoMassaMagra) CalcularPesoGorduraEMassaMagra(double pesoTotal, double percentualGordura)

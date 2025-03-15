@@ -8,7 +8,7 @@ namespace ProjetoNutri.Services
 {
     public class CalculoImc
     {
-        public (double imc, string classificacao, double pesoIdeal) CalcularImc(double peso, double altura, string sexo)
+        public (double? imc, string classificacao, double? pesoIdeal) CalcularImc(double peso, double altura, string sexo)
         {
             // Calcula o IMC
             double imc = peso / Math.Pow(altura, 2);
@@ -74,7 +74,7 @@ namespace ProjetoNutri.Services
             return Math.Round(imcDesejado * Math.Pow(altura, 2), 2);
         }
             // Método para calcular a CMB, % do padrão e classificação
-        public (double cmb, double porcentagemPadrao, string classificacao) CalcularCMBCompleto(double circunferenciaBraco, double pregaTricipitalMm, string sexo)
+        public (double? cmb, double? porcentagemPadrao, string classificacao) CalcularCMBCompleto(double circunferenciaBraco, double pregaTricipitalMm, string sexo)
         {
             // Converte a PCT de mm para cm
             double pregaTricipitalCm = pregaTricipitalMm / 10;

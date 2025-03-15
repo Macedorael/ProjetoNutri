@@ -20,8 +20,6 @@
         @foreach (var circunferencia in Model)
         {
             <tr>
-                <td>@circunferencia.Rcq</td>
-                <td>@circunferencia.Classificacao</td>
                 <td> 
                     <a asp-action="DetalheCircunferencia" asp-route-id="@circunferencia.Id" class="btn btn-secondary">Detalhe</a>
                 </td>
