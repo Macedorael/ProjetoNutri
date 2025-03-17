@@ -124,19 +124,6 @@ namespace ProjetoNutri.Controllers
 
             return View(imc);
         }
-
-        public IActionResult DetalheImc(int id)
-        {
-            var imc = _context.Imcs.Include(i => i.Projeto).ThenInclude(p => p.Paciente).FirstOrDefault(i => i.Id == id);
-
-            if (imc == null)
-            {
-                return NotFound();
-            }
-
-            return View(imc);
-        }
-
         public IActionResult DeletarImc(int id)
         {
             var imc = _context.Imcs
@@ -165,7 +152,7 @@ namespace ProjetoNutri.Controllers
             _context.Imcs.Remove(imcs);
             _context.SaveChanges();
 
-            return RedirectToAction("IndexImc", new { projetoId = imcs.IdProjeto });
+            return RedirectToAction("AntrapometriaProjeto","Projeto", new { projetoId = imcs.IdProjeto });
         }
 
     }

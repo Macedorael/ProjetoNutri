@@ -16,7 +16,24 @@
 </div>
 
 <div>
-    <a asp-action="EditarImc" asp-route-id="@Model.Id" class="btn btn-secondary">✏️ Editar</a>
-    <a asp-action="DeletarImc" asp-route-id="@Model.Id" class="btn btn-secondary">🗑️ Excluir</a>
-    <a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">⬅️ Voltar</a>
+    <a asp-action="EditarImc" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
+    <form asp-action="DeletarImc" method="post" style="display:inline;">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <button type="submit" class="btn btn-secondary delete-button">Deletar</button>
+</form>
+    <a asp-action="AntropometriaProjeto" asp-controller="Projeto" asp-route-projetoId="@Model.IdProjeto" class="btn btn-secondary">Voltar</a>
 </div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                var confirmed = confirm('Você tem certeza que deseja deletar este IMC?');
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
