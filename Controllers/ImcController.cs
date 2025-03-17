@@ -165,7 +165,7 @@ namespace ProjetoNutri.Controllers
             _context.Imcs.Remove(imcs);
             _context.SaveChanges();
 
-            return RedirectToAction("AnthropometriaProjeto","Projeto", new { projetoId = imcs.IdProjeto });
+            return RedirectToAction("AntropometriaProjeto","Projeto", new { projetoId = imcs.IdProjeto });
         }
 
     }
