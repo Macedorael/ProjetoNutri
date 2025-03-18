@@ -21,6 +21,5 @@ namespace ProjetoNutri.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data de Criação")]
         public DateTime DataCriacao { get; set; } = DateTime.Now;
-
     }
 }
