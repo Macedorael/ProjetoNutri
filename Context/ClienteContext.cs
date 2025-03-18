@@ -68,6 +68,12 @@ namespace ProjetoNutri.Context
                 .HasForeignKey(ra => ra.IdRefeicao) // Chave estrangeira
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Refeicao_Alimento>()
+                .HasOne(ra => ra.Alimento) // Relacionamento de uma Refeicao_Alimento com um Alimento
+                .WithMany(a => a.Refeicao_Alimentos) // Um Alimento pode ter muitos Refeicao_Alimentos
+                .HasForeignKey(ra => ra.IdAlimento) // Chave estrangeira
+                .OnDelete(DeleteBehavior.Cascade);
+
             }
         }
     }

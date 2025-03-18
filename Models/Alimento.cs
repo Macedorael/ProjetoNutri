@@ -38,5 +38,6 @@ namespace ProjetoNutri.Models
     public double Piridoxina { get; set; }
     public double Niacina { get; set; }
     public double Vitamina_C { get; set; }
+    public ICollection<Refeicao_Alimento> Refeicao_Alimentos { get; set; }
     }
 }
