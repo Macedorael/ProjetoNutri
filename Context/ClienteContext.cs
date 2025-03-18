@@ -21,6 +21,12 @@ namespace ProjetoNutri.Context
         public DbSet<Imc> Imcs { get; set; }
         public DbSet<Circunferencia> Circunferencias { get; set; }
         public DbSet<Pregas> Pregas { get; set; }
+        public DbSet<Alimento> Alimentos { get; set; }
+        public DbSet<Categoria_Alimento> Categorias { get; set; }
+        public DbSet<Refeicao> Refeicoes { get; set; }
+        public DbSet<Categoria_Refeicao> Categorias_Refeicoes { get; set; }
+        public DbSet<Refeicao_Alimento> Refeicoes_Alimentos { get; set; }
+
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Projeto>()
@@ -47,6 +53,21 @@ namespace ProjetoNutri.Context
                 .HasForeignKey(c => c.IdProjeto) // Chave estrangeira
                 .OnDelete(DeleteBehavior.Cascade);
 
-        }
+            modelBuilder.Entity<Alimento>()
+                .HasOne(a => a.Categoria) // Relacionamento de um Alimento com uma Categoria
+                .WithMany(c => c.Alimentos) // Uma Categoria pode ter muitos Alimentos
+                .HasForeignKey(a => a.IdCategoria_Alimento) // Chave estrangeira
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Refeicao_Alimento>()
+                .HasKey(ra => new { ra.IdRefeicao, ra.IdAlimento }); // Definindo chave composta
+
+            modelBuilder.Entity<Refeicao_Alimento>()
+                .HasOne(ra => ra.Refeicao) // Relacionamento de uma Refeicao_Alimento com uma Refeicao
+                .WithMany(r => r.Refeicao_Alimentos) // Uma Refeicao pode ter muitos Refeicao_Alimentos
+                .HasForeignKey(ra => ra.IdRefeicao) // Chave estrangeira
+                .OnDelete(DeleteBehavior.Cascade);
+
+            }
         }
     }
