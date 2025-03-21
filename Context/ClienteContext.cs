@@ -22,9 +22,9 @@ namespace ProjetoNutri.Context
         public DbSet<Circunferencia> Circunferencias { get; set; }
         public DbSet<Pregas> Pregas { get; set; }
         public DbSet<Alimento> Alimentos { get; set; }
-        public DbSet<Categoria_Alimento> Categorias { get; set; }
+        public DbSet<Categoria_Alimento> Categorias_Alimentos { get; set; }
         public DbSet<Refeicao> Refeicoes { get; set; }
-        public DbSet<Categoria_Refeicao> Categorias_Refeicoes { get; set; }
+       
         public DbSet<Refeicao_Alimento> Refeicoes_Alimentos { get; set; }
 
         override protected void OnModelCreating(ModelBuilder modelBuilder)

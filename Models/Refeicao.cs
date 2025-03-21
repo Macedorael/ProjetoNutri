@@ -11,15 +11,15 @@ namespace ProjetoNutri.Models
     {
         public int Id { get; set; }
 
-        [ForeignKey("Categoria_Refeicao")]
-        public int IdCategoria_Refeicao { get; set; }
-        public virtual Categoria_Refeicao Categoria_Refeicao { get; set; }
+       
         public string Nome { get; set; }
 
         [DataType(DataType.Date)]
         [Display(Name = "Data de Criação")]
         public DateTime DataCriacao { get; set; } = DateTime.Now;
-
+        [DataType(DataType.Date)]
+        [Display(Name = "Data de Edição")]
+        public DateTime DataEdicao { get; set; } = DateTime.Now;
         public virtual ICollection<Refeicao_Alimento> Refeicao_Alimentos { get; set; }
         
 

@@ -1,0 +1,48 @@
+@model IEnumerable<ProjetoNutri.Models.Refeicao>
+
+@{
+    ViewData["Title"] = "Listagem de Refeção";
+}
+
+<h2>Refeições</h2>
+
+<p>
+    <a asp-action="CriarRefeicao" class="btn btn-secondary">Novo Refeição</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var refeicao in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(model => refeicao.Nome)</td>
+                <td>
+                    <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id">Editar</a> |
+                    <form asp-action="DeletarRefeicao" method="post" style="display:inline;">
+                        <input type="hidden" name="id" value="@refeicao.Id" />
+                        <a type="submit" class=" delete-button">Deletar</a>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.delete-button').on('click', function(e) {
+                var confirmed = confirm('Você tem certeza que deseja deletar esta Refeição?');
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            });
+        });
+    </script>
+}
