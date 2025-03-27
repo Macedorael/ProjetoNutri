@@ -1,32 +1,60 @@
-@model IEnumerable<ProjetoNutri.Models.Refeicao>
-
-@{
-    ViewData["Title"] = "Listagem de Refeção";
-}
+@model ProjetoNutri.Models.ProjetoDietaViewModel
 
 <h2>Refeições</h2>
 
+<!-- Botão para abrir o formulário para nova refeição -->
 <p>
-    <a asp-action="CriarRefeicao" class="btn btn-secondary">Novo Refeição</a>
+    <button id="btnCriarRefeicao" class="btn btn-secondary">Nova Refeição</button>
 </p>
+
+<!-- Formulário oculto para criar nova refeição -->
+<div id="formCriarRefeicao" style="display:none;">
+    <h2>Criar Novo Refeição</h2>
+
+    <form asp-action="CriarRefeicao" method="post">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="Refeicao.Nome" class="control-label"></label>
+            <input asp-for="Refeicao.Nome" class="form-control" />
+            <span asp-validation-for="Refeicao.Nome" class="text-danger"></span>
+        </div>
+        <div class="form-group mt-3">
+            <button type="submit" class="btn btn-secondary">Criar</button>
+            <a asp-action="IndexRefeicao" class="btn btn-secondary">Voltar</a>
+        </div>
+    </form>
+</div>
 
 <table class="table">
     <thead>
         <tr>
-            <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Refeicaos[0].Nome)</th>
+            <th>Ações</th> <!-- Coluna para ações como editar, deletar, adicionar alimentos -->
         </tr>
     </thead>
     <tbody>
-        @foreach (var refeicao in Model)
+        @foreach (var refeicao in Model.Refeicaos)
         {
             <tr>
                 <td>@Html.DisplayFor(model => refeicao.Nome)</td>
                 <td>
+                    <!-- Botões de ação -->
                     <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id">Editar</a> |
                     <form asp-action="DeletarRefeicao" method="post" style="display:inline;">
                         <input type="hidden" name="id" value="@refeicao.Id" />
-                        <a type="submit" class=" delete-button">Deletar</a>
+                        <a type="submit" class="delete-button">Deletar</a>
                     </form>
+                </td>
+            </tr>
+
+            <!-- Linha para o botão de adicionar alimento -->
+            <tr>
+                <td colspan="2" class="text-center">
+                    <!-- Botão para adicionar alimento abaixo da refeição -->
+                   <a asp-action="CriarRefeicao_Alimento" asp-controller="Refeicao_Alimento" class="btn btn-primary" asp-route-refeicaoId="@refeicao.Id">
+                        Adicionar Alimento
+                    </a>
+
                 </td>
             </tr>
         }
@@ -37,11 +65,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
-            $('.delete-button').on('click', function(e) {
-                var confirmed = confirm('Você tem certeza que deseja deletar esta Refeição?');
-                if (!confirmed) {
-                    e.preventDefault();
-                }
+            // Alternar o formulário de criar refeição
+            $('#btnCriarRefeicao').on('click', function() {
+                $('#formCriarRefeicao').toggle(); // Alterna a visibilidade do formulário de criação
             });
         });
     </script>

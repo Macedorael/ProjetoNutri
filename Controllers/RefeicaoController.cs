@@ -19,8 +19,15 @@ namespace ProjetoNutri.Controllers
 
         public IActionResult IndexRefeicao()
         {
+
             var refeicoes = _context.Refeicoes.ToList();
-            return View(refeicoes);
+            var viewModel = new ProjetoDietaViewModel
+            {
+                Refeicaos = refeicoes
+            };
+
+    // Retorne o ViewModel para a view
+            return View(viewModel);
         }  
 
         public IActionResult CriarRefeicao()
@@ -30,6 +37,7 @@ namespace ProjetoNutri.Controllers
         [HttpPost]
         public IActionResult CriarRefeicao(Refeicao refeicao)
         {
+            
             _context.Refeicoes.Add(refeicao);
             _context.SaveChanges();
             return RedirectToAction("IndexRefeicao");

@@ -1,0 +1,121 @@
+@model ProjetoNutri.Models.ProjetoDietaViewModel
+
+@{
+    ViewData["Title"] = "Adicionar Refeição e Alimento";
+    var alimentoSelecionado = ViewBag.AlimentoSelecionado as Alimento; // Faz um cast seguro
+
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<!-- Formulário de seleção (GET) -->
+<form method="get" class="mb-4 p-3 border rounded">
+    <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" /> <!-- Mantém o ID da refeição -->
+
+    <div class="form-group">
+        <label>Selecione um alimento para ver as informações:</label>
+        <select name="AlimentoId" class="form-control" onchange="this.form.submit()">
+            <option value="">-- Selecione --</option>
+            @foreach (var item in ViewBag.Alimentos)
+            {
+                <option value="@item.Value" 
+                        selected="@(item.Value == ViewBag.AlimentoSelecionado?.Id.ToString())">
+                    @item.Text
+                </option>
+            }
+        </select>
+    </div>
+</form>
+
+<!-- Formulário principal (POST) -->
+<form asp-action="Create" method="post" class="p-3 border rounded">
+    <div class="row align-items-end">
+        <!-- Refeição -->
+        <div class="col-md-3 form-group">
+            <label>Refeição</label>
+            <input type="text" 
+                   class="form-control" 
+                   value="@ViewBag.RefeicaoSelecionada?.Nome" 
+                   readonly />
+            <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoSelecionada?.Id" />
+        </div>
+
+        <!-- Alimento -->
+        <div class="col-md-3 form-group">
+            <label>Alimento</label>
+            <select name="AlimentoId" class="form-control" required>
+                @if (alimentoSelecionado != null)
+                {
+                    <option value="@alimentoSelecionado.Id" selected>@alimentoSelecionado.Nome</option>
+                }
+                else
+                {
+                    <option value="">-- Selecione primeiro acima --</option>
+                }
+            </select>
+        </div>
+
+        <!-- Quantidade -->
+        <div class="col-md-2 form-group">
+            <label>Quantidade (g/ml)</label>
+            <input type="number" id="quantidade" name="Quantidade" class="form-control" required min="1" />
+        </div>
+
+        <!-- Gramas -->
+        <div class="col-md-2 form-group">
+            <label>Gramas</label>
+            <input type="text" name="gramas" id="gramas" class="form-control" disabled />
+        </div>
+
+        <!-- Proteína (g) -->
+        <div class="col-md-2 form-group">
+            <label>Proteína (g)</label>
+            <input type="text" id="proteina" class="form-control" value="@(alimentoSelecionado?.Proteina ?? 0)" disabled />
+        </div>
+
+        <!-- Energia (kcal) -->
+        <div class="col-md-2 form-group">
+            <label>Energia (kcal)</label>
+            <input type="text" id="energiaKcal" class="form-control" value="@(alimentoSelecionado?.Energia_Kcal ?? 0)" disabled />
+        </div>
+
+        <!-- Energia (kj) -->
+        <div class="col-md-2 form-group">
+            <label>Energia (kj)</label>
+            <input type="text" id="energiaKj" class="form-control" value="@(alimentoSelecionado?.Energia_KJ ?? 0)" disabled />
+        </div>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Adicionar</button>
+        <a href="@Url.Action("Index")" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        let proteinaPorGrama = parseFloat("@alimentoSelecionado.Proteina") || 0; // Obtém o valor de proteína por 100g
+        let energiaKcalPor100g = parseFloat("@alimentoSelecionado.Energia_Kcal") || 0; // Obtém o valor de energia por 100g
+        let energiaKjPor100g = parseFloat("@alimentoSelecionado.Energia_KJ") || 0; // Obtém o valor de energia (kj) por 100g
+        console.log(proteinaPorGrama);
+        // Quando a quantidade mudar
+        $("#quantidade").on("input", function () {
+            let quantidade = parseFloat($(this).val()) || 0; // Obtém a quantidade digitada
+            
+
+            // Calcular a quantidade total de proteína (em gramas)
+            let proteinaTotal = (quantidade * proteinaPorGrama) / 100;
+            $("#proteina").val(proteinaTotal.toFixed(2)); // Atualiza o campo de proteína
+
+            // Calcular a quantidade total de energia (kcal) e (kj)
+            let energiaTotalKcal = (quantidade * energiaKcalPor100g) / 100;
+            $("#energiaKcal").val(energiaTotalKcal); // Atualiza o campo de energia kcal
+
+            let energiaTotalKj = (quantidade * energiaKjPor100g) / 100;
+            $("#energiaKj").val(energiaTotalKj); // Atualiza o campo de energia kj
+
+            let gramas = quantidade/1000;
+            $("#gramas").val(gramas.toFixed(3));
+        });
+    });
+</script>
