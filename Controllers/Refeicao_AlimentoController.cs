@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +35,14 @@ namespace ProjetoNutri.Controllers
                 Text = r.Nome
             }).ToList();
 
-            ViewBag.Alimentos = alimentos.Select(a => new SelectListItem
-            {
-                Value = a.Id.ToString(),
-                Text = a.Nome
-            }).ToList();
+            ViewBag.Alimentos = _context.Alimentos?
+    .Select(a => new SelectListItem
+    {
+        Value = a.Id.ToString(),
+        Text = a.Nome
+    }).ToList() ?? new List<SelectListItem>(); // Garante que não será null
+
+
 
             if (RefeicaoId.HasValue)
             {
@@ -54,15 +58,14 @@ namespace ProjetoNutri.Controllers
                 var alimento = _context.Alimentos.Find(AlimentoId.Value);
                 if (alimento != null)
                 {
-                    ViewBag.AlimentoSelecionado = new {
-                        Id = alimento.Id,
-                        Nome = alimento.Nome,
-                        Proteina = alimento.Proteina,
-                        Energia_Kcal = alimento.Energia_Kcal,
-                        Energia_Kj = alimento.Energia_KJ
-                    };
+                    ViewBag.AlimentoSelecionado = alimento; // Agora é um objeto Alimento real
                 }
             }
+            else
+            {
+                ViewBag.AlimentoSelecionado = null; // Garante que a View sabe que não há alimento selecionado
+            }
+
 
             // Retorna a View
             return View();

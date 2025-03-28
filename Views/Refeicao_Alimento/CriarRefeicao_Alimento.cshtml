@@ -2,7 +2,7 @@
 
 @{
     ViewData["Title"] = "Adicionar Refeição e Alimento";
-    var alimentoSelecionado = ViewBag.AlimentoSelecionado as Alimento; // Faz um cast seguro
+    var alimentoSelecionado = ViewBag.AlimentoSelecionado as ProjetoNutri.Models.Alimento ?? new ProjetoNutri.Models.Alimento();
 
 }
 
