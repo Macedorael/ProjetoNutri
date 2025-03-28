@@ -77,9 +77,11 @@ namespace ProjetoNutri.Controllers
         [HttpPost]  
         public IActionResult CriarRefeicao_Alimento(Refeicao_Alimento refeicao_Alimento)
         {
+            Console.WriteLine("RefeicaoId: " + refeicao_Alimento.IdRefeicao);
+            Console.WriteLine("AlimentoId: " + refeicao_Alimento.IdAlimento);
             _context.Refeicoes_Alimentos.Add(refeicao_Alimento);
             _context.SaveChanges();
-            return RedirectToAction("IndexRefeicao", "Refeicao");
+            return RedirectToAction("IndexRefeicao", "Refeicao"); // Redireciona para a ação IndexRefeicao no controlador Refeicao
         }
 
     }

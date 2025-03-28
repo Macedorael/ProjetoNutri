@@ -28,7 +28,7 @@
 </form>
 
 <!-- Formulário principal (POST) -->
-<form asp-action="Create" method="post" class="p-3 border rounded">
+<form asp-action="CriarRefeicao_Alimento" method="post" class="p-3 border rounded">
     <div class="row align-items-end">
         <!-- Refeição -->
         <div class="col-md-3 form-group">
@@ -37,13 +37,13 @@
                    class="form-control" 
                    value="@ViewBag.RefeicaoSelecionada?.Nome" 
                    readonly />
-            <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoSelecionada?.Id" />
+            <input type="hidden" name="IdRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
         </div>
 
         <!-- Alimento -->
         <div class="col-md-3 form-group">
             <label>Alimento</label>
-            <select name="AlimentoId" class="form-control" required>
+            <select name="IdAlimento" class="form-control" required>
                 @if (alimentoSelecionado != null)
                 {
                     <option value="@alimentoSelecionado.Id" selected>@alimentoSelecionado.Nome</option>
@@ -105,7 +105,7 @@
 
             // Calcular a quantidade total de proteína (em gramas)
             let proteinaTotal = (quantidade * proteinaPorGrama) / 100;
-            $("#proteina").val(proteinaTotal.toFixed(2)); // Atualiza o campo de proteína
+            $("#proteina").val(proteinaTotal); // Atualiza o campo de proteína
 
             // Calcular a quantidade total de energia (kcal) e (kj)
             let energiaTotalKcal = (quantidade * energiaKcalPor100g) / 100;

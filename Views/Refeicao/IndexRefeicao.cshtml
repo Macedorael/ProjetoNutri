@@ -1,74 +1,124 @@
 @model ProjetoNutri.Models.ProjetoDietaViewModel
 
-<h2>Refeições</h2>
+<h2 class="mb-4 text-primary text-center">🍽️ Minhas Refeições</h2>
 
-<!-- Botão para abrir o formulário para nova refeição -->
-<p>
-    <button id="btnCriarRefeicao" class="btn btn-secondary">Nova Refeição</button>
+<!-- Botão para criar uma nova refeição -->
+<p class="text-center">
+    <button id="btnCriarRefeicao" class="btn btn-secondary">+ Nova Refeição</button>
 </p>
 
 <!-- Formulário oculto para criar nova refeição -->
-<div id="formCriarRefeicao" style="display:none;">
-    <h2>Criar Novo Refeição</h2>
-
+<div id="formCriarRefeicao" class="card p-3 shadow-sm mb-4" style="display:none;">
+    <h4 class="text-secondary">Criar Nova Refeição</h4>
     <form asp-action="CriarRefeicao" method="post">
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="Refeicao.Nome" class="control-label"></label>
-            <input asp-for="Refeicao.Nome" class="form-control" />
+            <label asp-for="Refeicao.Nome" class="control-label fw-bold"></label>
+            <input asp-for="Refeicao.Nome" class="form-control" placeholder="Nome da Refeição"/>
             <span asp-validation-for="Refeicao.Nome" class="text-danger"></span>
         </div>
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-secondary">Criar</button>
-            <a asp-action="IndexRefeicao" class="btn btn-secondary">Voltar</a>
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary">Criar</button>
+            <a asp-action="IndexRefeicao" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Refeicaos[0].Nome)</th>
-            <th>Ações</th> <!-- Coluna para ações como editar, deletar, adicionar alimentos -->
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var refeicao in Model.Refeicaos)
-        {
-            <tr>
-                <td>@Html.DisplayFor(model => refeicao.Nome)</td>
-                <td>
-                    <!-- Botões de ação -->
-                    <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id">Editar</a> |
-                    <form asp-action="DeletarRefeicao" method="post" style="display:inline;">
-                        <input type="hidden" name="id" value="@refeicao.Id" />
-                        <a type="submit" class="delete-button">Deletar</a>
-                    </form>
-                </td>
-            </tr>
+<!-- Lista de Refeições (Sortable) -->
+<div id="sortableRefeicoes" class="list-group">
+    @foreach (var refeicao in Model.Refeicaos)
+    {
+        <div class="list-group-item refeicao-item shadow-sm p-3 mb-3 bg-white rounded"
+             data-id="@refeicao.Id">
+             
+            <div class="d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">@refeicao.Nome</h4>
+                <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id" class="btn btn-outline-dark">✏️ Editar</a>
+            </div>
 
-            <!-- Linha para o botão de adicionar alimento -->
-            <tr>
-                <td colspan="2" class="text-center">
-                    <!-- Botão para adicionar alimento abaixo da refeição -->
-                   <a asp-action="CriarRefeicao_Alimento" asp-controller="Refeicao_Alimento" class="btn btn-primary" asp-route-refeicaoId="@refeicao.Id">
-                        Adicionar Alimento
-                    </a>
+            <!-- Alimentos dentro da refeição -->
+            @if (refeicao.Refeicao_Alimentos != null && refeicao.Refeicao_Alimentos.Any())
+            {
+                <table class="table table-bordered mt-3">
+                    <thead class="table-light text-center">
+                        <tr>
+                            <th>🍏 Alimento</th>
+                            <th>📏 Quantidade (g)</th>
+                            <th>💪 Proteína (g)</th>
+                            <th>🔥 Energia (KJ)</th>
+                            <th>🔥 Energia (Kcal)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var refeicaoAlimento in refeicao.Refeicao_Alimentos)
+                        {
+                            <tr class="text-center">
+                                <td><strong>@refeicaoAlimento.Alimento.Nome</strong></td>
+                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("0.000"))</td>
+                                <td>@refeicaoAlimento.Alimento.Proteina</td>
+                                <td>@refeicaoAlimento.Alimento.Energia_KJ</td>
+                                <td>@refeicaoAlimento.Alimento.Energia_Kcal</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p class="text-center text-muted">Nenhum alimento adicionado.</p>
+            }
 
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+            <!-- Botão para adicionar alimento -->
+            <div class="text-center mt-3">
+                <a asp-action="CriarRefeicao_Alimento" asp-controller="Refeicao_Alimento"
+                   class="btn btn-outline-dark" asp-route-refeicaoId="@refeicao.Id">
+                    ➕ Adicionar Alimento
+                </a>
+            </div>
+        </div>
+    }
+</div>
 
 @section Scripts {
+    <!-- jQuery e jQuery UI para Sortable -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Alternar o formulário de criar refeição
-            $('#btnCriarRefeicao').on('click', function() {
-                $('#formCriarRefeicao').toggle(); // Alterna a visibilidade do formulário de criação
+            $('#btnCriarRefeicao').on('click', function () {
+                $('#formCriarRefeicao').toggle();
             });
+
+            // Recuperar ordem salva no localStorage
+            function carregarOrdem() {
+                let ordemSalva = localStorage.getItem("ordemRefeicoes");
+                if (ordemSalva) {
+                    let ordem = JSON.parse(ordemSalva);
+                    let container = $("#sortableRefeicoes");
+
+                    ordem.forEach(function (id) {
+                        let item = container.find(`.refeicao-item[data-id='${id}']`);
+                        container.append(item); // Reordena os itens na tela
+                    });
+                }
+            }
+
+            // Ativar arrastar e soltar
+            $("#sortableRefeicoes").sortable({
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    let ordemAtual = [];
+                    $(".refeicao-item").each(function () {
+                        ordemAtual.push($(this).attr("data-id"));
+                    });
+                    localStorage.setItem("ordemRefeicoes", JSON.stringify(ordemAtual)); // Salva no localStorage
+                }
+            }).disableSelection();
+
+            // Carregar a ordem salva ao iniciar
+            carregarOrdem();
         });
     </script>
 }
