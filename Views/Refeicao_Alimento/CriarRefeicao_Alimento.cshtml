@@ -1,19 +1,19 @@
 @model ProjetoNutri.Models.ProjetoDietaViewModel
 
 @{
-    ViewData["Title"] = "Adicionar Refeição e Alimento";
+    
     var alimentoSelecionado = ViewBag.AlimentoSelecionado as ProjetoNutri.Models.Alimento ?? new ProjetoNutri.Models.Alimento();
 
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>Adicionar Alimento a Refeição @ViewBag.RefeicaoSelecionada?.Nome</h1>
 
 <!-- Formulário de seleção (GET) -->
 <form method="get" class="mb-4 p-3 border rounded">
     <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" /> <!-- Mantém o ID da refeição -->
 
     <div class="form-group">
-        <label>Selecione um alimento para ver as informações:</label>
+        <label>Selecione um alimento:</label>
         <select name="AlimentoId" class="form-control" onchange="this.form.submit()">
             <option value="">-- Selecione --</option>
             @foreach (var item in ViewBag.Alimentos)
@@ -87,16 +87,17 @@
     </div>
 
     <div class="mt-3">
-        <button type="submit" class="btn btn-primary">Adicionar</button>
+        <button type="submit" class="btn btn-secondary">Adicionar</button>
         <a href="@Url.Action("IndexRefeicao","Refeicao")" class="btn btn-secondary">Cancelar</a>
     </div>
 </form>
 
 @if (ViewBag.AlimentosDaRefeicao != null && ViewBag.AlimentosDaRefeicao.Count > 0)
 {
-   @if (ViewBag.TotalProteina != null)
-{
-    <div class="card p-3 mb-4 shadow-sm">
+  
+    <h3>Alimentos da Refeição</h3>
+        <table class="table table-bordered mt-3">
+        <div class="card p-3 mb-4 shadow-sm">
                     
                     <div class="row text-center">
                         <div class="col-md-4">
@@ -110,10 +111,6 @@
                         </div>
                     </div>
                 </div>
-
-}
-    <h3>Alimentos da Refeição</h3>
-        <table class="table table-bordered mt-3">
                     <thead class="table-light text-center">
                         <tr>
                             <th>🍏 Alimento</th>
@@ -128,7 +125,7 @@
             {
                 <tr class="text-center">
                     <td>@item.Alimento.Nome</td>
-                    <td>@item.Quantidade</td>
+                    <td>@((item.Quantidade /1000).ToString("F3"))</td>
                     <td>@((item.Alimento.Proteina * item.Quantidade) / 100)</td>
                     <td>@((item.Alimento.Energia_Kcal * item.Quantidade) / 100)</td>
                     <td>@((item.Alimento.Energia_KJ * item.Quantidade) / 100)</td>
