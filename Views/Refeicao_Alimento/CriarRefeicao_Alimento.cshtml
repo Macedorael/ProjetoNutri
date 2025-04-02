@@ -6,11 +6,11 @@
 
 }
 
-<h1>Adicionar Alimento a Refeição @ViewBag.RefeicaoSelecionada?.Nome</h1>
+<h1>@ViewBag.RefeicaoSelecionada?.Nome</h1>
 
-<!-- Formulário de seleção (GET) -->
+
 <form method="get" class="mb-4 p-3 border rounded">
-    <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" /> <!-- Mantém o ID da refeição -->
+    <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" /> 
 
     <div class="form-group">
         <label>Selecione um alimento:</label>
@@ -27,10 +27,10 @@
     </div>
 </form>
 
-<!-- Formulário principal (POST) -->
+
 <form asp-action="CriarRefeicao_Alimento" method="post" class="p-3 border rounded">
     <div class="row align-items-end">
-        <!-- Refeição -->
+       
         <div class="col-md-3 form-group">
             <label>Refeição</label>
             <input type="text" 
@@ -40,7 +40,7 @@
             <input type="hidden" name="IdRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
         </div>
 
-        <!-- Alimento -->
+        
         <div class="col-md-3 form-group">
             <label>Alimento</label>
             <select name="IdAlimento" class="form-control" required>
@@ -55,31 +55,31 @@
             </select>
         </div>
 
-        <!-- Quantidade -->
+        
         <div class="col-md-2 form-group">
             <label>Quantidade (g/ml)</label>
             <input type="number" id="quantidade" name="Quantidade" class="form-control" required min="1" />
         </div>
 
-        <!-- Gramas -->
+        
         <div class="col-md-2 form-group">
             <label>Gramas</label>
             <input type="text" name="gramas" id="gramas" class="form-control" disabled />
         </div>
 
-        <!-- Proteína (g) -->
+        
         <div class="col-md-2 form-group">
             <label>Proteína (g)</label>
             <input type="text" id="proteina" class="form-control" value="@(alimentoSelecionado?.Proteina ?? 0)" disabled />
         </div>
 
-        <!-- Energia (kcal) -->
+        
         <div class="col-md-2 form-group">
             <label>Energia (kcal)</label>
             <input type="text" id="energiaKcal" class="form-control" value="@(alimentoSelecionado?.Energia_Kcal ?? 0)" disabled />
         </div>
 
-        <!-- Energia (kj) -->
+        
         <div class="col-md-2 form-group">
             <label>Energia (kj)</label>
             <input type="text" id="energiaKj" class="form-control" value="@(alimentoSelecionado?.Energia_KJ ?? 0)" disabled />
