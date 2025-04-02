@@ -22,6 +22,5 @@ namespace ProjetoNutri.Models
         public DateTime DataEdicao { get; set; } = DateTime.Now;
         public virtual ICollection<Refeicao_Alimento> Refeicao_Alimentos { get; set; }
         
-
     }
 }

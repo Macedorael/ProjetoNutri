@@ -18,17 +18,34 @@ namespace ProjetoNutri.Controllers
             _context = context;
         }
 
-        public IActionResult IndexRefeicao()
+       public IActionResult IndexRefeicao()
         {
             var refeicoes = _context.Refeicoes
-                .Include(r => r.Refeicao_Alimentos) // Inclui os alimentos da refeição
+                .Include(r => r.Refeicao_Alimentos)
                 .ThenInclude(ra => ra.Alimento)
-                .OrderByDescending(r => r.DataCriacao)  // Se houver uma relação com Alimento, inclui também
+                .OrderByDescending(r => r.DataCriacao)
                 .ToList();
+
+            // Criando um dicionário para armazenar a soma das proteínas por refeição
+            var totalProteinaPorRefeicao = refeicoes.ToDictionary(
+                refeicao => refeicao.Id,
+                refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Proteina) ?? 0
+            );
+            var totalKcalPorRefeicao = refeicoes.ToDictionary(
+                refeicao => refeicao.Id,
+                refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Energia_Kcal) ?? 0
+            );
+            var totalKjPorRefeicao = refeicoes.ToDictionary(
+                refeicao => refeicao.Id,
+                refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Energia_KJ) ?? 0
+            );
 
             var viewModel = new ProjetoDietaViewModel
             {
-                Refeicaos = refeicoes
+                Refeicaos = refeicoes,
+                TotalProteinaPorRefeicao = totalProteinaPorRefeicao,
+                TotalKcalPorRefeicao = totalKcalPorRefeicao,
+                TotalKjPorRefeicao = totalKjPorRefeicao
             };
 
             return View(viewModel);
@@ -86,19 +103,19 @@ namespace ProjetoNutri.Controllers
         }
 
         [HttpPost]
-    public IActionResult Deletar_Refeicao(int id)
-    {
-        var refeicao = _context.Refeicoes.Find(id);
-        if (refeicao == null)
+        public IActionResult Deletar_Refeicao(int id)
         {
-            return NotFound();
-        }
+            var refeicao = _context.Refeicoes.Find(id);
+            if (refeicao == null)
+            {
+                return NotFound();
+            }
 
-        _context.Refeicoes.Remove(refeicao);
-        _context.SaveChanges();
-        
-        return RedirectToAction("IndexRefeicao");
-    }
+            _context.Refeicoes.Remove(refeicao);
+            _context.SaveChanges();
+            
+            return RedirectToAction("IndexRefeicao");
+        }
 
     }
 }

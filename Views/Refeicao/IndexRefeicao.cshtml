@@ -32,13 +32,27 @@
              data-id="@refeicao.Id">
              
             <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-0">@refeicao.Nome</h4>
+                <h4 class="mb-3 text-center fw-bold">@refeicao.Nome</h4>
                 <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id" class="btn btn-outline-dark">✏️ Editar</a>
             </div>
 
             <!-- Alimentos dentro da refeição -->
             @if (refeicao.Refeicao_Alimentos != null && refeicao.Refeicao_Alimentos.Any())
             {
+                <div class="card p-3 mb-4 shadow-sm">
+                    
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <p><strong>💪 Proteína Total:</strong> @Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id] kcal</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjPorRefeicao[refeicao.Id] kJ</p>
+                        </div>
+                    </div>
+                </div>
                 <table class="table table-bordered mt-3">
                     <thead class="table-light text-center">
                         <tr>
