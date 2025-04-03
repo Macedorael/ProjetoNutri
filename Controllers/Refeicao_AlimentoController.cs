@@ -156,8 +156,5 @@ namespace ProjetoNutri.Controllers
             return NotFound();
         }
 
-
-
-
     }
 }

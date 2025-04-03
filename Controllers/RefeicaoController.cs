@@ -40,12 +40,19 @@ namespace ProjetoNutri.Controllers
                 refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Energia_KJ) ?? 0
             );
 
+            double totalProteinaGeral = totalProteinaPorRefeicao.Values.Sum();
+            double totalKcalGeral = totalKcalPorRefeicao.Values.Sum();
+            double totalKjGeral = totalKjPorRefeicao.Values.Sum();
+
             var viewModel = new ProjetoDietaViewModel
             {
                 Refeicaos = refeicoes,
                 TotalProteinaPorRefeicao = totalProteinaPorRefeicao,
                 TotalKcalPorRefeicao = totalKcalPorRefeicao,
-                TotalKjPorRefeicao = totalKjPorRefeicao
+                TotalKjPorRefeicao = totalKjPorRefeicao,
+                TotalProteinaGeral = totalProteinaGeral,
+                TotalKcalGeral = totalKcalGeral,
+                TotalKjGeral = totalKjGeral
             };
 
             return View(viewModel);
