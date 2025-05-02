@@ -104,10 +104,10 @@
                             <p><strong>💪 Proteína Total:</strong>@ViewBag.TotalProteina.ToString("F2") g</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>🔥 Energia Total:</strong> @ViewBag.TotalKcal kcal</p>
+                            <p><strong>🔥 Energia Total:</strong> @ViewBag.TotalKcal.ToString("F2") kcal</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>⚡ Energia Total:</strong> @ViewBag.TotalKj kJ</p>
+                            <p><strong>⚡ Energia Total:</strong> @ViewBag.TotalKj.ToString("F2") kJ</p>
                         </div>
                     </div>
                 </div>
@@ -126,9 +126,9 @@
                 <tr class="text-center">
                     <td>@item.Alimento.Nome</td>
                     <td>@((item.Quantidade /1000).ToString("F3"))</td>
-                    <td>@((item.Alimento.Proteina * item.Quantidade) / 100)</td>
-                    <td>@((item.Alimento.Energia_Kcal * item.Quantidade) / 100)</td>
-                    <td>@((item.Alimento.Energia_KJ * item.Quantidade) / 100)</td>
+                    <td>@(((item.Alimento.Proteina * item.Quantidade) / 100).ToString("F2"))</td>
+                    <td>@(((item.Alimento.Energia_Kcal * item.Quantidade) / 100).ToString("F2"))</td>
+                    <td>@(((item.Alimento.Energia_KJ * item.Quantidade) / 100).ToString("F2"))</td>
                     <td>
                         <form asp-action="DeletarRefeicao_Alimento" method="post">
                             <input type="hidden" name="idRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
@@ -146,28 +146,35 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        let proteinaPorGrama = parseFloat("@alimentoSelecionado.Proteina") || 0; // Obtém o valor de proteína por 100g
-        let energiaKcalPor100g = parseFloat("@alimentoSelecionado.Energia_Kcal") || 0; // Obtém o valor de energia por 100g
-        let energiaKjPor100g = parseFloat("@alimentoSelecionado.Energia_KJ") || 0; // Obtém o valor de energia (kj) por 100g
-        console.log(proteinaPorGrama);
-        // Quando a quantidade mudar
-        $("#quantidade").on("input", function () {
-            let quantidade = parseFloat($(this).val()) || 0; // Obtém a quantidade digitada
-            
+    let proteinaPorGrama = parseFloat("@alimentoSelecionado.Proteina") || 0;
+    let energiaKcalPor100g = parseFloat("@alimentoSelecionado.Energia_Kcal") || 0;
+    let energiaKjPor100g = parseFloat("@alimentoSelecionado.Energia_KJ") || 0;
 
-            // Calcular a quantidade total de proteína (em gramas)
-            let proteinaTotal = (quantidade * proteinaPorGrama) / 100;
-            $("#proteina").val(proteinaTotal); // Atualiza o campo de proteína
+    function atualizarCampos(quantidade) {
+        let proteinaTotal = (quantidade * proteinaPorGrama) / 100;
+        $("#proteina").val(proteinaTotal);
 
-            // Calcular a quantidade total de energia (kcal) e (kj)
-            let energiaTotalKcal = (quantidade * energiaKcalPor100g) / 100;
-            $("#energiaKcal").val(energiaTotalKcal); // Atualiza o campo de energia kcal
+        let energiaTotalKcal = (quantidade * energiaKcalPor100g) / 100;
+        $("#energiaKcal").val(energiaTotalKcal);
 
-            let energiaTotalKj = (quantidade * energiaKjPor100g) / 100;
-            $("#energiaKj").val(energiaTotalKj); // Atualiza o campo de energia kj
+        let energiaTotalKj = (quantidade * energiaKjPor100g) / 100;
+        $("#energiaKj").val(energiaTotalKj);
 
-            let gramas = quantidade/1000;
-            $("#gramas").val(gramas.toFixed(3));
-        });
+        let gramas = quantidade / 1000;
+        $("#gramas").val(gramas.toFixed(3));
+    }
+
+    // Se houver alimento selecionado, inicializa com 100g
+    if (@(alimentoSelecionado.Id > 0 ? "true" : "false")) {
+        $("#quantidade").val(100); // define o valor no input
+        atualizarCampos(100);      // calcula os valores
+    }
+
+    // Atualiza os valores ao alterar a quantidade
+    $("#quantidade").on("input", function () {
+        let quantidade = parseFloat($(this).val()) || 0;
+        atualizarCampos(quantidade);
     });
+});
+
 </script>

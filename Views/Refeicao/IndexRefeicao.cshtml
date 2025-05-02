@@ -30,10 +30,10 @@
             <p><strong>💪 Proteína Total:</strong> @Model.TotalProteinaGeral.ToString("F2") g</p>
         </div>
         <div class="col-md-4">
-            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalGeral kcal</p>
+            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalGeral.ToString("F2") kcal</p>
         </div>
         <div class="col-md-4">
-            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjGeral kJ</p>
+            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjGeral.ToString("F2") kJ</p>
         </div>
     </div>
 </div>
@@ -59,10 +59,10 @@
                             <p><strong>💪 Proteína Total:</strong> @Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id] kcal</p>
+                            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id].ToString("F2") kcal</p>
                         </div>
                         <div class="col-md-4">
-                            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjPorRefeicao[refeicao.Id] kJ</p>
+                            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjPorRefeicao[refeicao.Id].ToString("F2") kJ</p>
                         </div>
                     </div>
                 </div>
@@ -81,10 +81,10 @@
                         {
                             <tr class="text-center">
                                 <td><strong>@refeicaoAlimento.Alimento.Nome</strong></td>
-                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("0.000"))</td>
-                                <td>@refeicaoAlimento.Alimento.Proteina</td>
-                                <td>@refeicaoAlimento.Alimento.Energia_KJ</td>
-                                <td>@refeicaoAlimento.Alimento.Energia_Kcal</td>
+                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("F2"))</td>
+                                <td>@refeicaoAlimento.Alimento.Proteina.ToString("F2")</td>
+                                <td>@refeicaoAlimento.Alimento.Energia_KJ.ToString("F2")</td>
+                                <td>@refeicaoAlimento.Alimento.Energia_Kcal.ToString("F2")</td>
                             </tr>
                         }
                     </tbody>
