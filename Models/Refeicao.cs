@@ -10,8 +10,10 @@ namespace ProjetoNutri.Models
     public class Refeicao
     {
         public int Id { get; set; }
+        [ForeignKey("Projeto")]
+        public int IdProjeto { get; set; }
+        public Projeto Projeto { get; set; }
 
-       
         public string Nome { get; set; }
 
         [DataType(DataType.Date)]
@@ -21,6 +23,7 @@ namespace ProjetoNutri.Models
         [Display(Name = "Data de Edição")]
         public DateTime DataEdicao { get; set; } = DateTime.Now;
         public virtual ICollection<Refeicao_Alimento> Refeicao_Alimentos { get; set; }
+        
         
     }
 }

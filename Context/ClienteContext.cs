@@ -24,56 +24,63 @@ namespace ProjetoNutri.Context
         public DbSet<Alimento> Alimentos { get; set; }
         public DbSet<Categoria_Alimento> Categorias_Alimentos { get; set; }
         public DbSet<Refeicao> Refeicoes { get; set; }
-       
+
         public DbSet<Refeicao_Alimento> Refeicoes_Alimentos { get; set; }
 
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Projeto>()
-                .HasOne(p => p.Paciente) // Relacionamento de um Projeto com um Paciente
-                .WithMany(p => p.Projetos) // Um Paciente pode ter muitos Projetos
-                .HasForeignKey(p => p.PacienteId) // Chave estrangeira
-                .OnDelete(DeleteBehavior.Cascade); // Comportamento de exclusão em cascata
+                .HasOne(p => p.Paciente)
+                .WithMany(p => p.Projetos)
+                .HasForeignKey(p => p.PacienteId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Imc>()
-                .HasOne(i => i.Projeto)  // Relacionamento de um IMC com um Projeto
-                .WithMany(p => p.Imcs)  // Um Projeto pode ter muitos IMCs
-                .HasForeignKey(i => i.IdProjeto)  // Definindo a chave estrangeira
+                .HasOne(i => i.Projeto)
+                .WithMany(p => p.Imcs)
+                .HasForeignKey(i => i.IdProjeto)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Circunferencia>()
-                .HasOne(c => c.Projeto) // Relacionamento de uma Circuferencia com um Projeto
-                .WithMany(p => p.Circunferencias) // Um Projeto pode ter muitas Circuferencias
-                .HasForeignKey(c => c.IdProjeto) // Chave estrangeira
+                .HasOne(c => c.Projeto)
+                .WithMany(p => p.Circunferencias)
+                .HasForeignKey(c => c.IdProjeto)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Pregas>()
-                .HasOne(c => c.Projeto) // Relacionamento de uma Circuferencia com um Projeto
-                .WithMany(p => p.Pregas) // Um Projeto pode ter muitas Circuferencias
-                .HasForeignKey(c => c.IdProjeto) // Chave estrangeira
+                .HasOne(c => c.Projeto)
+                .WithMany(p => p.Pregas)
+                .HasForeignKey(c => c.IdProjeto)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Alimento>()
-                .HasOne(a => a.Categoria) // Relacionamento de um Alimento com uma Categoria
-                .WithMany(c => c.Alimentos) // Uma Categoria pode ter muitos Alimentos
-                .HasForeignKey(a => a.IdCategoria_Alimento) // Chave estrangeira
+                .HasOne(a => a.Categoria)
+                .WithMany(c => c.Alimentos)
+                .HasForeignKey(a => a.IdCategoria_Alimento)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Refeicao_Alimento>()
-                .HasKey(ra => new { ra.IdRefeicao, ra.IdAlimento }); // Definindo chave composta
+                .HasKey(ra => new { ra.IdRefeicao, ra.IdAlimento });
 
             modelBuilder.Entity<Refeicao_Alimento>()
-                .HasOne(ra => ra.Refeicao) // Relacionamento de uma Refeicao_Alimento com uma Refeicao
-                .WithMany(r => r.Refeicao_Alimentos) // Uma Refeicao pode ter muitos Refeicao_Alimentos
-                .HasForeignKey(ra => ra.IdRefeicao) // Chave estrangeira
-                .OnDelete(DeleteBehavior.Cascade);
+                .HasOne(ra => ra.Refeicao)
+                .WithMany(r => r.Refeicao_Alimentos)
+                .HasForeignKey(ra => ra.IdRefeicao)
+                .OnDelete(DeleteBehavior.Restrict); // Alterado para evitar ciclo de cascata
 
             modelBuilder.Entity<Refeicao_Alimento>()
-                .HasOne(ra => ra.Alimento) // Relacionamento de uma Refeicao_Alimento com um Alimento
-                .WithMany(a => a.Refeicao_Alimentos) // Um Alimento pode ter muitos Refeicao_Alimentos
-                .HasForeignKey(ra => ra.IdAlimento) // Chave estrangeira
+                .HasOne(ra => ra.Alimento)
+                .WithMany(a => a.Refeicao_Alimentos)
+                .HasForeignKey(ra => ra.IdAlimento)
+                .OnDelete(DeleteBehavior.Restrict); // Alterado para evitar ciclo de cascata
+
+            modelBuilder.Entity<Refeicao>()
+                .HasOne(r => r.Projeto)
+                .WithMany(p => p.Refeicoes)
+                .HasForeignKey(r => r.IdProjeto)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            }
+
         }
     }
+}

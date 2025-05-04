@@ -30,6 +30,8 @@ namespace ProjetoNutri.Models
         public ICollection<Imc> Imcs { get; set; }
         public ICollection<Circunferencia> Circunferencias { get; set; }
         public ICollection<Pregas> Pregas { get; set; }
+        public ICollection<Refeicao> Refeicoes { get; set; } // Relacionamento com Refeicao
+        public ICollection<Refeicao_Alimento> Refeicoes_Alimentos { get; set; } // Relacionamento com Refeicao_Alimento
         
     }
 }

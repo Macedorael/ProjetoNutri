@@ -9,22 +9,22 @@
 
     <form asp-action="EditarRefeicao" method="post" id="form-editar">
         <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="IdProjeto" />
+
         <div class="form-group mb-3">
             <label asp-for="Nome" class="form-label fw-bold text-secondary">Nome da Refeição</label>
             <input asp-for="Nome" class="form-control border rounded-3 shadow-sm" />
         </div>
 
-        <!-- Botões alinhados na mesma linha -->
         <div class="d-flex gap-2 mt-3">
             <button type="submit" class="btn btn-secondary" id="btn-editar">Salvar</button>
-            <a asp-action="IndexRefeicao" class="btn btn-secondary">Cancelar</a>
+            <a asp-action="IndexRefeicao" asp-route-idProjeto="@Model.IdProjeto" class="btn btn-secondary">Cancelar</a>
         </div>
-        
     </form>
 
-    <!-- Formulário de exclusão separado -->
     <form asp-action="Deletar_Refeicao" method="post" id="form-excluir" class="mt-3">
         <input type="hidden" name="id" value="@Model.Id" id="refeicao-id" />
+        <input type="hidden" name="idProjeto" value="@Model.IdProjeto" />
         <button type="submit" class="btn btn-secondary" id="btn-excluir">Excluir</button>
     </form>
 </div>
@@ -32,9 +32,8 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        // Confirmação ao salvar
-        $('#btn-editar').click(function(event) {
+    $(document).ready(function () {
+        $('#btn-editar').click(function (event) {
             event.preventDefault();
             var confirmar = confirm("Deseja realmente salvar as alterações?");
             if (confirmar) {
@@ -42,8 +41,7 @@
             }
         });
 
-        // Confirmação ao excluir
-        $('#btn-excluir').click(function(event) {
+        $('#btn-excluir').click(function (event) {
             event.preventDefault();
             var confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
             if (confirmar) {
@@ -53,13 +51,12 @@
             }
         });
 
-        // Função para remover refeição do localStorage
         function removerRefeicaoDoLocalStorage(id) {
             let ordemRefeicoes = localStorage.getItem("ordemRefeicoes");
             if (ordemRefeicoes) {
                 ordemRefeicoes = JSON.parse(ordemRefeicoes);
-                ordemRefeicoes = ordemRefeicoes.filter(refeicaoId => refeicaoId !== id); // Remove a refeição excluída
-                localStorage.setItem("ordemRefeicoes", JSON.stringify(ordemRefeicoes)); // Atualiza o localStorage
+                ordemRefeicoes = ordemRefeicoes.filter(refeicaoId => refeicaoId !== id);
+                localStorage.setItem("ordemRefeicoes", JSON.stringify(ordemRefeicoes));
             }
         }
     });

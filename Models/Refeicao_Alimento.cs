@@ -10,16 +10,22 @@ namespace ProjetoNutri.Models
     public class Refeicao_Alimento
     {
         public int Id { get; set; }
+
+        [ForeignKey("Projeto")]
+        public int IdProjeto { get; set; }
+        public Projeto Projeto { get; set; }
+        
         [ForeignKey("Refeicao")]
         public int IdRefeicao { get; set; }
         public Refeicao Refeicao { get; set; }
-        
+
         [ForeignKey("Alimento")]
         public int IdAlimento { get; set; }
         public Alimento Alimento { get; set; }
         public double Quantidade { get; set; }
         [DataType(DataType.Date)]
         [Display(Name = "Data de Criação")]
-        public DateTime DataCriacao { get; set; } = DateTime.Now;
+        public DateTime DataCriacao { get; set; } = DateTime.Now;   
+
     }
 }

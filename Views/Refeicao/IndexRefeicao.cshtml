@@ -3,10 +3,17 @@
 <h2 class="mb-4 text-primary text-center texto">🍽️ Minhas Refeições</h2>
 
 <!-- Botão para criar uma nova refeição -->
-<p class="text-center">
-    <button id="btnCriarRefeicao" class="btn btn-secondary">+ Nova Refeição</button>
-</p>
 
+
+<div class="mt-4 d-flex justify-content-between">
+    <a asp-action="DetalheProjeto" asp-controller="Projeto" asp-route-id="@Model.Projeto.Id" class="btn btn-secondary">
+        🔙 Voltar para Detalhes do Projeto
+    </a>
+    <button id="btnCriarRefeicao" class="btn btn-secondary">+ Nova Refeição</button>
+</div>
+
+
+<br>
 <!-- Formulário oculto para criar nova refeição -->
 <div id="formCriarRefeicao" class="card p-3 shadow-sm mb-4" style="display:none;">
     <h4 class="text-secondary">Criar Nova Refeição</h4>
@@ -17,61 +24,85 @@
             <input asp-for="Refeicao.Nome" class="form-control" placeholder="Nome da Refeição"/>
             <span asp-validation-for="Refeicao.Nome" class="text-danger"></span>
         </div>
+        <!-- Campo oculto para passar o ID do Projeto -->
+       <input type="hidden" name="Refeicao.IdProjeto" value="@Model.Projeto.Id" />
         <div class="mt-3">
             <button type="submit" class="btn btn-secondary">Criar</button>
             <a asp-action="IndexRefeicao" class="btn btn-secondary">Cancelar</a>
         </div>
     </form>
 </div>
+
+<!-- Resumo Nutricional Geral -->
 <div class="card p-3 shadow-sm mb-4 total">
     <h4 class="text-primary text-center texto">Resumo Nutricional</h4>
     <div class="row text-center">
-        <div class="col-md-4">
-            <p><strong>💪 Proteína Total:</strong> @Model.TotalProteinaGeral.ToString("F2") g</p>
+        <div class="col-md-2">
+            <p><strong>💪 Proteína:</strong> @Model.TotalProteinaGeral.ToString("F2") g</p>
         </div>
-        <div class="col-md-4">
-            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalGeral.ToString("F2") kcal</p>
+        <div class="col-md-2">
+            <p><strong>🥓 Lipídio:</strong> @Model.TotalLipidioGeral.ToString("F2") g</p>
         </div>
-        <div class="col-md-4">
-            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjGeral.ToString("F2") kJ</p>
+        <div class="col-md-2">
+            <p><strong>🍞 Carboidrato:</strong> @Model.TotalCarboidratoGeral.ToString("F2") g</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>🔥 Energia:</strong> @Model.TotalKcalGeral.ToString("F2") kcal</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>⚡ Energia:</strong> @Model.TotalKjGeral.ToString("F2") kJ</p>
         </div>
     </div>
 </div>
+
 <!-- Lista de Refeições (Sortable) -->
 <div id="sortableRefeicoes" class="list-group">
     @foreach (var refeicao in Model.Refeicaos)
     {
-        <div class="list-group-item refeicao-item shadow-sm p-3 mb-3 bg-white rounded"
-             data-id="@refeicao.Id">
-             
+        <div class="list-group-item refeicao-item shadow-sm p-3 mb-3 bg-white rounded" data-id="@refeicao.Id">
             <div class="d-flex justify-content-between align-items-center">
                 <h4 class="mb-3 text-center fw-bold">@refeicao.Nome</h4>
-                <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id" class="btn btn-outline-dark">✏️ Editar</a>
+                <div>
+                    <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id" class="btn btn-outline-dark">✏️ Editar</a>
+                    <a asp-action="DuplicarRefeicao"
+                    asp-controller="Refeicao"
+                    asp-route-id="@refeicao.Id"
+                    class="btn btn-outline-primary ms-2">
+                        📋 Duplicar
+                    </a>
+                </div>
             </div>
 
-            <!-- Alimentos dentro da refeição -->
             @if (refeicao.Refeicao_Alimentos != null && refeicao.Refeicao_Alimentos.Any())
             {
                 <div class="card p-3 mb-4 shadow-sm">
-                    
                     <div class="row text-center">
-                        <div class="col-md-4">
-                            <p><strong>💪 Proteína Total:</strong> @Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</p>
+                        <div class="col-md-2">
+                            <p><strong>💪 Proteína:</strong> @Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</p>
                         </div>
-                        <div class="col-md-4">
-                            <p><strong>🔥 Energia Total:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id].ToString("F2") kcal</p>
+                        <div class="col-md-2">
+                            <p><strong>🥓 Lipídio:</strong> @Model.TotalLipidioPorRefeicao[refeicao.Id].ToString("F2") g</p>
                         </div>
-                        <div class="col-md-4">
-                            <p><strong>⚡ Energia Total:</strong> @Model.TotalKjPorRefeicao[refeicao.Id].ToString("F2") kJ</p>
+                        <div class="col-md-2">
+                            <p><strong>🍞 Carboidrato:</strong> @Model.TotalCarboidratoPorRefeicao[refeicao.Id].ToString("F2") g</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>🔥 Energia:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id].ToString("F2") kcal</p>
+                        </div>
+                        <div class="col-md-3">
+                            <p><strong>⚡ Energia:</strong> @Model.TotalKjPorRefeicao[refeicao.Id].ToString("F2") kJ</p>
                         </div>
                     </div>
                 </div>
+
                 <table class="table table-bordered mt-3">
                     <thead class="table-light text-center">
                         <tr>
                             <th>🍏 Alimento</th>
                             <th>📏 Quantidade (g)</th>
                             <th>💪 Proteína (g)</th>
+                            <th>🥓 Lipídio (g)</th>
+                            <th>🍞 Carboidrato (g)</th>
                             <th>🔥 Energia (KJ)</th>
                             <th>🔥 Energia (Kcal)</th>
                         </tr>
@@ -81,8 +112,10 @@
                         {
                             <tr class="text-center">
                                 <td><strong>@refeicaoAlimento.Alimento.Nome</strong></td>
-                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("F2"))</td>
+                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("F3"))</td>
                                 <td>@refeicaoAlimento.Alimento.Proteina.ToString("F2")</td>
+                                <td>@refeicaoAlimento.Alimento.Lipidio.ToString("F2")</td>
+                                <td>@refeicaoAlimento.Alimento.Carboidrato.ToString("F2")</td>
                                 <td>@refeicaoAlimento.Alimento.Energia_KJ.ToString("F2")</td>
                                 <td>@refeicaoAlimento.Alimento.Energia_Kcal.ToString("F2")</td>
                             </tr>
@@ -95,12 +128,15 @@
                 <p class="text-center text-muted">Nenhum alimento adicionado.</p>
             }
 
-            <!-- Botão para adicionar alimento -->
             <div class="text-center mt-3">
-                <a asp-action="CriarRefeicao_Alimento" asp-controller="Refeicao_Alimento"
-                   class="btn btn-outline-dark" asp-route-refeicaoId="@refeicao.Id">
-                    ➕ Adicionar Alimento
+                <a asp-action="CriarRefeicao_Alimento"
+                    asp-controller="Refeicao_Alimento"
+                    asp-route-refeicaoId="@refeicao.Id"
+                    asp-route-idProjeto="@Model.Projeto.Id"
+                    class="btn btn-outline-dark">
+                        ➕ Adicionar Alimento
                 </a>
+
             </div>
         </div>
     }

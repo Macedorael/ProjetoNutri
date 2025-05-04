@@ -30,19 +30,85 @@ namespace ProjetoNutri.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<double>("Calcio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Carboidrato")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Cinzas")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Cobre")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Colesterol")
+                        .HasColumnType("float");
+
                     b.Property<double>("Energia_KJ")
                         .HasColumnType("float");
 
                     b.Property<double>("Energia_Kcal")
                         .HasColumnType("float");
 
+                    b.Property<double>("Ferro")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Fibra_Alimentar")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Fosforo")
+                        .HasColumnType("float");
+
                     b.Property<int>("IdCategoria_Alimento")
                         .HasColumnType("int");
+
+                    b.Property<double>("Lipidio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Magnesio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Manganes")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Niacina")
+                        .HasColumnType("float");
 
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Piridoxina")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Potassio")
+                        .HasColumnType("float");
+
                     b.Property<double>("Proteina")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RAE")
+                        .HasColumnType("float");
+
+                    b.Property<double>("RE")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Retinol")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Riboflavina")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Sodio")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Tiamina")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Vitamina_C")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Zinco")
                         .HasColumnType("float");
 
                     b.HasKey("Id");
@@ -343,10 +409,15 @@ namespace ProjetoNutri.Migrations
                     b.Property<DateTime>("DataEdicao")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("IdProjeto")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IdProjeto");
 
                     b.ToTable("Refeicoes");
                 });
@@ -365,12 +436,17 @@ namespace ProjetoNutri.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdProjeto")
+                        .HasColumnType("int");
+
                     b.Property<double>("Quantidade")
                         .HasColumnType("float");
 
                     b.HasKey("IdRefeicao", "IdAlimento");
 
                     b.HasIndex("IdAlimento");
+
+                    b.HasIndex("IdProjeto");
 
                     b.ToTable("Refeicoes_Alimentos");
                 });
@@ -430,21 +506,40 @@ namespace ProjetoNutri.Migrations
                     b.Navigation("Paciente");
                 });
 
+            modelBuilder.Entity("ProjetoNutri.Models.Refeicao", b =>
+                {
+                    b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
+                        .WithMany("Refeicoes")
+                        .HasForeignKey("IdProjeto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Refeicao_Alimento", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Alimento", "Alimento")
                         .WithMany("Refeicao_Alimentos")
                         .HasForeignKey("IdAlimento")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
+                        .WithMany("Refeicoes_Alimentos")
+                        .HasForeignKey("IdProjeto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjetoNutri.Models.Refeicao", "Refeicao")
                         .WithMany("Refeicao_Alimentos")
                         .HasForeignKey("IdRefeicao")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Alimento");
+
+                    b.Navigation("Projeto");
 
                     b.Navigation("Refeicao");
                 });
@@ -471,6 +566,10 @@ namespace ProjetoNutri.Migrations
                     b.Navigation("Imcs");
 
                     b.Navigation("Pregas");
+
+                    b.Navigation("Refeicoes");
+
+                    b.Navigation("Refeicoes_Alimentos");
                 });
 
             modelBuilder.Entity("ProjetoNutri.Models.Refeicao", b =>

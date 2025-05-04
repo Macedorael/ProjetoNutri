@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ProjetoNutri.Context;
@@ -12,149 +10,165 @@ namespace ProjetoNutri.Controllers
 {
     public class Refeicao_AlimentoController : Controller
     {
-         private readonly ClienteContext _context;
+        private readonly ClienteContext _context;
 
         public Refeicao_AlimentoController(ClienteContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult CriarRefeicao_Alimento(int? RefeicaoId = null, int? AlimentoId = null)
-        {
-            var refeicoes = _context.Refeicoes.ToList();
-            var alimentos = _context.Alimentos.ToList();
+        public IActionResult CriarRefeicao_Alimento(int? RefeicaoId = null, int? AlimentoId = null, int? IdProjeto = null)
+        {   
+            if (!IdProjeto.HasValue)
+                return BadRequest("Projeto não fornecido.");
 
+            ViewBag.IdProjeto = IdProjeto.Value;
             ViewBag.RefeicaoId = RefeicaoId;
 
-            Console.WriteLine("RefeicaoId: " + RefeicaoId);
-
-            ViewBag.Refeicoes = refeicoes.Select(r => new SelectListItem
+            ViewBag.Refeicoes = _context.Refeicoes.Select(r => new SelectListItem
             {
                 Value = r.Id.ToString(),
                 Text = r.Nome
             }).ToList();
 
-            ViewBag.Alimentos = _context.Alimentos?
-                                .Select(a => new SelectListItem
-                                {
-                                    Value = a.Id.ToString(),
-                                    Text = a.Nome
-                                }).ToList() ?? new List<SelectListItem>(); // Garante que não será null
-
-
+            ViewBag.Alimentos = _context.Alimentos.Select(a => new SelectListItem
+            {
+                Value = a.Id.ToString(),
+                Text = a.Nome
+            }).ToList();
 
             if (RefeicaoId.HasValue)
             {
                 var refeicao = _context.Refeicoes.Find(RefeicaoId.Value);
                 if (refeicao != null)
-                {
                     ViewBag.RefeicaoSelecionada = refeicao;
-                }
+
+                var alimentosDaRefeicao = _context.Refeicoes_Alimentos
+                    .Where(ra => ra.IdRefeicao == RefeicaoId.Value)
+                    .Select(ra => new
+                    {
+                        ra.Id,
+                        Alimento = _context.Alimentos.FirstOrDefault(a => a.Id == ra.IdAlimento),
+                        ra.Quantidade
+                    }).ToList();
+
+                ViewBag.AlimentosDaRefeicao = alimentosDaRefeicao;
+
+                var dados = (from ra in _context.Refeicoes_Alimentos
+                             join a in _context.Alimentos on ra.IdAlimento equals a.Id
+                             where ra.IdRefeicao == RefeicaoId.Value
+                             select new
+                             {
+                                 Quantidade = ra.Quantidade,
+                                 Proteina = a.Proteina,
+                                 Lipidio = a.Lipidio,
+                                 Carboidrato = a.Carboidrato,
+                                 Energia_Kcal = a.Energia_Kcal,
+                                 Energia_KJ = a.Energia_KJ
+                             }).ToList();
+
+                ViewBag.TotalProteina = dados.Sum(x => (x.Quantidade * x.Proteina) / 100);
+                ViewBag.TotalLipidio = dados.Sum(x => (x.Quantidade * x.Lipidio) / 100);
+                ViewBag.TotalCarboidrato = dados.Sum(x => (x.Quantidade * x.Carboidrato) / 100);
+                ViewBag.TotalKcal = dados.Sum(x => (x.Quantidade * x.Energia_Kcal) / 100);
+                ViewBag.TotalKj = dados.Sum(x => (x.Quantidade * x.Energia_KJ) / 100);
             }
 
             if (AlimentoId.HasValue)
             {
                 var alimento = _context.Alimentos.Find(AlimentoId.Value);
                 if (alimento != null)
-                {
-                    ViewBag.AlimentoSelecionado = alimento; // Agora é um objeto Alimento real
-                }
-            }
-            else
-            {
-                ViewBag.AlimentoSelecionado = null; // Garante que a View sabe que não há alimento selecionado
+                    ViewBag.AlimentoSelecionado = alimento;
             }
 
-            var alimentosDaRefeicao = _context.Refeicoes_Alimentos
-                                    .Where(ra => ra.IdRefeicao == RefeicaoId.Value)
-                                    .Select(ra => new
-                                    {
-                                        ra.Id,
-                                        Alimento = _context.Alimentos.FirstOrDefault(a => a.Id == ra.IdAlimento),
-                                        ra.Quantidade
-                                    })
-                                    .ToList();
-
-                                ViewBag.AlimentosDaRefeicao = alimentosDaRefeicao;
-
-            if (RefeicaoId.HasValue)
-            {
-                var totalProteina = _context.Refeicoes_Alimentos
-                    .Where(ra => ra.IdRefeicao == RefeicaoId.Value)
-                    .Sum(ra => (ra.Quantidade * _context.Alimentos.Where(a => a.Id == ra.IdAlimento).Select(a => a.Proteina).FirstOrDefault()) / 100);
-                var totalKcal = _context.Refeicoes_Alimentos
-                    .Where(ra => ra.IdRefeicao == RefeicaoId.Value)
-                    .Sum(ra => (ra.Quantidade * _context.Alimentos.Where(a => a.Id == ra.IdAlimento).Select(a => a.Energia_Kcal).FirstOrDefault()) / 100);
-                var totalKj = _context.Refeicoes_Alimentos
-                    .Where(ra => ra.IdRefeicao == RefeicaoId.Value)
-                    .Sum(ra => (ra.Quantidade * _context.Alimentos.Where(a => a.Id == ra.IdAlimento).Select(a => a.Energia_KJ).FirstOrDefault()) / 100);
-
-                ViewBag.TotalProteina = totalProteina;
-                ViewBag.TotalKcal = totalKcal;
-                ViewBag.TotalKj = totalKj;
-            }
-            // Retorna a View
             return View();
         }
 
-
-
-
-        [HttpPost]  
-        public IActionResult CriarRefeicao_Alimento(Refeicao_Alimento refeicao_Alimento)
+        [HttpPost]
+        public IActionResult CriarRefeicao_Alimento(Refeicao_Alimento refeicao_Alimento, int IdProjeto)
         {
-            Console.WriteLine("RefeicaoId: " + refeicao_Alimento.IdRefeicao);
-            Console.WriteLine("AlimentoId: " + refeicao_Alimento.IdAlimento);
+            if (refeicao_Alimento.IdRefeicao == 0 || refeicao_Alimento.IdAlimento == 0)
+                return BadRequest("Refeição ou Alimento não especificados.");
 
+            refeicao_Alimento.IdProjeto = IdProjeto;
             _context.Refeicoes_Alimentos.Add(refeicao_Alimento);
             _context.SaveChanges();
 
-            // Redirecionar para o método GET, passando os IDs necessários
-            return RedirectToAction("CriarRefeicao_Alimento", new { RefeicaoId = refeicao_Alimento.IdRefeicao });
-        }
-
-
-
-
-        [HttpPost]
-        public IActionResult DeletarRefeicaoAlimento(int idRefeicao, int idAlimento)
-        {
-            Console.WriteLine($"Tentando excluir o item com IdRefeicao: {idRefeicao}, IdAlimento: {idAlimento}");
-
-            var refeicao_Alimento = _context.Refeicoes_Alimentos.Find(idRefeicao, idAlimento);
-            if (refeicao_Alimento != null)
+            return RedirectToAction("CriarRefeicao_Alimento", new
             {
-                _context.Refeicoes_Alimentos.Remove(refeicao_Alimento);
-                _context.SaveChanges();
-                
-                // Após excluir, redireciona para a página sem incluir o IdAlimento
-                return RedirectToAction("CriarRefeicaoAlimento", new { IdRefeicao = idRefeicao });
-            }
-
-            Console.WriteLine("Item não encontrado no banco de dados.");
-            return NotFound();
+                RefeicaoId = refeicao_Alimento.IdRefeicao,
+                IdProjeto = IdProjeto
+            });
         }
 
-
         [HttpPost]
-        public IActionResult DeletarRefeicao_Alimento(int idRefeicao, int idAlimento)
+        public IActionResult DeletarRefeicao_Alimento(int idRefeicao, int idAlimento, int IdProjeto)
         {
-            Console.WriteLine($"Tentando excluir o item com IdRefeicao: {idRefeicao}, IdAlimento: {idAlimento}");
-
             var refeicao_Alimento = _context.Refeicoes_Alimentos
-                                            .FirstOrDefault(ra => ra.IdRefeicao == idRefeicao && ra.IdAlimento == idAlimento);
+                .FirstOrDefault(ra => ra.IdRefeicao == idRefeicao && ra.IdAlimento == idAlimento);
+
             if (refeicao_Alimento != null)
             {
                 _context.Refeicoes_Alimentos.Remove(refeicao_Alimento);
                 _context.SaveChanges();
-                
-                return RedirectToAction("CriarRefeicao_Alimento", new { RefeicaoId = idRefeicao });
+
+                return RedirectToAction("CriarRefeicao_Alimento", "Refeicao_Alimento", new { refeicaoId = idRefeicao, idProjeto = IdProjeto });
             }
 
-            Console.WriteLine("Item não encontrado no banco de dados.");
             return NotFound();
         }
 
+
+        [HttpPost]
+        public IActionResult AtualizarQuantidade(int idRefeicao, int idAlimento, float novaQuantidade, int IdProjeto)
+        {
+            if (novaQuantidade <= 0)
+                return BadRequest("Quantidade inválida.");
+
+            var relacao = _context.Refeicoes_Alimentos
+                .FirstOrDefault(r => r.IdRefeicao == idRefeicao && r.IdAlimento == idAlimento);
+
+            if (relacao != null)
+            {
+                relacao.Quantidade = novaQuantidade;
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("CriarRefeicao_Alimento", new
+            {
+                RefeicaoId = idRefeicao,
+                IdProjeto = IdProjeto
+            });
+        }
+
+        [HttpGet]
+        public JsonResult BuscarAlimentos(string termo)
+        {
+            var alimentos = _context.Alimentos
+                .Where(a => a.Nome.Contains(termo))
+                .Select(a => new { a.Id, a.Nome })
+                .Take(10)
+                .ToList();
+
+            return Json(alimentos);
+        }
+
+        [HttpGet]
+        public IActionResult ObterDadosAlimento(int id)
+        {
+            var alimento = _context.Alimentos.FirstOrDefault(a => a.Id == id);
+
+            if (alimento == null)
+                return NotFound();
+
+            return Json(new
+            {
+                proteina = alimento.Proteina,
+                energia_Kcal = alimento.Energia_Kcal,
+                energia_KJ = alimento.Energia_KJ,
+                lipidio = alimento.Lipidio,
+                carboidrato = alimento.Carboidrato
+            });
+        }
     }
 }

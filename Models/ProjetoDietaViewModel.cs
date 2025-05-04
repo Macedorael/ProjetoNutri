@@ -16,8 +16,12 @@ namespace ProjetoNutri.Models
         public Dictionary<int, double> TotalProteinaPorRefeicao { get; set; } = new Dictionary<int, double>();
         public Dictionary<int, double> TotalKcalPorRefeicao { get; set; } = new Dictionary<int, double>();
         public Dictionary<int, double> TotalKjPorRefeicao { get; set; } = new Dictionary<int, double>();
+        public Dictionary<int, double> TotalLipidioPorRefeicao { get; set; }
+        public Dictionary<int, double> TotalCarboidratoPorRefeicao { get; set; }
         public double TotalProteinaGeral { get; set; }
         public double TotalKcalGeral { get; set; }
         public double TotalKjGeral { get; set; }
+        public double TotalLipidioGeral { get; set; }
+        public double TotalCarboidratoGeral { get; set; }
     }
 }

@@ -45,5 +45,5 @@
     <a asp-action="EditarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>  
     <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
     <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Antropometria</a>
-    <a asp-action="IndexRefeicao"  asp-controller="Refeicao" class="btn btn-secondary">Categoria_Refeição</a>
+    <a asp-action="IndexRefeicao" asp-controller="Refeicao" asp-route-IdProjeto="@Model.Id" class="btn btn-secondary">Refeições</a>
 </div>

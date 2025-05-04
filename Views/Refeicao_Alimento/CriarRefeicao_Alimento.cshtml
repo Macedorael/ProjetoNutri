@@ -1,46 +1,33 @@
 @model ProjetoNutri.Models.ProjetoDietaViewModel
 
 @{
-    
     var alimentoSelecionado = ViewBag.AlimentoSelecionado as ProjetoNutri.Models.Alimento ?? new ProjetoNutri.Models.Alimento();
-
 }
 
 <h1>@ViewBag.RefeicaoSelecionada?.Nome</h1>
 
 
 <form method="get" class="mb-4 p-3 border rounded">
-    <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" /> 
-
+    <input type="hidden" name="RefeicaoId" value="@ViewBag.RefeicaoId" />
     <div class="form-group">
         <label>Selecione um alimento:</label>
-        <select name="AlimentoId" class="form-control" onchange="this.form.submit()">
-            <option value="">-- Selecione --</option>
-            @foreach (var item in ViewBag.Alimentos)
-            {
-                <option value="@item.Value" 
-                        selected="@(item.Value == ViewBag.AlimentoSelecionado?.Id.ToString())">
-                    @item.Text
-                </option>
-            }
-        </select>
+        <input type="text" id="inputAlimento" class="form-control" placeholder="Digite o nome do alimento..." autocomplete="off" />
+        <input type="hidden" id="AlimentoId" name="AlimentoId" />
+        <ul id="sugestoesAlimento" class="list-group"></ul>
     </div>
 </form>
 
+<div id="formAdicionarAlimento" style="display:none;">
+    <form asp-action="CriarRefeicao_Alimento" method="post" class="p-3 border rounded">
+    <input type="hidden" name="IdProjeto" value="@ViewBag.IdProjeto" />
 
-<form asp-action="CriarRefeicao_Alimento" method="post" class="p-3 border rounded">
     <div class="row align-items-end">
-       
         <div class="col-md-3 form-group">
             <label>Refeição</label>
-            <input type="text" 
-                   class="form-control" 
-                   value="@ViewBag.RefeicaoSelecionada?.Nome" 
-                   readonly />
+            <input type="text" class="form-control" value="@ViewBag.RefeicaoSelecionada?.Nome" readonly />
             <input type="hidden" name="IdRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
         </div>
 
-        
         <div class="col-md-3 form-group">
             <label>Alimento</label>
             <select name="IdAlimento" class="form-control" required>
@@ -55,33 +42,38 @@
             </select>
         </div>
 
-        
         <div class="col-md-2 form-group">
             <label>Quantidade (g/ml)</label>
             <input type="number" id="quantidade" name="Quantidade" class="form-control" required min="1" />
         </div>
 
-        
         <div class="col-md-2 form-group">
             <label>Gramas</label>
             <input type="text" name="gramas" id="gramas" class="form-control" disabled />
         </div>
 
-        
         <div class="col-md-2 form-group">
             <label>Proteína (g)</label>
             <input type="text" id="proteina" class="form-control" value="@(alimentoSelecionado?.Proteina ?? 0)" disabled />
         </div>
 
-        
+        <div class="col-md-2 form-group">
+            <label>Lipídio (g)</label>
+            <input type="text" id="lipidio" class="form-control" value="@(alimentoSelecionado?.Lipidio ?? 0)" disabled />
+        </div>
+
+        <div class="col-md-2 form-group">
+            <label>Carboidrato (g)</label>
+            <input type="text" id="carboidrato" class="form-control" value="@(alimentoSelecionado?.Carboidrato ?? 0)" disabled />
+        </div>
+
         <div class="col-md-2 form-group">
             <label>Energia (kcal)</label>
             <input type="text" id="energiaKcal" class="form-control" value="@(alimentoSelecionado?.Energia_Kcal ?? 0)" disabled />
         </div>
 
-        
         <div class="col-md-2 form-group">
-            <label>Energia (kj)</label>
+            <label>Energia (kJ)</label>
             <input type="text" id="energiaKj" class="form-control" value="@(alimentoSelecionado?.Energia_KJ ?? 0)" disabled />
         </div>
     </div>
@@ -92,88 +84,194 @@
     </div>
 </form>
 
+</div>
+
 @if (ViewBag.AlimentosDaRefeicao != null && ViewBag.AlimentosDaRefeicao.Count > 0)
 {
-  
-    <h3>Alimentos da Refeição</h3>
-        <table class="table table-bordered mt-3">
-        <div class="card p-3 mb-4 shadow-sm">
-                    
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <p><strong>💪 Proteína Total:</strong>@ViewBag.TotalProteina.ToString("F2") g</p>
-                        </div>
-                        <div class="col-md-4">
-                            <p><strong>🔥 Energia Total:</strong> @ViewBag.TotalKcal.ToString("F2") kcal</p>
-                        </div>
-                        <div class="col-md-4">
-                            <p><strong>⚡ Energia Total:</strong> @ViewBag.TotalKj.ToString("F2") kJ</p>
-                        </div>
-                    </div>
-                </div>
-                    <thead class="table-light text-center">
-                        <tr>
-                            <th>🍏 Alimento</th>
-                            <th>📏 Quantidade (g)</th>
-                            <th>💪 Proteína (g)</th>
-                            <th>🔥 Energia (KJ)</th>
-                            <th>🔥 Energia (Kcal)</th>
-                        </tr>
-                    </thead>
+    <div class="row text-center">
+        <div class="col-md-2">
+            <p><strong>💪 Proteína:</strong> @ViewBag.TotalProteina.ToString("F2") g</p>
+        </div>
+        <div class="col-md-2">
+            <p><strong>🥓 Lipídio:</strong> @ViewBag.TotalLipidio.ToString("F2") g</p>
+        </div>
+        <div class="col-md-2">
+            <p><strong>🍞 Carboidrato:</strong> @ViewBag.TotalCarboidrato.ToString("F2") g</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>🔥 Energia:</strong> @ViewBag.TotalKcal.ToString("F2") kcal</p>
+        </div>
+        <div class="col-md-3">
+            <p><strong>⚡ Energia:</strong> @ViewBag.TotalKj.ToString("F2") kJ</p>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered mt-3">
+        <thead class="table-light text-center">
+            <tr>
+                <th>🍏 Alimento</th>
+                <th>📏 Quantidade (g)</th>
+                <th>💪 Proteína (g)</th>
+                <th>🧈 Lipídio (g)</th>
+                <th>🍞 Carboidrato (g)</th>
+                <th>🔥 Energia (KJ)</th>
+                <th>🔥 Energia (Kcal)</th>
+                <th colspan="2">Ações</th>
+            </tr>
+        </thead>
         <tbody>
             @foreach (var item in ViewBag.AlimentosDaRefeicao)
             {
+                var quantidade = item.Quantidade;
+                var id = item.Alimento.Id;
+
+                var proteinaTotal = (item.Alimento.Proteina * quantidade) / 100;
+                var lipidioTotal = (item.Alimento.Lipidio * quantidade) / 100;
+                var carboidratoTotal = (item.Alimento.Carboidrato * quantidade) / 100;
+                var energiaKcalTotal = (item.Alimento.Energia_Kcal * quantidade) / 100;
+                var energiaKjTotal = (item.Alimento.Energia_KJ * quantidade) / 100;
+
                 <tr class="text-center">
                     <td>@item.Alimento.Nome</td>
-                    <td>@((item.Quantidade /1000).ToString("F3"))</td>
-                    <td>@(((item.Alimento.Proteina * item.Quantidade) / 100).ToString("F2"))</td>
-                    <td>@(((item.Alimento.Energia_Kcal * item.Quantidade) / 100).ToString("F2"))</td>
-                    <td>@(((item.Alimento.Energia_KJ * item.Quantidade) / 100).ToString("F2"))</td>
+                    <td>
+                        <input type="number" name="quantidade" class="form-control form-control-sm quantidade-input "
+                            data-id="@id"
+                            data-proteina="@item.Alimento.Proteina"
+                            data-lipidio="@item.Alimento.Lipidio"
+                            data-carboidrato="@item.Alimento.Carboidrato"
+                            data-kcal="@item.Alimento.Energia_Kcal"
+                            data-kj="@item.Alimento.Energia_KJ"
+                            value="@quantidade" min="1" />
+                    </td>
+                    <td><input type="text" id="proteina-@id" class="form-control form-control-sm text-end" value="@proteinaTotal.ToString("F2")" disabled /></td>
+                    <td><input type="text" id="lipidio-@id" class="form-control form-control-sm text-end" value="@lipidioTotal.ToString("F2")" disabled /></td>
+                    <td><input type="text" id="carboidrato-@id" class="form-control form-control-sm text-end" value="@carboidratoTotal.ToString("F2")" disabled /></td>
+                    <td><input type="text" id="kcal-@id" class="form-control form-control-sm text-end" value="@energiaKcalTotal.ToString("F2")" disabled /></td>
+                    <td><input type="text" id="kj-@id" class="form-control form-control-sm text-end" value="@energiaKjTotal.ToString("F2")" disabled /></td>
+                    <td>
+                        <form asp-action="AtualizarQuantidade" method="post" class="d-inline">
+                            <input type="hidden" name="idRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
+                            <input type="hidden" name="idAlimento" value="@item.Alimento.Id" />
+                            <input type="hidden" name="IdProjeto" value="@ViewBag.IdProjeto" />
+                            <input type="hidden" name="novaQuantidade" class="nova-quantidade" />
+                            <button type="submit" class="btn btn-secondary menor">Atualizar</button>
+                        </form>
+                    </td>
                     <td>
                         <form asp-action="DeletarRefeicao_Alimento" method="post">
                             <input type="hidden" name="idRefeicao" value="@ViewBag.RefeicaoSelecionada?.Id" />
                             <input type="hidden" name="idAlimento" value="@item.Alimento?.Id" />
-                            <button type="submit" class="btn btn-secondary">Excluir</button>
+                            <input type="hidden" name="IdProjeto" value="@ViewBag.IdProjeto" />
+                            <button type="submit" class="btn btn-secondary menor">Excluir</button>
                         </form>
-                        
+
+
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 }
+<div class="mt-4">
+    <a href="@Url.Action("IndexRefeicao", "Refeicao", new { idProjeto = ViewBag.IdProjeto })" class="btn btn-secondary ">
+        Voltar
+    </a>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
     let proteinaPorGrama = parseFloat("@alimentoSelecionado.Proteina") || 0;
+    let lipidioPor100g = parseFloat("@alimentoSelecionado.Lipidio") || 0;
+    let carboidratoPor100g = parseFloat("@alimentoSelecionado.Carboidrato") || 0;
     let energiaKcalPor100g = parseFloat("@alimentoSelecionado.Energia_Kcal") || 0;
     let energiaKjPor100g = parseFloat("@alimentoSelecionado.Energia_KJ") || 0;
 
     function atualizarCampos(quantidade) {
-        let proteinaTotal = (quantidade * proteinaPorGrama) / 100;
-        $("#proteina").val(proteinaTotal);
-
-        let energiaTotalKcal = (quantidade * energiaKcalPor100g) / 100;
-        $("#energiaKcal").val(energiaTotalKcal);
-
-        let energiaTotalKj = (quantidade * energiaKjPor100g) / 100;
-        $("#energiaKj").val(energiaTotalKj);
-
+        let proteina = (quantidade * proteinaPorGrama / 100);
+        let lipidio = (quantidade * lipidioPor100g / 100);
+        let carboidrato = (quantidade * carboidratoPor100g / 100);
+        let energiaKcal = (quantidade * energiaKcalPor100g / 100);
+        let energiaKj = (quantidade * energiaKjPor100g / 100);
         let gramas = quantidade / 1000;
+
+        $("#proteina").val(proteina.toFixed(2));
+        $("#lipidio").val(lipidio.toFixed(2));
+        $("#carboidrato").val(carboidrato.toFixed(2));
+        $("#energiaKcal").val(energiaKcal.toFixed(2));
+        $("#energiaKj").val(energiaKj.toFixed(2));
         $("#gramas").val(gramas.toFixed(3));
     }
 
-    // Se houver alimento selecionado, inicializa com 100g
     if (@(alimentoSelecionado.Id > 0 ? "true" : "false")) {
-        $("#quantidade").val(100); // define o valor no input
-        atualizarCampos(100);      // calcula os valores
+        $("#quantidade").val(100);
+        atualizarCampos(100);
     }
 
-    // Atualiza os valores ao alterar a quantidade
     $("#quantidade").on("input", function () {
         let quantidade = parseFloat($(this).val()) || 0;
         atualizarCampos(quantidade);
+    });
+
+    // Sugestões de alimentos com autocomplete
+    $("#inputAlimento").on("input", function () {
+        let termo = $(this).val();
+        if (termo.length < 1) {
+            $("#sugestoesAlimento").hide();
+            return;
+        }
+
+        $.get('/Refeicao_Alimento/BuscarAlimentos', { termo: termo }, function (data) {
+            let lista = $("#sugestoesAlimento").empty();
+            data.forEach(item => {
+                lista.append(`<li class="list-group-item list-group-item-action" data-id="${item.id}" data-nome="${item.nome}">${item.nome}</li>`);
+            });
+            lista.show();
+        });
+    });
+
+    // Ao clicar na sugestão de alimento
+    $(document).on("click", "#sugestoesAlimento li", function () {
+        let id = $(this).data("id");
+        let nome = $(this).data("nome");
+
+        $("#inputAlimento").val(nome);
+        $("#AlimentoId").val(id);
+        $("#sugestoesAlimento").hide();
+        $("select[name='IdAlimento']").html(`<option value="${id}" selected>${nome}</option>`);
+        $("#formAdicionarAlimento").fadeIn();
+
+        $.get("/Refeicao_Alimento/ObterDadosAlimento", { id: id }, function (data) {
+            proteinaPorGrama = parseFloat(data.proteina) || 0;
+            lipidioPor100g = parseFloat(data.lipidio) || 0;
+            carboidratoPor100g = parseFloat(data.carboidrato) || 0;
+            energiaKcalPor100g = parseFloat(data.energiaKcal) || 0;
+            energiaKjPor100g = parseFloat(data.energiaKj) || 0;
+
+            $("#quantidade").val(100);
+            atualizarCampos(100);
+        });
+    });
+
+    // Atualizar os nutrientes ao alterar quantidades dos itens listados
+    $(".quantidade-input").on("input", function () {
+        let id = $(this).data("id");
+        let quantidade = parseFloat($(this).val()) || 0;
+
+        let proteina = parseFloat($(this).data("proteina"));
+        let lipidio = parseFloat($(this).data("lipidio"));
+        let carboidrato = parseFloat($(this).data("carboidrato"));
+        let kcal = parseFloat($(this).data("kcal"));
+        let kj = parseFloat($(this).data("kj"));
+
+        $('#proteina-' + id).val((quantidade * proteina / 100).toFixed(2));
+        $('#lipidio-' + id).val((quantidade * lipidio / 100).toFixed(2));
+        $('#carboidrato-' + id).val((quantidade * carboidrato / 100).toFixed(2));
+        $('#kcal-' + id).val((quantidade * kcal / 100).toFixed(2));
+        $('#kj-' + id).val((quantidade * kj / 100).toFixed(2));
+
+        $(this).closest("tr").find(".nova-quantidade").val(quantidade);
     });
 });
 

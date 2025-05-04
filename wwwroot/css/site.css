@@ -158,6 +158,13 @@ img {
 .btn-secondary{
   background-color: #4B0082;
 }
+.menor{
+  background-color: #4B0082;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 4px;
+}
 
 .nav{
   background-color: 	#f1f1f1 ;
@@ -174,3 +181,11 @@ img {
 .texto{
   color: #4B0082 !important;
 }
+
+.entrada-quantidade{
+  width: 80px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  padding-left: 20px;
+} 
