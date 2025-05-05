@@ -72,7 +72,7 @@ namespace ProjetoNutri.Context
                 .HasOne(ra => ra.Alimento)
                 .WithMany(a => a.Refeicao_Alimentos)
                 .HasForeignKey(ra => ra.IdAlimento)
-                .OnDelete(DeleteBehavior.Restrict); // Alterado para evitar ciclo de cascata
+                .OnDelete(DeleteBehavior.Cascade); // Alterado para evitar ciclo de cascata
 
             modelBuilder.Entity<Refeicao>()
                 .HasOne(r => r.Projeto)

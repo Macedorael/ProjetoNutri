@@ -157,62 +157,68 @@ namespace ProjetoNutri.Controllers
 
         // Exclui uma refeição do banco de dados
         [HttpPost]
-        public IActionResult Deletar_Refeicao(int id)
+            public IActionResult Deletar_Refeicao(int id)
+            {
+                var refeicao = _context.Refeicoes.Include(r => r.Refeicao_Alimentos).FirstOrDefault(r => r.Id == id);
+
+                if (refeicao == null)
+                {
+                    return NotFound();
+                }
+
+                // Excluir todos os alimentos associados à refeição
+                _context.Refeicoes_Alimentos.RemoveRange(refeicao.Refeicao_Alimentos);
+
+                // Agora podemos excluir a refeição
+                _context.Refeicoes.Remove(refeicao);
+                _context.SaveChanges();
+
+                return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicao.IdProjeto });
+            }
+
+
+
+        public IActionResult DuplicarRefeicao(int id)
         {
-            var refeicao = _context.Refeicoes.Find(id);
-            if (refeicao == null)
+            var refeicaoOriginal = _context.Refeicoes
+                .Include(r => r.Refeicao_Alimentos)
+                .FirstOrDefault(r => r.Id == id);
+
+            if (refeicaoOriginal == null)
             {
                 return NotFound();
             }
 
-            _context.Refeicoes.Remove(refeicao);
+            // 1. Criar nova refeição com o mesmo projeto
+            var novaRefeicao = new Refeicao
+            {
+                Nome = refeicaoOriginal.Nome + " (Cópia)",
+                IdProjeto = refeicaoOriginal.IdProjeto,
+                DataCriacao = DateTime.Now
+            };
+
+            _context.Refeicoes.Add(novaRefeicao);
+            _context.SaveChanges(); // precisa salvar antes para gerar Id
+
+            // 2. Copiar os alimentos vinculados à refeição original
+            foreach (var item in refeicaoOriginal.Refeicao_Alimentos)
+            {
+                var novoItem = new Refeicao_Alimento
+                {
+                    IdRefeicao = novaRefeicao.Id,
+                    IdAlimento = item.IdAlimento,
+                    Quantidade = item.Quantidade,
+                    // Se houver IdProjeto no model Refeicao_Alimento:
+                    IdProjeto = refeicaoOriginal.IdProjeto // adicione isso se necessário
+                };
+
+                _context.Refeicoes_Alimentos.Add(novoItem);
+            }
+
             _context.SaveChanges();
 
-            // Redireciona de volta para a página de refeições do projeto
-            return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicao.IdProjeto });
+            return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicaoOriginal.IdProjeto });
         }
-
-        public IActionResult DuplicarRefeicao(int id)
-{
-    var refeicaoOriginal = _context.Refeicoes
-        .Include(r => r.Refeicao_Alimentos)
-        .FirstOrDefault(r => r.Id == id);
-
-    if (refeicaoOriginal == null)
-    {
-        return NotFound();
-    }
-
-    // 1. Criar nova refeição com o mesmo projeto
-    var novaRefeicao = new Refeicao
-    {
-        Nome = refeicaoOriginal.Nome + " (Cópia)",
-        IdProjeto = refeicaoOriginal.IdProjeto,
-        DataCriacao = DateTime.Now
-    };
-
-    _context.Refeicoes.Add(novaRefeicao);
-    _context.SaveChanges(); // precisa salvar antes para gerar Id
-
-    // 2. Copiar os alimentos vinculados à refeição original
-    foreach (var item in refeicaoOriginal.Refeicao_Alimentos)
-    {
-        var novoItem = new Refeicao_Alimento
-        {
-            IdRefeicao = novaRefeicao.Id,
-            IdAlimento = item.IdAlimento,
-            Quantidade = item.Quantidade,
-            // Se houver IdProjeto no model Refeicao_Alimento:
-            IdProjeto = refeicaoOriginal.IdProjeto // adicione isso se necessário
-        };
-
-        _context.Refeicoes_Alimentos.Add(novoItem);
-    }
-
-    _context.SaveChanges();
-
-    return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicaoOriginal.IdProjeto });
-}
 
     }
 }
