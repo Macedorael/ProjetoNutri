@@ -82,10 +82,13 @@
 
             <!-- Ações -->
             <div class="acoes-refeicao d-flex gap-2">
-                <a asp-action="DuplicarRefeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" class="btn-editar-excluir" title="Duplicar Refeição"><i class="bi bi-copy"></i></a>
-                <form asp-action="Deletar_Refeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" method="post">
-                    <button type="submit" class="btn-editar-excluir" title="Excluir Refeição"><i class="bi bi-bucket"></i></button>
+                <a asp-action="DuplicarRefeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" class="btn-editar-excluir" title="Duplicar Refeição"><i class="bi bi-back"></i></a>
+                <form id="form-excluir-@refeicao.Id" asp-action="Deletar_Refeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" method="post">
+                    <button type="submit" class="btn-editar-excluir btn-excluir" data-refeicao-id="@refeicao.Id" title="Excluir Refeição">
+                        <i class="bi bi-trash2-fill"></i>
+                    </button>
                 </form>
+
             </div>
         </div>
             <!-- Lista de Alimentos -->
@@ -170,38 +173,38 @@
             // Carregar a ordem salva ao iniciar
             carregarOrdem();
 
-             $('.btn-excluir').click(function (event) {
-            event.preventDefault();
-            const id = $(this).data('refeicao-id');
-            const confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
-            if (confirmar) {
-                removerRefeicaoDoLocalStorage(id); // se quiser manter isso
-                $('#form-excluir-' + id).submit();
+            
+            $('.btn-excluir').click(function (event) {
+                event.preventDefault();
+                const id = $(this).data('refeicao-id');
+                const confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
+                if (confirmar) {
+                    removerRefeicaoDoLocalStorage(id);
+                    $('#form-excluir-' + id).submit();
+                }
+            });
+        
+
+        function removerRefeicaoDoLocalStorage(id) {
+            let ordemSalva = localStorage.getItem("ordemRefeicoes");
+            if (ordemSalva) {
+                let ordem = JSON.parse(ordemSalva);
+                ordem = ordem.filter(rid => rid != id);
+                localStorage.setItem("ordemRefeicoes", JSON.stringify(ordem));
+            }
+        }
+
+
+    
+        $('.refeicao-nome-custom').on('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault(); // Evita quebra de linha
+                salvarNome($(this));
+                $(this).blur(); // Tira o foco para disparar o blur também
             }
         });
 
-        function removerRefeicaoDoLocalStorage(id) {
-        let ordemSalva = localStorage.getItem("ordemRefeicoes");
-        if (ordemSalva) {
-            let ordem = JSON.parse(ordemSalva);
-            ordem = ordem.filter(rid => rid != id);
-            localStorage.setItem("ordemRefeicoes", JSON.stringify(ordem));
-        }
-    }
 
-    
-        $('.refeicao-nome-input').on('keydown', function (e) {
-        if (e.key === 'Enter') {
-            e.preventDefault(); // Evita quebra de linha
-            salvarNome($(this));
-            $(this).blur(); // Tira o foco para disparar o blur também
-        }
-    });
-
-    // Salvar ao sair do campo (blur)
-    $('.refeicao-nome-input').on('blur', function () {
-        salvarNome($(this));
-    });
 
     function salvarNome(input) {
         let id = input.data('refeicao-id');
