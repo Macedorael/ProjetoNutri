@@ -157,24 +157,24 @@ namespace ProjetoNutri.Controllers
 
         // Exclui uma refeição do banco de dados
         [HttpPost]
-            public IActionResult Deletar_Refeicao(int id)
+        public IActionResult Deletar_Refeicao(int id)
+        {
+            var refeicao = _context.Refeicoes.Include(r => r.Refeicao_Alimentos).FirstOrDefault(r => r.Id == id);
+
+            if (refeicao == null)
             {
-                var refeicao = _context.Refeicoes.Include(r => r.Refeicao_Alimentos).FirstOrDefault(r => r.Id == id);
-
-                if (refeicao == null)
-                {
-                    return NotFound();
-                }
-
-                // Excluir todos os alimentos associados à refeição
-                _context.Refeicoes_Alimentos.RemoveRange(refeicao.Refeicao_Alimentos);
-
-                // Agora podemos excluir a refeição
-                _context.Refeicoes.Remove(refeicao);
-                _context.SaveChanges();
-
-                return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicao.IdProjeto });
+                return NotFound();
             }
+
+            // Excluir todos os alimentos associados à refeição
+            _context.Refeicoes_Alimentos.RemoveRange(refeicao.Refeicao_Alimentos);
+
+            // Agora podemos excluir a refeição
+            _context.Refeicoes.Remove(refeicao);
+            _context.SaveChanges();
+
+            return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicao.IdProjeto });
+        }
 
 
 
@@ -219,6 +219,21 @@ namespace ProjetoNutri.Controllers
 
             return RedirectToAction("IndexRefeicao", new { IdProjeto = refeicaoOriginal.IdProjeto });
         }
+        [HttpPost]
+        public IActionResult AtualizarNome(int id, string nome)
+        {
+            var refeicao = _context.Refeicoes.FirstOrDefault(r => r.Id == id);
+            if (refeicao == null)
+            {
+                return NotFound();
+            }
+
+            refeicao.Nome = nome;
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
 
     }
 }

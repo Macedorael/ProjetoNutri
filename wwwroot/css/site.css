@@ -189,3 +189,83 @@ img {
   text-align: center;
   padding-left: 20px;
 } 
+
+.cor{
+  background-color: #f1f1f1;
+}
+
+/* Input do nome da refeição */
+.refeicao-nome-custom {
+  font-weight: bold;                      /* Deixa o texto em negrito */
+  border-radius: 0.75rem;                 /* Cantos arredondados */
+  background-color: #f8f9fa;              /* Fundo cinza claro */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  outline: none;                          /* Remove contorno azul ao focar */
+  font-size: 20px;                        /* Tamanho da fonte */
+  padding: 10px 20px;                     /* Espaçamento interno */
+  min-width: 150px;                       /* Largura mínima */
+  max-width: 100%;                        /* Não ultrapassa o container */
+  display: inline-block;                 /* Para alinhar com flex */
+  border: none;                           /* Remove borda padrão */
+}
+
+/* Container de cada nutriente (caixa) */
+.nutriente-box {
+  background-color: #f8f9fa;              /* Fundo cinza claro */
+  padding: 2px 16px;                      /* Espaço interno da caixa */
+  border-radius: 0.75rem;                 /* Cantos arredondados */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);/* Sombra leve */
+  text-align: center;                     /* Centraliza o conteúdo */
+  min-width: 120px;                       /* Evita que a caixa fique muito estreita */
+  flex: 1 1 auto;                         /* Permite que todas cresçam igualmente */
+}
+
+/* Linha do título (ícone + nome) */
+.nutriente-titulo {
+  font-weight: bold;                      /* Texto em negrito */
+  font-size: 12px;                     /* Tamanho do texto */
+  display: flex;                          /* Flex para alinhar horizontalmente */
+  align-items: center;                    /* Alinhamento vertical */
+  justify-content: center;                /* Centraliza horizontalmente */
+  gap: 0.4rem;                            /* Espaço entre ícone e texto */
+  margin-bottom: 4px;                     /* Espaço abaixo do título */
+}
+
+/* Valor do nutriente (número) */
+.nutriente-valor {
+  font-size: 15px;                      /* Tamanho da fonte */
+  color: #333;                            /* Cor cinza escura */
+}
+
+/* Linha inteira da refeição (título, nutrientes, botões) */
+.refeicao-header {
+  display: flex;                          /* Flex container principal */
+  align-items: center;                    /* Alinha verticalmente */
+  flex-wrap: wrap;                        /* Permite quebrar linha se necessário */
+  gap: 1rem;                              /* Espaço entre os blocos */
+  margin-bottom: 1rem;                    /* Espaço abaixo da linha */
+}
+
+.nomespan{
+  font-size: 15px;
+}
+
+.btn-editar-excluir {
+  background-color: #f8f9fa;
+  font-size: 20px;
+  padding: 10px 8px;
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 80px;
+  flex: 1 1 auto;
+  border: none;
+  outline: none;
+  appearance: none;
+  cursor: pointer;
+  text-decoration: none; /* REMOVE o sublinhado */
+}
+
+.bi{
+  color: black;
+}

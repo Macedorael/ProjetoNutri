@@ -7,7 +7,7 @@
 
 <div class="mt-4 d-flex justify-content-between">
     <a asp-action="DetalheProjeto" asp-controller="Projeto" asp-route-id="@Model.Projeto.Id" class="btn btn-secondary">
-        🔙 Voltar para Detalhes do Projeto
+        🔙 Voltar
     </a>
     <button id="btnCriarRefeicao" class="btn btn-secondary">+ Nova Refeição</button>
 </div>
@@ -34,23 +34,20 @@
 </div>
 
 <!-- Resumo Nutricional Geral -->
-<div class="card p-3 shadow-sm mb-4 total">
-    <h4 class="text-primary text-center texto">Resumo Nutricional</h4>
+<div class="card p-3 mb-4 shadow-sm cor">
+    <h4 class="text-primary text-center texto">Resumo Nutricional</h4><br>
     <div class="row text-center">
-        <div class="col-md-2">
+        <div class="col">
             <p><strong>💪 Proteína:</strong> @Model.TotalProteinaGeral.ToString("F2") g</p>
         </div>
-        <div class="col-md-2">
+        <div class="col">
             <p><strong>🥓 Lipídio:</strong> @Model.TotalLipidioGeral.ToString("F2") g</p>
         </div>
-        <div class="col-md-2">
+        <div class="col">
             <p><strong>🍞 Carboidrato:</strong> @Model.TotalCarboidratoGeral.ToString("F2") g</p>
         </div>
-        <div class="col-md-3">
+        <div class="col">
             <p><strong>🔥 Energia:</strong> @Model.TotalKcalGeral.ToString("F2") kcal</p>
-        </div>
-        <div class="col-md-3">
-            <p><strong>⚡ Energia:</strong> @Model.TotalKjGeral.ToString("F2") kJ</p>
         </div>
     </div>
 </div>
@@ -60,52 +57,45 @@
     @foreach (var refeicao in Model.Refeicaos)
     {
         <div class="list-group-item refeicao-item shadow-sm p-3 mb-3 bg-white rounded" data-id="@refeicao.Id">
-            <div class="d-flex justify-content-between align-items-center">
-                <h4 class="mb-3 text-center fw-bold">@refeicao.Nome</h4>
-                <div>
-                    <a asp-action="EditarRefeicao" asp-route-id="@refeicao.Id" class="btn btn-outline-dark">✏️ Editar</a>
-                    <a asp-action="DuplicarRefeicao"
-                    asp-controller="Refeicao"
-                    asp-route-id="@refeicao.Id"
-                    class="btn btn-outline-primary ms-2">
-                        📋 Duplicar
-                    </a>
-                   
-                </div>
+            <!-- Cabeçalho com nome, nutrientes e ações -->
+            <div class="refeicao-header d-flex align-items-center flex-wrap gap-3 mb-3">
+            <!-- Nome da Refeição -->
+            <input type="text" class="refeicao-nome-custom" value="@refeicao.Nome" data-refeicao-id="@refeicao.Id" />
+
+            <!-- Nutrientes -->
+            <div class="nutriente-box">
+                <div class="nutriente-titulo">💪 <span class="nomespan">Proteína</span></div>
+                <div class="nutriente-valor">@Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</div>
+            </div>
+            <div class="nutriente-box">
+                <div class="nutriente-titulo">🥓 <span class="nomespan">Lipídio</span></div>
+                <div class="nutriente-valor">@Model.TotalLipidioPorRefeicao[refeicao.Id].ToString("F2") g</div>
+            </div>
+            <div class="nutriente-box">
+                <div class="nutriente-titulo">🍞 <span class="nomespan">Carboidrato</span></div>
+                <div class="nutriente-valor">@Model.TotalCarboidratoPorRefeicao[refeicao.Id].ToString("F2") g</div>
+            </div>
+            <div class="nutriente-box">
+                <div class="nutriente-titulo">🔥 <span class="nomespan">Energia</span></div>
+                <div class="nutriente-valor">@Model.TotalKcalPorRefeicao[refeicao.Id].ToString("F2") kcal</div>
             </div>
 
+            <!-- Ações -->
+            <div class="acoes-refeicao d-flex gap-2">
+                <a asp-action="DuplicarRefeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" class="btn-editar-excluir" title="Duplicar Refeição"><i class="bi bi-copy"></i></a>
+                <form asp-action="Deletar_Refeicao" asp-controller="Refeicao" asp-route-id="@refeicao.Id" method="post">
+                    <button type="submit" class="btn-editar-excluir" title="Excluir Refeição"><i class="bi bi-bucket"></i></button>
+                </form>
+            </div>
+        </div>
+            <!-- Lista de Alimentos -->
             @if (refeicao.Refeicao_Alimentos != null && refeicao.Refeicao_Alimentos.Any())
             {
-                <div class="card p-3 mb-4 shadow-sm">
-                    <div class="row text-center">
-                        <div class="col-md-2">
-                            <p><strong>💪 Proteína:</strong> @Model.TotalProteinaPorRefeicao[refeicao.Id].ToString("F2") g</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><strong>🥓 Lipídio:</strong> @Model.TotalLipidioPorRefeicao[refeicao.Id].ToString("F2") g</p>
-                        </div>
-                        <div class="col-md-2">
-                            <p><strong>🍞 Carboidrato:</strong> @Model.TotalCarboidratoPorRefeicao[refeicao.Id].ToString("F2") g</p>
-                        </div>
-                        <div class="col-md-3">
-                            <p><strong>🔥 Energia:</strong> @Model.TotalKcalPorRefeicao[refeicao.Id].ToString("F2") kcal</p>
-                        </div>
-                        <div class="col-md-3">
-                            <p><strong>⚡ Energia:</strong> @Model.TotalKjPorRefeicao[refeicao.Id].ToString("F2") kJ</p>
-                        </div>
-                    </div>
-                </div>
-
                 <table class="table table-bordered mt-3">
                     <thead class="table-light text-center">
                         <tr>
                             <th>🍏 Alimento</th>
                             <th>📏 Quantidade (g)</th>
-                            <th>💪 Proteína (g)</th>
-                            <th>🥓 Lipídio (g)</th>
-                            <th>🍞 Carboidrato (g)</th>
-                            <th>🔥 Energia (KJ)</th>
-                            <th>🔥 Energia (Kcal)</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,12 +103,7 @@
                         {
                             <tr class="text-center">
                                 <td><strong>@refeicaoAlimento.Alimento.Nome</strong></td>
-                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("F3"))</td>
-                                <td>@refeicaoAlimento.Alimento.Proteina.ToString("F2")</td>
-                                <td>@refeicaoAlimento.Alimento.Lipidio.ToString("F2")</td>
-                                <td>@refeicaoAlimento.Alimento.Carboidrato.ToString("F2")</td>
-                                <td>@refeicaoAlimento.Alimento.Energia_KJ.ToString("F2")</td>
-                                <td>@refeicaoAlimento.Alimento.Energia_Kcal.ToString("F2")</td>
+                                <td>@((refeicaoAlimento.Quantidade / 1000).ToString("F3")) g</td>
                             </tr>
                         }
                     </tbody>
@@ -129,19 +114,20 @@
                 <p class="text-center text-muted">Nenhum alimento adicionado.</p>
             }
 
+            <!-- Botão Adicionar Alimento -->
             <div class="text-center mt-3">
                 <a asp-action="CriarRefeicao_Alimento"
-                    asp-controller="Refeicao_Alimento"
-                    asp-route-refeicaoId="@refeicao.Id"
-                    asp-route-idProjeto="@Model.Projeto.Id"
-                    class="btn btn-outline-dark">
-                        ➕ Adicionar Alimento
+                   asp-controller="Refeicao_Alimento"
+                   asp-route-refeicaoId="@refeicao.Id"
+                   asp-route-idProjeto="@Model.Projeto.Id"
+                   class="btn btn-outline-dark">
+                    ➕ Adicionar Alimento
                 </a>
-
             </div>
         </div>
     }
 </div>
+
 
 @section Scripts {
     <!-- jQuery e jQuery UI para Sortable -->
@@ -183,6 +169,50 @@
 
             // Carregar a ordem salva ao iniciar
             carregarOrdem();
+
+             $('.btn-excluir').click(function (event) {
+            event.preventDefault();
+            const id = $(this).data('refeicao-id');
+            const confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
+            if (confirmar) {
+                removerRefeicaoDoLocalStorage(id); // se quiser manter isso
+                $('#form-excluir-' + id).submit();
+            }
         });
-    </script>
+
+        function removerRefeicaoDoLocalStorage(id) {
+        let ordemSalva = localStorage.getItem("ordemRefeicoes");
+        if (ordemSalva) {
+            let ordem = JSON.parse(ordemSalva);
+            ordem = ordem.filter(rid => rid != id);
+            localStorage.setItem("ordemRefeicoes", JSON.stringify(ordem));
+        }
+    }
+
+    
+        $('.refeicao-nome-input').on('keydown', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault(); // Evita quebra de linha
+            salvarNome($(this));
+            $(this).blur(); // Tira o foco para disparar o blur também
+        }
+    });
+
+    // Salvar ao sair do campo (blur)
+    $('.refeicao-nome-input').on('blur', function () {
+        salvarNome($(this));
+    });
+
+    function salvarNome(input) {
+        let id = input.data('refeicao-id');
+        let novoNome = input.val();
+
+        $.post('/Refeicao/AtualizarNome', { id: id, nome: novoNome })
+            .fail(function () {
+                alert("Erro ao salvar o nome da refeição.");
+            });
+    }
+
+    });
+</script>
 }

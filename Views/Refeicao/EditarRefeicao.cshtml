@@ -5,14 +5,14 @@
 }
 
 <div class="card shadow-sm p-4">
-    <h2 class="text-center text-primary">Editar Refeição</h2>
+    <h2 class="text-center text-primary texto">Editar Refeição</h2>
 
     <form asp-action="EditarRefeicao" method="post" id="form-editar">
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="IdProjeto" />
 
         <div class="form-group mb-3">
-            <label asp-for="Nome" class="form-label fw-bold text-secondary">Nome da Refeição</label>
+            <label asp-for="Nome" class="form-label fw-bold text-secondary texto">Nome da Refeição</label>
             <input asp-for="Nome" class="form-control border rounded-3 shadow-sm" />
         </div>
 
@@ -36,24 +36,5 @@
                 $('#form-editar').submit();
             }
         });
-
-        $('#btn-excluir').click(function (event) {
-            event.preventDefault();
-            var confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
-            if (confirmar) {
-                let id = $('#refeicao-id').val();
-                removerRefeicaoDoLocalStorage(id);
-                $('#form-excluir').submit();
-            }
-        });
-
-        function removerRefeicaoDoLocalStorage(id) {
-            let ordemRefeicoes = localStorage.getItem("ordemRefeicoes");
-            if (ordemRefeicoes) {
-                ordemRefeicoes = JSON.parse(ordemRefeicoes);
-                ordemRefeicoes = ordemRefeicoes.filter(refeicaoId => refeicaoId !== id);
-                localStorage.setItem("ordemRefeicoes", JSON.stringify(ordemRefeicoes));
-            }
-        }
     });
 </script>
