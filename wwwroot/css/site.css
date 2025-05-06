@@ -269,3 +269,176 @@ img {
 .bi{
   color: rgba(0, 0, 0, 0.76);
 }
+
+.cara{
+  color: white important;
+}
+ 
+
+/* Alinhando a tela dos pacientes à esquerda */
+.tela-pacientes {
+  display: flex;
+  flex-direction: column; /* Organiza os elementos verticalmente */
+  align-items: flex-start; /* Alinha os elementos à esquerda */
+  margin: 20px; /* Adiciona espaço ao redor da tela */
+}
+
+/* Estilizando o cabeçalho da tela */
+.cabecalho-tela {
+  display: flex;
+  justify-content: center; /* Espalha o conteúdo ao máximo */
+  width: 100%; /* Toma toda a largura disponível */
+  margin-bottom: 20px; /* Adiciona espaçamento inferior */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Definindo fonte */
+}
+
+/* Título principal da tela */
+.cabecalho-tela h1 {
+  font-size: 2em; /* Tamanho grande para o título */
+  color: #333; /* Cor escura para o título */
+  margin: 0; /* Remove a margem para ajustar o alinhamento */
+
+}
+
+/* Estilizando o botão de criar paciente */
+.cabecalho-tela a {
+  font-size: 1em; /* Tamanho de fonte moderado */
+  padding: 10px 15px; /* Adiciona padding ao redor do botão */
+  border-radius: 5px; /* Bordas arredondadas */
+  text-decoration: none; /* Remove a sublinhado */
+}
+
+/* Estilo do botão de criar paciente */
+.cabecalho-tela .btn-secondary {
+  background-color: #6c757d; /* Cor de fundo cinza */
+  border-color: #6c757d; /* Cor da borda */
+}
+
+/* Contêiner para os cards com rolagem */
+.lista-pacientes-container {
+  background-color: white; /* Cor de fundo bem suave */
+  padding: 20px; /* Adiciona espaçamento dentro do contêiner */
+  border-radius: 10px; /* Borda arredondada */
+  width: 40%; /* Preenche toda a largura */
+  max-width: 750px; /* Limita a largura máxima */
+  max-height: 600px; /* Limita a altura máxima */
+  overflow-y: auto; /* Permite rolagem vertical */
+  margin-top: 20px; /* Adiciona espaço acima */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Lista de pacientes: organiza os cards */
+.lista-pacientes {
+  display: flex;
+  flex-direction: column; /* Organiza os cards verticalmente */
+  gap: 10px; /* Espaçamento entre os cards */
+}
+
+/* Estilo de cada card de paciente */
+.paciente-card {
+  background-color: #f1f1f1; /* Cor de fundo branca */
+  padding: 15px; /* Diminuindo o padding para deixar os cards mais compactos */
+  border-radius: 12px; /* Borda arredondada */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  width: 100%; /* O card ocupa toda a largura disponível */
+  display: flex;
+  flex-direction: column; /* Organiza os elementos dentro do card verticalmente */
+  gap: 10px; /* Espaçamento entre os itens dentro do card */
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transição suave para o hover */
+}
+
+/* Efeito ao passar o mouse sobre o card */
+.paciente-card:hover {
+  transform: translateY(-5px); /* Eleva o card */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15); /* Sombra mais forte */
+}
+
+/* Organizando as informações dentro do card */
+.informacoes {
+  display: flex;
+  flex-direction: column; /* Organiza as informações verticalmente */
+  gap: 8px; /* Espaçamento entre as informações */
+}
+
+/* Estilizando o nome do paciente */
+.nome-paciente strong {
+  font-size: 15px; /* Reduzindo o tamanho do nome para deixar mais compacto */
+  color: #4B0082; /* Cor roxa para o nome */
+  font-weight: 600; /* Deixa o nome em negrito */
+}
+
+/* Detalhes do paciente (telefone e Instagram) */
+.detalhes-paciente {
+  display: flex;
+  gap: 20px; /* Reduzindo o espaçamento entre telefone e Instagram */
+  font-size: 10px; /* Tamanho de fonte mais compacto */
+  color: #6c757d; /* Cor cinza suave */
+}
+.fonte-telefone-e-insta{
+  font-size: 15px; /* Tamanho de fonte mais compacto */
+   /* Cor cinza suave */
+}
+
+/* Estilizando a área das ações (botões) */
+.acoes {
+  display: flex;
+  gap: 8px; /* Espaçamento entre os botões */; /* Centraliza horizontalmente */
+}
+
+/* Estilo dos botões dentro do card */
+.acoes {
+  display: flex;
+  gap: 10px;
+  margin-left: auto; /* Empurra os ícones pro canto direito */
+}
+
+/* Estilização dos botões */
+.acoes a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Ícones dentro dos botões */
+.acoes a i {
+  margin: 0; /* Remove margem lateral dos ícones */
+}
+
+/* Efeito hover */
+.acoes a:hover {
+  transform: scale(1.05);
+}
+
+/* Botão "Novo Paciente" */
+/* Área do botão de criar */
+.area-botao-criar {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 15px;
+}
+
+/* Estilo do botão "Novo Paciente" */
+.btn-criar-paciente {
+  font-size: 1em;
+  padding: 10px 15px;
+  border-radius: 5px;
+  background-color: #4B0082;
+  border: none;
+  color: white;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.btn-criar-paciente:hover {
+  background-color: #5a6268;
+  color: white;
+}

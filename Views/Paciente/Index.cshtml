@@ -4,36 +4,47 @@
     ViewData["Title"] = "Listagem de Pacientes";
 }
 
-<h2>Pacientes</h2>
+<div class="tela-pacientes">
 
-<p>
-    <a asp-action="Criar" class="btn btn-secondary">Novo Paciente</a>
-</p>
+    <!-- Botão acima do título principal -->
+    <div class="area-botao-criar">
+        <a asp-action="Criar" class="btn btn-secondary btn-criar-paciente">
+            <i class="bi bi-person-plus cara"></i> Novo Paciente
+        </a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.Nome)</th>
-            <th>@Html.DisplayNameFor(model => model.Sobrenome)</th>
-            <th>@Html.DisplayNameFor(model => model.DataNascimento)</th>
-            <th>@Html.DisplayNameFor(model => model.Telefone)</th>
-            <th>@Html.DisplayNameFor(model => model.Instagram)</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>@Html.DisplayFor(model => item.Nome)</td>
-                <td>@Html.DisplayFor(model => item.Sobrenome)</td>
-                <td>@Html.DisplayFor(model => item.DataNascimento)</td>
-                <td>@Html.DisplayFor(model => item.Telefone)</td>
-                <td>@Html.DisplayFor(model => item.Instagram)</td>
-                <td>
-                    <a asp-action="Detalhe" asp-route-id="@item.Id" class="btn btn-secondary">Detalhes</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <!-- Contêiner para os cards com rolagem -->
+    <div class="lista-pacientes-container">
+        <div class="lista-pacientes">
+            <div class="cabecalho-tela">
+                <h1>Listagem de Pacientes</h1>
+            </div>
+            @foreach (var item in Model)
+            {
+                <div class="paciente-card">
+                    <div class="informacoes">
+                        <div class="nome-paciente">
+                            <strong>@($"{item.Nome} {item.Sobrenome}")</strong>
+                        </div>
+                        <div class="detalhes-paciente">
+                            <div class="telefone-paciente">
+                                <span class="fonte-telefone-e-insta">@item.Telefone</span>
+                            </div>
+                            <div class="instagram-paciente">
+                                <span class="fonte-telefone-e-insta">@item.Instagram</span>
+                            </div>
+                            <div class="acoes">
+                                <a asp-action="Detalhe" asp-route-id="@item.Id"  title="Ver detalhes">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id"  title="Ver projetos">
+                                    <i class="bi bi-folder-fill"></i>
+                                </a>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
