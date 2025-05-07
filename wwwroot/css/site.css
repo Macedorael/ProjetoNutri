@@ -285,11 +285,10 @@ img {
 
 /* Estilizando o cabeçalho da tela */
 .cabecalho-tela {
-  display: flex;
-  justify-content: center; /* Espalha o conteúdo ao máximo */
-  width: 100%; /* Toma toda a largura disponível */
-  margin-bottom: 20px; /* Adiciona espaçamento inferior */
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Definindo fonte */
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px 0;
 }
 
 /* Título principal da tela */
@@ -316,35 +315,41 @@ img {
 
 /* Contêiner para os cards com rolagem */
 .lista-pacientes-container {
-  background-color: #f9f9f9; /* Cor de fundo bem suave */
-  padding: 20px; /* Adiciona espaçamento dentro do contêiner */
-  border-radius: 10px; /* Borda arredondada */
-  width: 40%; /* Preenche toda a largura */
-  max-width: 750px; /* Limita a largura máxima */
-  max-height: 600px; /* Limita a altura máxima */
-  overflow-y: auto; /* Permite rolagem vertical */
-  margin-top: 20px; /* Adiciona espaço acima */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: #f9f9f9;
+  width: 40%;
+  max-width: 750px;
+  max-height: 500px;            /* Altura fixa */
+  overflow-y: auto;         /* Só os cards rolam */
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.cabecalho-fixa {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #f9f9f9;
+  padding-bottom: 10px;
+}
+.campo-pesquisa {
+  padding: 0 20px 10px 20px;
 }
 
 /* Lista de pacientes: organiza os cards */
 .lista-pacientes {
   display: flex;
-  flex-direction: column; /* Organiza os cards verticalmente */
-  gap: 10px; /* Espaçamento entre os cards */
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px 20px 20px 20px;
 }
-
 /* Estilo de cada card de paciente */
 .paciente-card {
-  background-color: #f1f1f1; /* Cor de fundo branca */
-  padding: 15px; /* Diminuindo o padding para deixar os cards mais compactos */
-  border-radius: 12px; /* Borda arredondada */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  width: 100%; /* O card ocupa toda a largura disponível */
-  display: flex;
-  flex-direction: column; /* Organiza os elementos dentro do card verticalmente */
-  gap: 10px; /* Espaçamento entre os itens dentro do card */
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Transição suave para o hover */
+  background-color: #f1f1f1;
+  padding: 12px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* Efeito ao passar o mouse sobre o card */
@@ -378,6 +383,13 @@ img {
   font-size: 15px; /* Tamanho de fonte mais compacto */
    /* Cor cinza suave */
 }
+
+#pesquisaPaciente:focus {
+  outline: none;            /* Remove o contorno azul */
+  box-shadow: none;         /* Remove sombra azul do Bootstrap */
+  border-color: #ccc;       /* Define a cor da borda como cinza (ou outra que preferir) */
+}
+
 
 /* Estilizando a área das ações (botões) */
 .acoes {
@@ -460,6 +472,13 @@ img {
   flex-shrink: 0; /* Impede que o cabeçalho seja redimensionado */
   margin-bottom: 10px;
 }
+
+.agendamento-cabecalho-agenda{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 
 .agendamento-cabecalho h1 {
   font-size: 30px;
@@ -637,4 +656,15 @@ img {
 #formAgendamentoContainer button {
   padding: 6px 16px;
   font-size: 0.85rem;
+}
+
+.campo-pesquisa {
+  margin: 20px 0;
+  width: 100%;
+}
+
+#pesquisaPaciente {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
 }

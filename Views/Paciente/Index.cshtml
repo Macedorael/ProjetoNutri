@@ -5,20 +5,29 @@
 }
 
 <div class="tela-pacientes">
-
-    <!-- Botão acima do título principal -->
+    <!-- Botão para criar novo paciente -->
     <div class="area-botao-criar">
-        <a asp-action="Criar" class="btn btn-secondary btn-criar-paciente">
+        <a asp-action="Criar" class=" btn-criar-paciente">
             <i class="bi bi-person-plus cara"></i> Novo Paciente
         </a>
     </div>
 
-    <!-- Contêiner para os cards com rolagem -->
+    <!-- Contêiner principal com título, pesquisa e lista rolável -->
     <div class="lista-pacientes-container">
-        <div class="lista-pacientes">
+        
+        <!-- Cabeçalho fixo (título + pesquisa) -->
+        <div class="cabecalho-fixa">
             <div class="cabecalho-tela">
                 <h1>Listagem de Pacientes</h1>
             </div>
+
+            <div class="campo-pesquisa">
+                <input type="text" id="pesquisaPaciente" class="form-control" placeholder="Pesquisar por nome...">
+            </div>
+        </div>
+
+        <!-- Lista de cards dos pacientes -->
+        <div class="lista-pacientes">
             @foreach (var item in Model)
             {
                 <div class="paciente-card">
@@ -34,10 +43,10 @@
                                 <span class="fonte-telefone-e-insta"><i class="bi bi-instagram"></i> @item.Instagram</span>
                             </div>
                             <div class="acoes">
-                                <a asp-action="Detalhe" asp-route-id="@item.Id"  title="Ver detalhes">
+                                <a asp-action="Detalhe" asp-route-id="@item.Id" title="Ver detalhes">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>
-                                <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id"  title="Ver projetos">
+                                <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" title="Ver projetos">
                                     <i class="bi bi-folder-fill"></i>
                                 </a>
                                 <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
@@ -47,10 +56,23 @@
                                     </button>
                                 </form>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                 </div>
             }
         </div>
     </div>
 </div>
+
+<!-- jQuery para filtro -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#pesquisaPaciente').on('keyup', function () {
+            var valor = $(this).val().toLowerCase();
+            $('.paciente-card').filter(function () {
+                $(this).toggle($(this).find('.nome-paciente').text().toLowerCase().indexOf(valor) > -1);
+            });
+        });
+    });
+</script>

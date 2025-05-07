@@ -4,13 +4,13 @@
     var agendamentos = ViewBag.Agendamentos as IEnumerable<ProjetoNutri.Models.Agendamento>;
 }
 
+<!-- Botão voltar -->
 <div>
     <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a>
 </div>
 
-<!-- Wrapper Flexível para dividir em duas colunas -->
+<!-- Wrapper Flexível -->
 <div class="detalhes-agendamento-wrapper">
-
     <!-- Detalhes do Paciente -->
     <div class="paciente-detalhes">
         <dl class="row">
@@ -27,10 +27,6 @@
                             <i class="bi bi-trash2-fill"></i>
                         </button>
                     </form>
-
-                    <button id="btnAgendar" class="icone-acao" title="Agendar Paciente">
-                        <i class="bi bi-calendar-date-fill"></i>
-                    </button>
                 </div>
             </div>
             <div class="paciente-info-linha d-flex flex-wrap gap-4">
@@ -54,18 +50,21 @@
             </div>
         </dl>
     </div>
-    
 
-    <!-- Agendamentos (sem alterações) -->
+    <!-- Agendamentos -->
     <div class="agendamento-container">
-        <div class="agendamento-cabecalho">
+        <div class="agendamento-cabecalho agendamento-cabecalho-agenda">
             <h1>Agendamentos de @Model.Nome</h1>
+            <!-- Botão que abre o modal -->
+            <button type="button" class="icone-acao" data-bs-toggle="modal" data-bs-target="#modalAgendamento" title="Agendar Paciente">
+                <i class="bi bi-calendar-date-fill"></i>
+            </button>
         </div>
 
         <div class="agendamento-lista">
             @if (agendamentos == null || !agendamentos.Any())
             {
-                <br>
+                <br />
                 <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
             }
             else
@@ -85,8 +84,12 @@
                                     <span class="agendamento-texto">@agendamento.Observacao</span>
                                 </div>
                                 <div class="agendamento-acoes">
-                                    <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Editar " class="icone-acao"><i class="bi bi-pencil-fill"></i></a>
-                                    <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Excluir Agendamento" class="icone-acao"><i class="bi bi-trash2-fill"></i></a>
+                                    <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Editar">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </a>
+                                    <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Excluir Agendamento">
+                                        <i class="bi bi-trash2-fill"></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -95,35 +98,45 @@
             }
         </div>
     </div>
-
 </div>
-<br>
+
+<!-- Botão para ir aos projetos -->
+<br />
 <div>
     <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
 </div>
 
-
-<div id="formAgendamentoContainer" style="display: none; margin-top: 20px;">
-    <form method="post" action="/Agendamento/CriarAgendamento">
-        <input type="hidden" name="IdPaciente" value="@Model.Id" />
-        
-        <div class="form-group">
-            <label for="Data">Data</label>
-            <input type="date" id="Data" name="Data" class="form-control form-control-sm" required />
+<!-- Modal de Agendamento -->
+<div class="modal fade" id="modalAgendamento" tabindex="-1" aria-labelledby="modalAgendamentoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/Agendamento/CriarAgendamento">
+                <input type="hidden" name="IdPaciente" value="@Model.Id" />
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgendamentoLabel">Novo Agendamento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-2">
+                        <label for="Data">Data</label>
+                        <input type="date" id="Data" name="Data" class="form-control form-control-sm" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Hora">Hora</label>
+                        <input type="time" id="Hora" name="Hora" class="form-control form-control-sm" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Observacao">Observações</label>
+                        <textarea id="Observacao" name="Observacao" class="form-control form-control-sm" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-secondary">Agendar</button>
+                </div>
+            </form>
         </div>
-
-        <div class="form-group">
-            <label for="Hora">Hora</label>
-            <input type="time" id="Hora" name="Hora" class="form-control form-control-sm" required />
-        </div>
-
-        <div class="form-group">
-            <label for="Observacao">Obs.</label>
-            <textarea id="Observacao" name="Observacao" class="form-control form-control-sm" rows="2"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-secondary">Agendar</button>
-    </form>
+    </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
