@@ -442,3 +442,79 @@ img {
   background-color: #5a6268;
   color: white;
 }
+
+
+.agendamento-container {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 40%;
+  max-width: 750px;
+  max-height: 600px;
+  overflow-y: auto;
+  margin-top: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.agendamento-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.agendamento-card {
+  background-color: #f1f1f1;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.agendamento-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.agendamento-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.agendamento-detalhes {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+  color: #6c757d;
+  flex-wrap: wrap;
+}
+
+.agendamento-item {
+  display: flex;
+  align-items: center;
+}
+
+.agendamento-texto {
+  font-size: 15px;
+}
+
+.agendamento-acoes {
+  display: flex;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.agendamento-acoes a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  padding: 6px 10px;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}

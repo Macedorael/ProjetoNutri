@@ -50,36 +50,40 @@
 </div>
 <br>
 
-<div class="lista-pacientes-container">
-        <div class="lista-pacientes">
-            <div class="cabecalho-tela">
-                <h1>Agendamento @Model.Nome</h1>
-            </div>
-            @if (agendamentos == null || !agendamentos.Any())
+<div class="agendamento-container">
+    <div class="agendamento-lista">
+        <div class="agendamento-cabecalho">
+            <h1>Agendamentos de @Model.Nome</h1>
+        </div>
+
+        @if (agendamentos == null || !agendamentos.Any())
+        {
+            <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
+        }
+        else
+        {
+            foreach (var agendamento in agendamentos)
             {
-                <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
-            }
-            @foreach (var agendamento in agendamentos)
-            {
-                <div class="paciente-card">
-                    <div class="informacoes">
-                        <div class="detalhes-paciente">
-                            <div class="telefone-paciente">
-                                <span class="fonte-telefone-e-insta"><i class="bi bi-calendar-check"></i>   @agendamento.Data.ToString("dd/MM/yyyy")</span>
+                <div class="agendamento-card">
+                    <div class="agendamento-info">
+                        <div class="agendamento-detalhes">
+                            <div class="agendamento-item">
+                                <span class="agendamento-texto"><i class="bi bi-calendar-check"></i> @agendamento.Data.ToString("dd/MM/yyyy")</span>
                             </div>
-                            <div class="instagram-paciente">
-                                <span class="fonte-telefone-e-insta"><i class="bi bi-watch"></i>  @agendamento.Hora</span>
+                            <div class="agendamento-item">
+                                <span class="agendamento-texto"><i class="bi bi-watch"></i> @agendamento.Hora</span>
                             </div>
-                            <div class="instagram-paciente">
-                                <span class="fonte-telefone-e-insta"> @agendamento.Observacao</span>
+                            <div class="agendamento-item">
+                                <span class="agendamento-texto">@agendamento.Observacao</span>
                             </div>
-                            <div class="acoes">
+                            <div class="agendamento-acoes">
                                 <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Editar"><i class="bi bi-pencil-fill"></i></a>
                                 <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Excluir Agendamento"><i class="bi bi-trash2-fill"></i></a>
+                                </div>
                             </div>
-                        </div>  
                     </div>
                 </div>
             }
-        </div>
+        }
     </div>
+</div>
