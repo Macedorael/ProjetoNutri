@@ -40,6 +40,12 @@
                                 <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id"  title="Ver projetos">
                                     <i class="bi bi-folder-fill"></i>
                                 </a>
+                                <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
+                                    <input type="hidden" name="Id" value="@item.Id" />
+                                    <button type="submit" class="icone-acao" title="Excluir Paciente">
+                                        <i class="bi bi-trash2-fill"></i>
+                                    </button>
+                                </form>
                             </div>
                         </div>  
                     </div>

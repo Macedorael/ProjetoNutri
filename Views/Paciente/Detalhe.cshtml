@@ -4,86 +4,143 @@
     var agendamentos = ViewBag.Agendamentos as IEnumerable<ProjetoNutri.Models.Agendamento>;
 }
 
-<h1>Detalhes do Paciente</h1><br>
-
 <div>
     <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a>
 </div>
-<br>
 
-<div>
-    <dl class="row">
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nome)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nome)</dd>
+<!-- Wrapper Flexível para dividir em duas colunas -->
+<div class="detalhes-agendamento-wrapper">
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Sobrenome)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Sobrenome)</dd>
+    <!-- Detalhes do Paciente -->
+    <div class="paciente-detalhes">
+        <dl class="row">
+            <div class="cabecalho-paciente">
+                <h2>Detalhes do Paciente</h2>
+                <div class="acoes-paciente">
+                    <a asp-action="Editar" asp-route-id="@Model.Id" title="Editar Paciente">
+                        <i class="bi bi-pencil-fill"></i>
+                    </a>
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataNascimento)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataNascimento)</dd>
+                    <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
+                        <input type="hidden" name="Id" value="@Model.Id" />
+                        <button type="submit" class="icone-acao" title="Excluir Paciente">
+                            <i class="bi bi-trash2-fill"></i>
+                        </button>
+                    </form>
 
-        <dt class="col-sm-2">Idade</dt>
-        <dd class="col-sm-10">@ViewBag.Idade anos</dd>
+                    <button id="btnAgendar" class="icone-acao" title="Agendar Paciente">
+                        <i class="bi bi-calendar-date-fill"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="paciente-info-linha d-flex flex-wrap gap-4">
+                <div><strong>Nome:</strong> @Model.Nome @Model.Sobrenome</div>
+                <div><strong>Idade:</strong> @ViewBag.Idade anos</div>
+                <div><strong>Sexo:</strong> @Model.Sexo</div>
+                <div><strong>Telefone:</strong> @Model.Telefone</div>
+                <div><strong>Instagram:</strong> @Model.Instagram</div>
+                <div><strong>Data de Cadastro:</strong> @Model.DataCadastro.ToShortDateString()</div>
+                <div>
+                    <strong>Status:</strong>
+                    @if (Model.Ativo)
+                    {
+                        <span class="badge bg-success">Ativo</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inativo</span>
+                    }
+                </div>
+            </div>
+        </dl>
+    </div>
+    
 
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Sexo)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Sexo)</dd>
-
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Telefone)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Telefone)</dd>
-
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Instagram)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Instagram)</dd>
-
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataCadastro)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataCadastro)</dd>
-
-        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ativo)</dt>
-        <dd class="col-sm-10">@Html.DisplayFor(model => model.Ativo)</dd>
-    </dl>
-</div>
-
-<div>
-    <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
-    <a asp-action="Deletar" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
-    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
-    <a asp-action="CriarAgendamento" asp-controller="Agendamento" asp-route-Idpaciente="@Model.Id" class="btn btn-secondary">Novo Agendamento</a>
-</div>
-<br>
-
-<div class="agendamento-container">
-    <div class="agendamento-lista">
+    <!-- Agendamentos (sem alterações) -->
+    <div class="agendamento-container">
         <div class="agendamento-cabecalho">
             <h1>Agendamentos de @Model.Nome</h1>
         </div>
 
-        @if (agendamentos == null || !agendamentos.Any())
-        {
-            <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
-        }
-        else
-        {
-            foreach (var agendamento in agendamentos)
+        <div class="agendamento-lista">
+            @if (agendamentos == null || !agendamentos.Any())
             {
-                <div class="agendamento-card">
-                    <div class="agendamento-info">
-                        <div class="agendamento-detalhes">
-                            <div class="agendamento-item">
-                                <span class="agendamento-texto"><i class="bi bi-calendar-check"></i> @agendamento.Data.ToString("dd/MM/yyyy")</span>
-                            </div>
-                            <div class="agendamento-item">
-                                <span class="agendamento-texto"><i class="bi bi-watch"></i> @agendamento.Hora</span>
-                            </div>
-                            <div class="agendamento-item">
-                                <span class="agendamento-texto">@agendamento.Observacao</span>
-                            </div>
-                            <div class="agendamento-acoes">
-                                <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Editar"><i class="bi bi-pencil-fill"></i></a>
-                                <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Excluir Agendamento"><i class="bi bi-trash2-fill"></i></a>
+                <br>
+                <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
+            }
+            else
+            {
+                foreach (var agendamento in agendamentos)
+                {
+                    <div class="agendamento-card">
+                        <div class="agendamento-info">
+                            <div class="agendamento-detalhes">
+                                <div class="agendamento-item">
+                                    <span class="agendamento-texto"><i class="bi bi-calendar-check"></i> @agendamento.Data.ToString("dd/MM/yyyy")</span>
+                                </div>
+                                <div class="agendamento-item">
+                                    <span class="agendamento-texto"><i class="bi bi-watch"></i> @agendamento.Hora</span>
+                                </div>
+                                <div class="agendamento-item">
+                                    <span class="agendamento-texto">@agendamento.Observacao</span>
+                                </div>
+                                <div class="agendamento-acoes">
+                                    <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Editar " class="icone-acao"><i class="bi bi-pencil-fill"></i></a>
+                                    <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Excluir Agendamento" class="icone-acao"><i class="bi bi-trash2-fill"></i></a>
                                 </div>
                             </div>
+                        </div>
                     </div>
-                </div>
+                }
             }
-        }
+        </div>
     </div>
+
 </div>
+<br>
+<div>
+    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
+</div>
+
+
+<div id="formAgendamentoContainer" style="display: none; margin-top: 20px;">
+    <form method="post" action="/Agendamento/CriarAgendamento">
+        <input type="hidden" name="IdPaciente" value="@Model.Id" />
+        
+        <div class="form-group">
+            <label for="Data">Data</label>
+            <input type="date" id="Data" name="Data" class="form-control form-control-sm" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Hora">Hora</label>
+            <input type="time" id="Hora" name="Hora" class="form-control form-control-sm" required />
+        </div>
+
+        <div class="form-group">
+            <label for="Observacao">Obs.</label>
+            <textarea id="Observacao" name="Observacao" class="form-control form-control-sm" rows="2"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-secondary">Agendar</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Alterna visibilidade do formulário
+        $("#btnAgendar").click(function (e) {
+            e.stopPropagation(); // Impede que o clique no botão feche o formulário
+            $("#formAgendamentoContainer").slideToggle();
+        });
+
+        // Fecha o formulário se clicar fora dele
+        $(document).on("click", function (e) {
+            // Verifica se o clique foi fora do botão e do container
+            if (!$(e.target).closest("#formAgendamentoContainer, #btnAgendar").length) {
+                $("#formAgendamentoContainer").slideUp();
+            }
+        });
+    });
+</script>
+

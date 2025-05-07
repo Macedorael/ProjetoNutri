@@ -316,7 +316,7 @@ img {
 
 /* Contêiner para os cards com rolagem */
 .lista-pacientes-container {
-  background-color: white; /* Cor de fundo bem suave */
+  background-color: #f9f9f9; /* Cor de fundo bem suave */
   padding: 20px; /* Adiciona espaçamento dentro do contêiner */
   border-radius: 10px; /* Borda arredondada */
   width: 40%; /* Preenche toda a largura */
@@ -445,18 +445,32 @@ img {
 
 
 .agendamento-container {
-  background-color: white;
+  background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
   width: 40%;
   max-width: 750px;
-  max-height: 600px;
-  overflow-y: auto;
-  margin-top: 20px;
+  height: 218px; /* Altura fixa do container */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.agendamento-cabecalho {
+  flex-shrink: 0; /* Impede que o cabeçalho seja redimensionado */
+  margin-bottom: 10px;
+}
+
+.agendamento-cabecalho h1 {
+  font-size: 30px;
+  font-weight: 600;
+  margin: 0;
+  text-align: center;
 }
 
 .agendamento-lista {
+  flex-grow: 1;
+  overflow-y: auto; /* Scroll apenas nesta parte */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -517,4 +531,110 @@ img {
   border-radius: 5px;
   text-decoration: none;
   transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.detalhes-agendamento-wrapper {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
+  flex-wrap: wrap; /* para responsividade em telas menores */
+}
+
+.paciente-detalhes {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  width: 40%; /* Largura ajustada */
+  max-width: 750px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-right: 20px; /* Distância entre o paciente e o agendamento */
+}
+
+.agendamento-container {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 10px;
+  width: 40%; /* Largura ajustada */
+  max-width: 750px;
+  max-height: 600px;
+  overflow-y: auto;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-left: 20px; /* Distância entre o agendamento e o paciente */
+}
+
+.cabecalho-paciente {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.acoes-paciente a {
+  margin-left: 10px;
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+/* Ajustes gerais para os ícones de ação */
+.acoes-paciente a,
+.icone-acao {
+  font-size: 17px; /* Mesma largura para todos os ícones */
+  color: #333; /* Cor padrão */
+  text-decoration: none; /* Remove o sublinhado */
+  margin-left: 10px; /* Espaçamento entre os ícones */
+  margin-top: 2px;
+  transition: color 0.3s ease, transform 0.2s ease; /* Animação suave */
+  display: inline-flex; /* Garantir que todos os ícones estejam alinhados na mesma linha */
+  align-items: center; /* Alinhamento vertical central dos ícones */
+}
+
+/* Alinhamento e estilo do botão de exclusão */
+.icone-acao {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* Efeito de hover para todos os ícones e botões */
+.acoes-paciente a:hover,
+.icone-acao:hover {
+  transform: scale(1.1); /* Aumenta o tamanho no hover */
+}
+
+.alert.alert-info {
+  background-color: #f1f1f1; /* cor de fundo personalizada */
+  color: #000000;              /* cor do texto */
+  border: 1px  #000000; /* borda opcional */
+}
+
+#formAgendamentoContainer {
+  background: #f9f9f9;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  max-width: 400px;
+  font-size: 0.9rem;
+}
+
+#formAgendamentoContainer .form-group {
+  margin-bottom: 10px;
+}
+
+#formAgendamentoContainer label {
+  font-weight: 500;
+  margin-bottom: 3px;
+}
+
+#formAgendamentoContainer input,
+#formAgendamentoContainer textarea {
+  font-size: 0.85rem;
+  padding: 6px 10px;
+}
+
+#formAgendamentoContainer button {
+  padding: 6px 16px;
+  font-size: 0.85rem;
 }
