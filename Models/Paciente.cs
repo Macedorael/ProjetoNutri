@@ -20,6 +20,8 @@ namespace ProjetoNutri.Models
         public DateTime DataCadastro { get; set; }
         public bool Ativo { get; set; }
 
-         public ICollection<Projeto> Projetos { get; set; }
+        public ICollection<Projeto> Projetos { get; set; }
+        
+        public ICollection<Agendamento> Agendamentos { get; set; }
     }
 }

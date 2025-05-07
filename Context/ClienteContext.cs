@@ -27,6 +27,8 @@ namespace ProjetoNutri.Context
 
         public DbSet<Refeicao_Alimento> Refeicoes_Alimentos { get; set; }
 
+        public DbSet<Agendamento> Agendamentos { get; set; }
+
         override protected void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Projeto>()
@@ -78,6 +80,12 @@ namespace ProjetoNutri.Context
                 .HasOne(r => r.Projeto)
                 .WithMany(p => p.Refeicoes)
                 .HasForeignKey(r => r.IdProjeto)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Agendamento>()
+                .HasOne(a => a.Paciente)
+                .WithMany(p => p.Agendamentos)
+                .HasForeignKey(a => a.IdPaciente)
                 .OnDelete(DeleteBehavior.Cascade);
 
 

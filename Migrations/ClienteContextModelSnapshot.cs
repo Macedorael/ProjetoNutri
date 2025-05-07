@@ -22,6 +22,39 @@ namespace ProjetoNutri.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ProjetoNutri.Models.Agendamento", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Data")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("GoogleEventId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("Hora")
+                        .HasColumnType("time");
+
+                    b.Property<int>("IdPaciente")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Observacao")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("Pacientes")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdPaciente");
+
+                    b.ToTable("Agendamentos");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Alimento", b =>
                 {
                     b.Property<int>("Id")
@@ -451,6 +484,17 @@ namespace ProjetoNutri.Migrations
                     b.ToTable("Refeicoes_Alimentos");
                 });
 
+            modelBuilder.Entity("ProjetoNutri.Models.Agendamento", b =>
+                {
+                    b.HasOne("ProjetoNutri.Models.Paciente", "Paciente")
+                        .WithMany("Agendamentos")
+                        .HasForeignKey("IdPaciente")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Paciente");
+                });
+
             modelBuilder.Entity("ProjetoNutri.Models.Alimento", b =>
                 {
                     b.HasOne("ProjetoNutri.Models.Categoria_Alimento", "Categoria")
@@ -522,7 +566,7 @@ namespace ProjetoNutri.Migrations
                     b.HasOne("ProjetoNutri.Models.Alimento", "Alimento")
                         .WithMany("Refeicao_Alimentos")
                         .HasForeignKey("IdAlimento")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ProjetoNutri.Models.Projeto", "Projeto")
@@ -556,6 +600,8 @@ namespace ProjetoNutri.Migrations
 
             modelBuilder.Entity("ProjetoNutri.Models.Paciente", b =>
                 {
+                    b.Navigation("Agendamentos");
+
                     b.Navigation("Projetos");
                 });
 

@@ -1,85 +1,85 @@
 @model ProjetoNutri.Models.Paciente
-
 @{
     ViewData["Title"] = "Detalhes do Paciente";
+    var agendamentos = ViewBag.Agendamentos as IEnumerable<ProjetoNutri.Models.Agendamento>;
 }
 
 <h1>Detalhes do Paciente</h1><br>
 
 <div>
-     <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a> 
+    <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a>
 </div>
 <br>
 
 <div>
     <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Nome)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Nome)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sobrenome)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sobrenome)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Sobrenome)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Sobrenome)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNascimento)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataNascimento)
-        </dd>
-        <dt class="col-sm-2">
-            Idade
-        </dt>
-        <dd class="col-sm-10">
-            @ViewBag.Idade anos
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataNascimento)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataNascimento)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sexo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sexo)
-        </dd>
+        <dt class="col-sm-2">Idade</dt>
+        <dd class="col-sm-10">@ViewBag.Idade anos</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Telefone)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Sexo)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Sexo)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Instagram)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Instagram)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Telefone)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Telefone)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DataCadastro)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DataCadastro)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Instagram)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Instagram)</dd>
 
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.DataCadastro)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.DataCadastro)</dd>
+
+        <dt class="col-sm-2">@Html.DisplayNameFor(model => model.Ativo)</dt>
+        <dd class="col-sm-10">@Html.DisplayFor(model => model.Ativo)</dd>
     </dl>
 </div>
 
 <div>
-    <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a> 
-    <a asp-action="Deletar" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a> 
+    <a asp-action="Editar" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>
+    <a asp-action="Deletar" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
     <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
-</div><br>
+    <a asp-action="CriarAgendamento" asp-controller="Agendamento" asp-route-Idpaciente="@Model.Id" class="btn btn-secondary">Novo Agendamento</a>
+</div>
+<br>
 
+<div class="lista-pacientes-container">
+        <div class="lista-pacientes">
+            <div class="cabecalho-tela">
+                <h1>Agendamento @Model.Nome</h1>
+            </div>
+            @if (agendamentos == null || !agendamentos.Any())
+            {
+                <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
+            }
+            @foreach (var agendamento in agendamentos)
+            {
+                <div class="paciente-card">
+                    <div class="informacoes">
+                        <div class="detalhes-paciente">
+                            <div class="telefone-paciente">
+                                <span class="fonte-telefone-e-insta"><i class="bi bi-calendar-check"></i>   @agendamento.Data.ToString("dd/MM/yyyy")</span>
+                            </div>
+                            <div class="instagram-paciente">
+                                <span class="fonte-telefone-e-insta"><i class="bi bi-watch"></i>  @agendamento.Hora</span>
+                            </div>
+                            <div class="instagram-paciente">
+                                <span class="fonte-telefone-e-insta"> @agendamento.Observacao</span>
+                            </div>
+                            <div class="acoes">
+                                <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Editar"><i class="bi bi-pencil-fill"></i></a>
+                                <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" title="Excluir Agendamento"><i class="bi bi-trash2-fill"></i></a>
+                            </div>
+                        </div>  
+                    </div>
+                </div>
+            }
+        </div>
+    </div>

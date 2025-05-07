@@ -61,3 +61,11 @@ dist/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+
+# Arquivos de configuração do Visual Studio Code
+.vscode/settings.json
+
+credentials.json
+credentials.xml
+Google.Apis.Auth.OAuth2.Responses.TokenResponse-user.json
+Google.Apis.Auth.OAuth2.Responses.TokenResponse-user
