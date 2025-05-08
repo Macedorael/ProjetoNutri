@@ -291,11 +291,10 @@ img {
 /* =============================== */
 
 .tela-pacientes {
-  background-color: #f9f9f9;
-  width: 48%;
-  max-width: 750px;
-  min-width: 320px;
-  height: 100%; /* Altura fixa igual à wrapper */
+  background-color: #f9f9f9; /* Diminuído para 30% */
+  max-width: 600px;
+  min-width: 500px;
+  height: 500px; /* Altura fixa igual à wrapper */
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -400,41 +399,23 @@ img {
 
 .lista-agendamento-index {
   background-color: #f9f9f9;
-  width: 48%;
   max-width: 750px;
-  min-width: 320px;
-  height: 100%; /* Altura fixa igual à wrapper */
+  min-width: 200px;
+  height: 400px; /* Aumenta a altura para acomodar mais conteúdo */
   display: flex;
   flex-direction: column;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+  margin-left: auto; /* Move a div para a direita */
+  overflow-y: auto; /* Permite rolagem se o conteúdo exceder a altura */
 }
 
-/* Cabeçalho do agendamento */
-.lista-agendamento-index .cabecalho-fixa {
-  padding: 20px;
-}
-
-.agendamento-cabecalho,
-.cabecalho-tela {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.agendamento-cabecalho h1,
-.cabecalho-tela h1 {
-  font-size: 1.8em;
-  color: #333;
-  margin: 0;
-}
-
-/* Rolagem interna para os cards de agendamento */
-.lista-pacientes {
-  flex: 1;
-  overflow-y: auto;
+/* Rolagem interna para os cards de agendamento - aplica rolagem quando necessário */
+.lista-agendamento-index .lista-pacientes {
+  flex: 1; /* Faz a lista ocupar o espaço restante */
+  overflow-y: auto; /* Ativa a rolagem quando o conteúdo exceder a altura */
   padding: 10px 20px;
+  max-height: 300px; /* Define a altura máxima para a área de rolagem */
 }
 
 /* Dia do agendamento */
@@ -447,7 +428,7 @@ img {
   font-weight: bold;
   color: #4B0082;
   margin: 10px 0 5px 0; /* Menor espaço entre o título e os cards */
-  
+  text-align: center; /* Centraliza o texto */
 }
 
 /* =============================== */
@@ -458,6 +439,12 @@ img {
   outline: none;
   box-shadow: none;
   border-color: #ccc;
+}
+
+.detalles-agendamento-wrapper {
+  display: flex; /* Configura a disposição lado a lado */
+  justify-content: space-between; /* Cria espaço entre as divs */
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -472,6 +459,8 @@ img {
     height: auto;
   }
 }
+
+
 
 
 
