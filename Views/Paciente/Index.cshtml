@@ -20,7 +20,7 @@
         <div class="lista-pacientes-container">
 
             <!-- Cabeçalho fixo (título + pesquisa) -->
-            <div class="cabecalho-fixa">
+            <div class="cabecalho-fixa cabecalho-agendamento-borda">
                 <div class="cabecalho-tela">
                     <h1>Listagem de Pacientes</h1>
                     <a asp-action="Criar" class="btn-criar-paciente-small">
@@ -73,9 +73,9 @@
 
     <!-- Nova lista de pacientes com agendamento -->
     <div class="lista-agendamento-index">
-        <div class="cabecalho-fixa">
-            <div class="cabecalho-tela">
-                <h1>Pacientes com Agendamentos</h1>
+        <div class="cabecalho-fixa cabecalho-agendamento-borda">
+            <div class="cabecalho-agendamento">
+                <h1>Agendamentos</h1>
             </div>
         </div>
 
@@ -105,7 +105,7 @@
                                     <div class="agendamento-info">
                                         <div class="agendamento-detalhes">
                                             <div class="agendamento-item">
-                                                <strong>@ag.Hora</strong>
+                                                <strong><i class="bi bi-watch"></i> @ag.Hora</strong>
                                             </div>
                                             <div class="agendamento-item">
                                                 <i class="bi bi-person"></i>
