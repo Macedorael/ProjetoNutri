@@ -1,67 +1,137 @@
-@model IEnumerable<ProjetoNutri.Models.Paciente>
+@model ProjetoNutri.Models.PacienteComAgendamentosViewModel
 
 @{
     ViewData["Title"] = "Listagem de Pacientes";
 }
+<!-- Botão para criar novo paciente (ajustado para tamanho menor e alinhado à esquerda) -->
+<div class="area-botao-criar">
+    <a asp-action="Criar" class="btn-criar-paciente">
+        <i class="bi bi-person-plus cara"></i> Novo Paciente
+    </a>
+</div>
 
-<div class="tela-pacientes">
-    <!-- Botão para criar novo paciente -->
-    <div class="area-botao-criar">
-        <a asp-action="Criar" class=" btn-criar-paciente">
-            <i class="bi bi-person-plus cara"></i> Novo Paciente
-        </a>
-    </div>
+<!-- Contêiner geral lado a lado -->
+<div class="detalhes-agendamento-wrapper">
 
-    <!-- Contêiner principal com título, pesquisa e lista rolável -->
-    <div class="lista-pacientes-container">
+    <!-- Lista original de pacientes (não alterada) -->
+    <div class="tela-pacientes">
         
-        <!-- Cabeçalho fixo (título + pesquisa) -->
-        <div class="cabecalho-fixa">
-            <div class="cabecalho-tela">
-                <h1>Listagem de Pacientes</h1>
+        <!-- Contêiner principal com título, pesquisa e lista rolável -->
+        <div class="lista-pacientes-container">
+
+            <!-- Cabeçalho fixo (título + pesquisa) -->
+            <div class="cabecalho-fixa">
+                <div class="cabecalho-tela">
+                    <h1>Listagem de Pacientes</h1>
+                    <a asp-action="Criar" class="btn-criar-paciente-small">
+                        <i class="bi bi-person-plus"></i>
+                    </a>
+                </div>
+
+                <div class="campo-pesquisa">
+                    <input type="text" id="pesquisaPaciente" class="form-control" placeholder="Pesquisar por nome...">
+                </div>
             </div>
 
-            <div class="campo-pesquisa">
-                <input type="text" id="pesquisaPaciente" class="form-control" placeholder="Pesquisar por nome...">
-            </div>
-        </div>
-
-        <!-- Lista de cards dos pacientes -->
-        <div class="lista-pacientes">
-            @foreach (var item in Model)
-            {
-                <div class="paciente-card">
-                    <div class="informacoes">
-                        <div class="nome-paciente">
-                            <strong>@($"{item.Nome} {item.Sobrenome}")</strong>
-                        </div>
-                        <div class="detalhes-paciente">
-                            <div class="telefone-paciente">
-                                <span class="fonte-telefone-e-insta"><i class="bi bi-phone"></i> @item.Telefone</span>
+            <!-- Lista de cards dos pacientes -->
+            <div class="lista-pacientes">
+                @foreach (var item in Model.Pacientes)
+                {
+                    <div class="paciente-card">
+                        <div class="informacoes">
+                            <div class="nome-paciente">
+                                <strong>@($"{item.Nome} {item.Sobrenome}")</strong>
                             </div>
-                            <div class="instagram-paciente">
-                                <span class="fonte-telefone-e-insta"><i class="bi bi-instagram"></i> @item.Instagram</span>
-                            </div>
-                            <div class="acoes">
-                                <a asp-action="Detalhe" asp-route-id="@item.Id" title="Ver detalhes">
-                                    <i class="bi bi-eye-fill"></i>
-                                </a>
-                                <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" title="Ver projetos">
-                                    <i class="bi bi-folder-fill"></i>
-                                </a>
-                                <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
-                                    <input type="hidden" name="Id" value="@item.Id" />
-                                    <button type="submit" class="icone-acao" title="Excluir Paciente">
-                                        <i class="bi bi-trash2-fill"></i>
-                                    </button>
-                                </form>
+                            <div class="detalhes-paciente">
+                                <div class="telefone-paciente">
+                                    <span class="fonte-telefone-e-insta"><i class="bi bi-phone"></i> @item.Telefone</span>
+                                </div>
+                                <div class="instagram-paciente">
+                                    <span class="fonte-telefone-e-insta"><i class="bi bi-instagram"></i> @item.Instagram</span>
+                                </div>
+                                <div class="acoes">
+                                    <a asp-action="Detalhe" asp-route-id="@item.Id" title="Ver detalhes">
+                                        <i class="bi bi-eye-fill"></i>
+                                    </a>
+                                    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" title="Ver projetos">
+                                        <i class="bi bi-folder-fill"></i>
+                                    </a>
+                                    <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
+                                        <input type="hidden" name="Id" value="@item.Id" />
+                                        <button type="submit" class="icone-acao" title="Excluir Paciente">
+                                            <i class="bi bi-trash2-fill"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
     </div>
+
+    <!-- Nova lista de pacientes com agendamento -->
+    <div class="lista-agendamento-index">
+        <div class="cabecalho-fixa">
+            <div class="cabecalho-tela">
+                <h1>Pacientes com Agendamentos</h1>
+            </div>
+        </div>
+
+        @{
+            var agendamentosAgrupados = Model.Agendamentos
+                .Where(a => a.Data >= DateTime.Today)
+                .OrderBy(a => DateTime.Parse($"{a.Data:yyyy-MM-dd} {a.Hora}"))
+                .GroupBy(a => a.Data.Date)
+                .ToList();
+        }
+
+        @if (agendamentosAgrupados.Any())
+        {
+            foreach (var grupo in agendamentosAgrupados)
+            {
+                var diaSemana = grupo.Key.ToString("dddd, dd MMMM yyyy", new System.Globalization.CultureInfo("pt-BR"));
+                <div class="dia-agendamento">
+                    <h2>@diaSemana</h2>
+
+                    <div class="lista-pacientes">
+                        @foreach (var ag in grupo)
+                        {
+                            var paciente = Model.Pacientes.FirstOrDefault(p => p.Id == ag.IdPaciente);
+                            if (paciente != null)
+                            {
+                                <div class="paciente-card">
+                                    <div class="agendamento-info">
+                                        <div class="agendamento-detalhes">
+                                            <div class="agendamento-item">
+                                                <strong>@ag.Hora</strong>
+                                            </div>
+                                            <div class="agendamento-item">
+                                                <i class="bi bi-person"></i>
+                                                <span class="agendamento-texto">@($"{paciente.Nome} {paciente.Sobrenome}")</span>
+                                            </div>
+                                            <div class="agendamento-item">
+                                                <i class="bi bi-phone"></i>
+                                                <span class="agendamento-texto">@paciente.Telefone</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="sem-agendamentos">
+                <p>Nenhum paciente com agendamentos encontrados.</p>
+            </div>
+        }
+    </div>
+
 </div>
 
 <!-- jQuery para filtro -->

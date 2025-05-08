@@ -21,7 +21,15 @@ namespace ProjetoNutri.Controllers
         public IActionResult Index()
         {
             var pacientes = _context.Pacientes.ToList();
-            return View(pacientes);
+            var agendamentos = _context.Agendamentos.ToList();
+
+            var viewModel = new PacienteComAgendamentosViewModel
+            {
+                Pacientes = pacientes,
+                Agendamentos = agendamentos
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Criar()
