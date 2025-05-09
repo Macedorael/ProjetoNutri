@@ -65,7 +65,7 @@
             @if (agendamentos == null || !agendamentos.Any())
             {
                 <br />
-                <div class="alert alert-info">Nenhum agendamento encontrado para este paciente.</div>
+                <div class="alert alert-info">Nenhum agendamento encontrado para @Model.Nome.</div>
             }
             else
             {
