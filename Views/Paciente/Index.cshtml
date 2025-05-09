@@ -5,7 +5,7 @@
 }
 <!-- Botão para criar novo paciente (ajustado para tamanho menor e alinhado à esquerda) -->
 <div class="area-botao-criar">
-    <a asp-action="Criar" class="btn-criar-paciente">
+    <a class="btn-criar-paciente" data-bs-toggle="modal" data-bs-target="#modalPaciente">
         <i class="bi bi-person-plus cara"></i> Novo Paciente
     </a>
 </div>
@@ -23,7 +23,7 @@
             <div class="cabecalho-fixa cabecalho-agendamento-borda">
                 <div class="cabecalho-tela">
                     <h1>Listagem de Pacientes</h1>
-                    <a asp-action="Criar" class="btn-criar-paciente-small">
+                    <a data-bs-toggle="modal" data-bs-target="#modalPaciente" class="btn-criar-paciente-small">
                         <i class="bi bi-person-plus"></i>
                     </a>
                 </div>
@@ -72,67 +72,108 @@
     </div>
 
     <!-- Nova lista de pacientes com agendamento -->
-    <div class="lista-agendamento-index">
-        <div class="cabecalho-fixa cabecalho-agendamento-borda">
-            <div class="cabecalho-agendamento">
-                <h1>Agendamentos</h1>
-            </div>
+<div class="lista-agendamento-index">
+    <div class="cabecalho-fixa cabecalho-agendamento-borda">
+        <div class="cabecalho-agendamento">
+            <h1>Agendamentos</h1>
         </div>
+        <div class="campo-pesquisa">
+            <input type="text" id="pesquisaAgendamento" class="form-control" placeholder="Pesquisar por nome...">
+        </div>
+    </div>
 
-        @{
-            var agendamentosAgrupados = Model.Agendamentos
-                .Where(a => a.Data >= DateTime.Today)
-                .OrderBy(a => DateTime.Parse($"{a.Data:yyyy-MM-dd} {a.Hora}"))
-                .GroupBy(a => a.Data.Date)
-                .ToList();
-        }
+    @{
+        var agendamentosAgrupados = Model.Agendamentos
+            .Where(a => a.Data >= DateTime.Today)
+            .OrderBy(a => DateTime.Parse($"{a.Data:yyyy-MM-dd} {a.Hora}"))
+            .GroupBy(a => a.Data.Date)
+            .ToList();
+    }
 
-        @if (agendamentosAgrupados.Any())
+    @if (agendamentosAgrupados.Any())
+    {
+        foreach (var grupo in agendamentosAgrupados)
         {
-            foreach (var grupo in agendamentosAgrupados)
-            {
-                var diaSemana = grupo.Key.ToString("dddd, dd MMMM yyyy", new System.Globalization.CultureInfo("pt-BR"));
-                <div class="dia-agendamento">
-                    <h2>@diaSemana</h2>
+            var diaSemana = grupo.Key.ToString("dddd, dd MMMM yyyy", new System.Globalization.CultureInfo("pt-BR"));
+            <div class="dia-agendamento">
+                <h2>@diaSemana</h2>
 
-                    <div class="lista-pacientes">
-                        @foreach (var ag in grupo)
+                <div class="lista-pacientes">
+                    @foreach (var ag in grupo)
+                    {
+                        var paciente = Model.Pacientes.FirstOrDefault(p => p.Id == ag.IdPaciente);
+                        if (paciente != null)
                         {
-                            var paciente = Model.Pacientes.FirstOrDefault(p => p.Id == ag.IdPaciente);
-                            if (paciente != null)
-                            {
-                                <div class="paciente-card">
-                                    <div class="agendamento-info">
-                                        <div class="agendamento-detalhes">
-                                            <div class="agendamento-item">
-                                                <strong><i class="bi bi-watch"></i> @ag.Hora</strong>
-                                            </div>
-                                            <div class="agendamento-item">
-                                                <i class="bi bi-person"></i>
-                                                <span class="agendamento-texto">@($"{paciente.Nome} {paciente.Sobrenome}")</span>
-                                            </div>
-                                            <div class="agendamento-item">
-                                                <i class="bi bi-phone"></i>
-                                                <span class="agendamento-texto">@paciente.Telefone</span>
-                                            </div>
+                            <div class="paciente-card">
+                                <div class="agendamento-info">
+                                    <div class="agendamento-detalhes">
+                                        <div class="agendamento-item">
+                                            <strong><i class="bi bi-watch"></i> @ag.Hora</strong>
+                                        </div>
+                                        <div class="agendamento-item">
+                                            <i class="bi bi-person"></i>
+                                            <span class="agendamento-texto nome-agendamento">@($"{paciente.Nome} {paciente.Sobrenome}")</span>
+                                        </div>
+                                        <div class="agendamento-item">
+                                            <i class="bi bi-phone"></i>
+                                            <span class="agendamento-texto">@paciente.Telefone</span>
                                         </div>
                                     </div>
                                 </div>
-                            }
+                            </div>
                         }
-                    </div>
+                    }
                 </div>
-            }
-        }
-        else
-        {
-            <div class="sem-agendamentos">
-                <p>Nenhum paciente com agendamentos encontrados.</p>
             </div>
         }
-    </div>
-
+    }
 </div>
+<div class="modal fade" id="modalPaciente" tabindex="-1" aria-labelledby="modalPacienteLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="/Paciente/Criar">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalPacienteLabel">Novo Paciente</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group mb-2">
+                        <label for="Nome">Nome</label>
+                        <input type="text" id="Nome" name="Nome" class="form-control form-control-sm Focus-Modal" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Sobrenome">Sobrenome</label>
+                        <input type="text" id="Sobrenome" name="Sobrenome" class="form-control form-control-sm Focus-Modal" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="DataNascimento">Data de Nascimento</label>
+                        <input type="date" id="DataNascimento" name="DataNascimento" class="form-control form-control-sm Focus-Modal" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Sexo">Sexo</label>
+                        <select id="Sexo" name="Sexo" class="form-control form-control-sm Focus-Modal" required>
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Telefone">Telefone</label>
+                        <input type="text" id="Telefone" name="Telefone" class="form-control form-control-sm Focus-Modal" required />
+                    </div>
+                    <div class="form-group mb-2">
+                        <label for="Instagram">Instagram</label>
+                        <input type="text" id="Instagram" name="Instagram" class="form-control form-control-sm Focus-Modal" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-secondary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 
 <!-- jQuery para filtro -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -140,8 +181,32 @@
     $(document).ready(function () {
         $('#pesquisaPaciente').on('keyup', function () {
             var valor = $(this).val().toLowerCase();
-            $('.paciente-card').filter(function () {
+            $('.tela-pacientes .paciente-card').filter(function () {
                 $(this).toggle($(this).find('.nome-paciente').text().toLowerCase().indexOf(valor) > -1);
+            });
+        });
+        // Filtro da lista de agendamentos
+        $('#pesquisaAgendamento').on('keyup', function () {
+            var valor = $(this).val().toLowerCase();
+
+            // Itera sobre cada grupo de dia
+            $('.lista-agendamento-index .dia-agendamento').each(function () {
+                var algumVisivel = false;
+
+                // Itera sobre os cards de paciente dentro do grupo
+                $(this).find('.paciente-card').each(function () {
+                    var nomePaciente = $(this).text().toLowerCase();
+                    var corresponde = nomePaciente.indexOf(valor) > -1;
+
+                    $(this).toggle(corresponde); // Mostra ou esconde o card
+
+                    if (corresponde) {
+                        algumVisivel = true; // Se pelo menos 1 card visível, mostra o dia
+                    }
+                });
+
+                // Mostra ou esconde o grupo do dia
+                $(this).toggle(algumVisivel);
             });
         });
     });

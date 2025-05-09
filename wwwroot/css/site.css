@@ -273,7 +273,8 @@ img {
 .cara{
   color: white important;
 }
- 
+
+
 
 /* =============================== */
 /* CONTAINER DAS DUAS COLUNAS     */
@@ -343,10 +344,6 @@ img {
   text-decoration: none;
 }
 
-.btn-criar-paciente-small i {
-  margin: 0;
-}
-
 /* Campo de busca */
 .campo-pesquisa input {
   width: 100%;
@@ -409,9 +406,8 @@ img {
 
 .lista-agendamento-index {
   background-color: #f9f9f9;
-  max-width: 750px;
-  min-width: 200px;
-  height: 300px; /* Aumenta a altura para acomodar mais conteúdo */
+  width: 500px;
+  height: 400px; /* Aumenta a altura para acomodar mais conteúdo */
   display: flex;
   flex-direction: column;
   border-radius: 10px;
@@ -449,6 +445,17 @@ img {
 /* =============================== */
 
 #pesquisaPaciente:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+
+#pesquisaAgendamento:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+.Focus-Modal:focus{
   outline: none;
   box-shadow: none;
   border-color: #ccc;
