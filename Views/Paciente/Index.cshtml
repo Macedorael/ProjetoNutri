@@ -118,6 +118,9 @@
                                             <i class="bi bi-phone"></i>
                                             <span class="agendamento-texto">@paciente.Telefone</span>
                                         </div>
+                                        <div class="agendamento-item">
+                                            <span class="agendamento-texto modalidade">@ag.Modalidade</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -208,6 +211,15 @@
                 // Mostra ou esconde o grupo do dia
                 $(this).toggle(algumVisivel);
             });
+        });
+        $('.modalidade').each(function () {
+            const texto = $(this).text().trim();
+
+            if (texto === "Presencial") {
+                $(this).prepend('<i class="bi bi-building me-1" title="Presencial"></i>');
+            } else if (texto === "Online") {
+                $(this).prepend('<i class="bi bi-laptop me-1" title="Online"></i>');
+            }
         });
     });
 </script>

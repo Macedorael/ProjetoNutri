@@ -81,7 +81,7 @@
                                     <span class="agendamento-texto"><i class="bi bi-watch"></i> @agendamento.Hora</span>
                                 </div>
                                 <div class="agendamento-item">
-                                    <span class="agendamento-texto">@agendamento.Observacao</span>
+                                    <span class="agendamento-texto modalidade">@agendamento.Modalidade</span>
                                 </div>
                                 <div class="agendamento-acoes">
                                     <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Editar">
@@ -126,6 +126,14 @@
                         <input type="time" id="Hora" name="Hora" class="form-control form-control-sm" required />
                     </div>
                     <div class="form-group mb-2">
+                        <label for="Modalidade">Modalidade</label>
+                        <select id="Modalidade" name="Modalidade" class="form-control form-control-sm" required>
+                            <option value="">Selecione</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Online">Online</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-2">
                         <label for="Observacao">Observações</label>
                         <textarea id="Observacao" name="Observacao" class="form-control form-control-sm" rows="2"></textarea>
                     </div>
@@ -138,6 +146,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
@@ -152,6 +161,16 @@
             // Verifica se o clique foi fora do botão e do container
             if (!$(e.target).closest("#formAgendamentoContainer, #btnAgendar").length) {
                 $("#formAgendamentoContainer").slideUp();
+            }
+        });
+
+        $('.modalidade').each(function () {
+            const texto = $(this).text().trim();
+
+            if (texto === "Presencial") {
+                $(this).prepend('<i class="bi bi-building me-1" title="Presencial"></i>');
+            } else if (texto === "Online") {
+                $(this).prepend('<i class="bi bi-laptop me-1" title="Online"></i>');
             }
         });
     });

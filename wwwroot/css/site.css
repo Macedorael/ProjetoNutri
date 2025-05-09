@@ -558,8 +558,7 @@ img {
   background-color: #f9f9f9;
   padding: 20px;
   border-radius: 10px;
-  width: 40%;
-  max-width: 750px;
+  width: 580px;
   height: 218px; /* Altura fixa do container */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -661,23 +660,12 @@ img {
   background-color: #f9f9f9;
   padding: 10px;
   border-radius: 10px;
-  width: 40%; /* Largura ajustada */
+  width: 550px; /* Largura ajustada */
   max-width: 750px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin-right: 20px; /* Distância entre o paciente e o agendamento */
 }
 
-.agendamento-container {
-  background-color: #f9f9f9;
-  padding: 20px;
-  border-radius: 10px;
-  width: 40%; /* Largura ajustada */
-  max-width: 750px;
-  max-height: 600px;
-  overflow-y: auto;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-left: 20px; /* Distância entre o agendamento e o paciente */
-}
 
 .cabecalho-paciente {
   display: flex;
@@ -756,14 +744,5 @@ img {
   font-size: 0.85rem;
 }
 
-.campo-pesquisa {
-  margin: 20px 0;
-  width: 100%;
-}
 
-#pesquisaPaciente {
-  width: 100%;
-  padding: 10px;
-  font-size: 16px;
-}
 

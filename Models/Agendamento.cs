@@ -29,5 +29,9 @@ namespace ProjetoNutri.Models
 
         public string? GoogleEventId { get; set; }
 
+        [Required]
+        [StringLength(50)]
+        public string Modalidade { get; set; } // Exemplo: "Presencial", "Online"
+
     }
 }

@@ -42,6 +42,11 @@ namespace ProjetoNutri.Migrations
                     b.Property<int>("IdPaciente")
                         .HasColumnType("int");
 
+                    b.Property<string>("Modalidade")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<string>("Observacao")
                         .HasColumnType("nvarchar(max)");
 
