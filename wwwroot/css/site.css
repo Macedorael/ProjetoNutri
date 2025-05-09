@@ -272,6 +272,7 @@ img {
 
 .cara{
   color: white important;
+  cursor: pointer;
 }
 
 
@@ -342,6 +343,7 @@ img {
   color: white;
   border-radius: 5px;
   text-decoration: none;
+  cursor: pointer;
 }
 
 /* Campo de busca */
