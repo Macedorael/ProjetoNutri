@@ -87,7 +87,7 @@
                                     <a asp-action="EditarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Editar">
                                         <i class="bi bi-pencil-fill"></i>
                                     </a>
-                                    <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Excluir Agendamento">
+                                    <a asp-action="DeletarAgendamento" asp-controller="Agendamento" asp-route-id="@agendamento.Id" class="icone-acao" title="Excluir Agendamento" onclick="return confirm('Tem certeza que deseja excluir este agendamento?');">
                                         <i class="bi bi-trash2-fill"></i>
                                     </a>
                                 </div>
