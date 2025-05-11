@@ -372,6 +372,9 @@ img {
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Certificando-se de que o conteúdo é distribuído entre o topo e o rodapé */
 }
 
 .paciente-card:hover {
@@ -401,6 +404,50 @@ img {
 .fonte-telefone-e-insta {
   font-size: 14px;
 }
+
+/* Estilos para os ícones e botões de ação */
+.acoes-paciente-index {
+  margin-left: 10px;
+  font-size: 18px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.acoes-paciente-index,
+.icone-acao-paciente-index {
+  font-size: 17px; /* Mesma largura para todos os ícones */
+  color: #333; /* Cor padrão */
+  text-decoration: none; /* Remove o sublinhado */
+  margin-left: 10px; /* Espaçamento entre os ícones */
+  margin-top: 2px;
+  transition: color 0.3s ease, transform 0.2s ease; /* Animação suave */
+  display: inline-flex; /* Garantir que todos os ícones estejam alinhados na mesma linha */
+  align-items: center; /* Alinhamento vertical central dos ícones */
+}
+
+/* Removendo borda do botão de excluir */
+button[type="submit"] {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font-size: 17px;
+  color: #333;
+  transition: transform 0.2s ease;
+}
+
+/* Estilos para o contêiner de ações (à direita) */
+.icone-acao-index {
+  display: flex;
+  justify-content: flex-end; /* Posiciona os botões à direita */
+  gap: 10px;
+}
+
+.icone-acao-paciente-index:hover {
+  transform: scale(1.1); /* Aumenta o tamanho no hover */
+}
+
 
 /* =============================== */
 /* LADO DIREITO - AGENDAMENTO     */

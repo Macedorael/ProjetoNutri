@@ -49,16 +49,16 @@
                                 <div class="instagram-paciente">
                                     <span class="fonte-telefone-e-insta"><i class="bi bi-instagram"></i> @item.Instagram</span>
                                 </div>
-                                <div class="acoes">
-                                    <a asp-action="Detalhe" asp-route-id="@item.Id" title="Ver detalhes">
+                                <div class="icone-acao-index">
+                                    <a asp-action="Detalhe" asp-route-id="@item.Id" class="acoes-paciente-index" title="Ver detalhes">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" title="Ver projetos">
+                                    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" class="acoes-paciente-index title="Ver projetos">
                                         <i class="bi bi-folder-fill"></i>
                                     </a>
-                                    <form asp-action="Deletar" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
+                                    <form asp-action="Deletar" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">
                                         <input type="hidden" name="Id" value="@item.Id" />
-                                        <button type="submit" class="icone-acao" title="Excluir Paciente">
+                                        <button type="submit" class="acoes-paciente-index title="Excluir Paciente">
                                             <i class="bi bi-trash2-fill"></i>
                                         </button>
                                     </form>
