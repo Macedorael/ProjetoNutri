@@ -2,11 +2,13 @@
 @{
     ViewData["Title"] = "Detalhes do Paciente";
     var agendamentos = ViewBag.Agendamentos as IEnumerable<ProjetoNutri.Models.Agendamento>;
+    var projetos = ViewBag.Projetos as IEnumerable<ProjetoNutri.Models.Projeto>;
 }
 
 <!-- Botão voltar -->
 <div>
     <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a>
+    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
 </div>
 
 <!-- Wrapper Flexível -->
@@ -55,7 +57,6 @@
     <div class="agendamento-container">
         <div class="agendamento-cabecalho agendamento-cabecalho-agenda">
             <h1>Agendamentos de @Model.Nome</h1>
-            <!-- Botão que abre o modal -->
             <button type="button" class="icone-acao" data-bs-toggle="modal" data-bs-target="#modalAgendamento" title="Agendar Paciente">
                 <i class="bi bi-calendar-date-fill"></i>
             </button>
@@ -98,12 +99,48 @@
             }
         </div>
     </div>
+
+<!-- Projetos do Paciente -->
+<div class="projetos-detalhes">
+    <h2>Projetos de @Model.Nome</h2>
+
+    @if (projetos != null && projetos.Any())
+    {
+        <div class="projetos-lista">
+            @foreach (var projeto in projetos)
+            {
+                <div class="projeto-card">
+                    <div class="projeto-topo">
+                        <div class="projeto-info-grupo">
+                            <h5 class="projeto-nome">
+                                <i class="bi bi-clipboard-data me-2"></i> @projeto.NomeProjeto
+                            </h5>
+                            <span class="projeto-data">
+                                <i class="bi bi-calendar-date me-1"></i>@projeto.DataCriacao.ToString("dd/MM/yyyy")
+                            </span>
+                        </div>
+                        <div class="projeto-acoes">
+                            <a asp-action="DetalheProjeto" asp-controller="Projeto" asp-route-id="@projeto.Id" class="icone-acao" title="Detalhes">
+                                <i class="bi bi-eye-fill"></i>
+                            </a>
+                            <a asp-action="EditarProjeto" asp-route-id="@projeto.Id" class="icone-acao" title="Editar">
+                                <i class="bi bi-pencil-fill"></i>
+                            </a>
+                            <a asp-action="ExcluirProjeto" asp-route-id="@projeto.Id" class="icone-acao" title="Excluir Projeto" onclick="return confirm('Tem certeza que deseja excluir este projeto?');">
+                                <i class="bi bi-trash2-fill"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info mt-3">Nenhum projeto associado a este paciente.</div>
+    }
 </div>
 
-<!-- Botão para ir aos projetos -->
-<br />
-<div>
-    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
 </div>
 
 <!-- Modal de Agendamento -->
@@ -146,19 +183,15 @@
         </div>
     </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {
-        // Alterna visibilidade do formulário
         $("#btnAgendar").click(function (e) {
-            e.stopPropagation(); // Impede que o clique no botão feche o formulário
+            e.stopPropagation();
             $("#formAgendamentoContainer").slideToggle();
         });
 
-        // Fecha o formulário se clicar fora dele
         $(document).on("click", function (e) {
-            // Verifica se o clique foi fora do botão e do container
             if (!$(e.target).closest("#formAgendamentoContainer, #btnAgendar").length) {
                 $("#formAgendamentoContainer").slideUp();
             }
@@ -166,7 +199,6 @@
 
         $('.modalidade').each(function () {
             const texto = $(this).text().trim();
-
             if (texto === "Presencial") {
                 $(this).prepend('<i class="bi bi-building me-1" title="Presencial"></i>');
             } else if (texto === "Online") {
@@ -175,4 +207,3 @@
         });
     });
 </script>
-

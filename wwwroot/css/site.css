@@ -489,71 +489,67 @@ img {
 
 
 
-/* Estilizando a área das ações (botões) */
-.acoes {
-  display: flex;
-  gap: 8px; /* Espaçamento entre os botões */; /* Centraliza horizontalmente */
+/* =============================== */
+/* CONTAINER DETALHE - PACIENTE     */
+/* =============================== */
+
+/* Estilizando o container de detalhes do paciente */
+.paciente-detalhes {
+  background-color: #f9f9f9;
+  padding: 10px;
+  border-radius: 10px;
+  width: 550px; /* Largura ajustada */
+  max-width: 750px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-right: 20px; /* Distância entre o paciente e o agendamento */
 }
 
-/* Estilo dos botões dentro do card */
-.acoes {
+/* Estilizando o cabeçalho do paciente */
+.cabecalho-paciente {
   display: flex;
-  gap: 10px;
-  margin-left: auto; /* Empurra os ícones pro canto direito */
-}
-
-/* Estilização dos botões */
-.acoes a {
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  font-size: 15px;
-  padding: 6px 10px;
-  border-radius: 5px;
-  text-decoration: none;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* Ícones dentro dos botões */
-.acoes a i {
-  margin: 0; /* Remove margem lateral dos ícones */
-}
-
-/* Efeito hover */
-.acoes a:hover {
-  transform: scale(1.05);
-}
-
-/* Botão "Novo Paciente" */
-/* Área do botão de criar */
-.area-botao-criar {
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
   margin-bottom: 15px;
 }
 
-/* Estilo do botão "Novo Paciente" */
-.btn-criar-paciente {
-  font-size: 1em;
-  padding: 10px 15px;
-  border-radius: 5px;
-  background-color: #4B0082;
-  border: none;
-  color: white;
+/* Estilizando os ícones de ações no cabeçalho do paciente */
+.acoes-paciente a {
+  margin-left: 10px;
+  font-size: 18px;
+  color: #333;
   text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background-color 0.3s ease;
+  transition: color 0.2s;
 }
 
-.btn-criar-paciente:hover {
-  background-color: #5a6268;
-  color: white;
+.acoes-paciente a,
+.icone-acao {
+  font-size: 17px; /* Mesma largura para todos os ícones */
+  color: #333; /* Cor padrão */
+  text-decoration: none; /* Remove o sublinhado */
+  margin-left: 10px; /* Espaçamento entre os ícones */
+  margin-top: 2px;
+  transition: color 0.3s ease, transform 0.2s ease; /* Animação suave */
+  display: inline-flex; /* Garantir que todos os ícones estejam alinhados na mesma linha */
+  align-items: center; /* Alinhamento vertical central dos ícones */
 }
 
+.icone-acao {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
 
+.acoes-paciente a:hover,
+.icone-acao:hover {
+  transform: scale(1.1); /* Aumenta o tamanho no hover */
+}
+
+/* =============================== */
+/* CONTAINER AGENDAMENTO           */
+/* =============================== */
+
+/* Estilo do container de agendamentos */
 .agendamento-container {
   background-color: #f9f9f9;
   padding: 20px;
@@ -565,17 +561,17 @@ img {
   flex-direction: column;
 }
 
+/* Estilizando o cabeçalho do agendamento */
 .agendamento-cabecalho {
   flex-shrink: 0; /* Impede que o cabeçalho seja redimensionado */
   margin-bottom: 10px;
 }
 
-.agendamento-cabecalho-agenda{
+.agendamento-cabecalho-agenda {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 
 .agendamento-cabecalho h1 {
   font-size: 30px;
@@ -584,6 +580,7 @@ img {
   text-align: center;
 }
 
+/* Estilo da lista de agendamentos */
 .agendamento-lista {
   flex-grow: 1;
   overflow-y: auto; /* Scroll apenas nesta parte */
@@ -592,6 +589,7 @@ img {
   gap: 10px;
 }
 
+/* Estilo do card de agendamento */
 .agendamento-card {
   background-color: #f1f1f1;
   padding: 15px;
@@ -609,12 +607,14 @@ img {
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
+/* Estilo das informações do agendamento */
 .agendamento-info {
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
 
+/* Estilo para os detalhes do agendamento */
 .agendamento-detalhes {
   display: flex;
   gap: 20px;
@@ -632,6 +632,7 @@ img {
   font-size: 15px;
 }
 
+/* Estilizando as ações no agendamento */
 .agendamento-acoes {
   display: flex;
   gap: 10px;
@@ -649,100 +650,108 @@ img {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Estilizando o wrapper de detalhes do agendamento */
 .detalhes-agendamento-wrapper {
   display: flex;
   align-items: flex-start;
   margin-top: 20px;
   flex-wrap: wrap; /* para responsividade em telas menores */
+  height: 700px; /* Altura fixa para o conjunto das colunas */
 }
 
-.paciente-detalhes {
+/* =============================== */
+/* DETALHES DOS PROJETOS          */
+/* =============================== */
+
+.projetos-detalhes {
   background-color: #f9f9f9;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
-  width: 550px; /* Largura ajustada */
-  max-width: 750px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin-right: 20px; /* Distância entre o paciente e o agendamento */
+  height: 280px; /* Aumente a altura do contêiner */
+  width: 500px; /* Largura fixa */
+  overflow: hidden; /* Impede rolagem no contêiner principal */
 }
 
+/* =============================== */
+/* LISTA DE PROJETOS              */
+/* =============================== */
 
-.cabecalho-paciente {
+.projetos-lista {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+  height: 200px;
+  width: 460px;
+  padding-right: 10px;
 }
 
-.acoes-paciente a {
-  margin-left: 10px;
-  font-size: 18px;
-  color: #333;
-  text-decoration: none;
-  transition: color 0.2s;
-}
+/* =============================== */
+/* CARDS DE PROJETOS              */
+/* =============================== */
 
-/* Ajustes gerais para os ícones de ação */
-.acoes-paciente a,
-.icone-acao {
-  font-size: 17px; /* Mesma largura para todos os ícones */
-  color: #333; /* Cor padrão */
-  text-decoration: none; /* Remove o sublinhado */
-  margin-left: 10px; /* Espaçamento entre os ícones */
-  margin-top: 2px;
-  transition: color 0.3s ease, transform 0.2s ease; /* Animação suave */
-  display: inline-flex; /* Garantir que todos os ícones estejam alinhados na mesma linha */
-  align-items: center; /* Alinhamento vertical central dos ícones */
-}
-
-/* Alinhamento e estilo do botão de exclusão */
-.icone-acao {
-  background: none;
-  border: none;
-  padding: 0;
-  cursor: pointer;
-}
-
-/* Efeito de hover para todos os ícones e botões */
-.acoes-paciente a:hover,
-.icone-acao:hover {
-  transform: scale(1.1); /* Aumenta o tamanho no hover */
-}
-
-.alert.alert-info {
-  background-color: #f1f1f1; /* cor de fundo personalizada */
-  color: #000000;              /* cor do texto */
-  border: 1px  #000000; /* borda opcional */
-}
-
-#formAgendamentoContainer {
-  background: #f9f9f9;
+.projeto-card {
+  background-color: #f1f1f1;
   padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  max-width: 400px;
-  font-size: 0.9rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  scroll-snap-align: start;
 }
 
-#formAgendamentoContainer .form-group {
-  margin-bottom: 10px;
+.projeto-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
 }
 
-#formAgendamentoContainer label {
-  font-weight: 500;
-  margin-bottom: 3px;
+/* =============================== */
+/* TOPO DO PROJETO (Nome + Data + Ações) */
+/* =============================== */
+
+.projeto-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
-#formAgendamentoContainer input,
-#formAgendamentoContainer textarea {
-  font-size: 0.85rem;
-  padding: 6px 10px;
+.projeto-info-grupo {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 70%; /* Evita que ocupe 100% e empurre os ícones */
 }
 
-#formAgendamentoContainer button {
-  padding: 6px 16px;
-  font-size: 0.85rem;
+.projeto-nome {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-grow: 1; /* Permite que o nome ocupe o espaço restante */
+  white-space: nowrap; /* Evita que o nome quebre em várias linhas */
+  overflow: hidden; /* Esconde qualquer texto que ultrapasse o limite */
+  text-overflow: ellipsis; /* Adiciona "..." caso o texto seja muito longo */
 }
 
+.projeto-data {
+  font-size: 14px;
+  color: #6c757d;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0; /* Impede que a data encolha */
+}
 
-
+.projeto-acoes {
+  display: flex;
+  gap: 10px;
+  flex-shrink: 0; /* Impede que os ícones encolham */
+}

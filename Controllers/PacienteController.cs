@@ -106,8 +106,13 @@ namespace ProjetoNutri.Controllers
         .Where(a => a.IdPaciente == id)
         .OrderByDescending(a => a.Data)
         .ToList();
-
     ViewBag.Agendamentos = agendamentos;
+
+    // Busca os projetos desse paciente
+    var projetos = _context.Projetos
+        .Where(p => p.PacienteId == id)
+        .ToList();
+    ViewBag.Projetos = projetos;
 
     return View(paciente);
 }
