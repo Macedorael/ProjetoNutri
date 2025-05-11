@@ -750,6 +750,20 @@ img {
   flex-shrink: 0; /* Impede que a data encolha */
 }
 
+.nome-input {
+  border: 1px solid #ccc;
+  height: 24px; /* ou outro valor menor */
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.nome-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc; /* Ou qualquer cor que você preferir */
+}
+
 .projeto-acoes {
   display: flex;
   gap: 10px;

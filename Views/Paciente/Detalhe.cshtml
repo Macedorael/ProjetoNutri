@@ -100,46 +100,53 @@
         </div>
     </div>
 
-<!-- Projetos do Paciente -->
-<div class="projetos-detalhes">
-    <h2>Projetos de @Model.Nome</h2>
+    <!-- Projetos do Paciente -->
+    <div class="projetos-detalhes">
+        <h2>Projetos de @Model.Nome</h2>
 
-    @if (projetos != null && projetos.Any())
-    {
-        <div class="projetos-lista">
-            @foreach (var projeto in projetos)
-            {
-                <div class="projeto-card">
-                    <div class="projeto-topo">
-                        <div class="projeto-info-grupo">
-                            <h5 class="projeto-nome">
-                                <i class="bi bi-clipboard-data me-2"></i> @projeto.NomeProjeto
-                            </h5>
-                            <span class="projeto-data">
-                                <i class="bi bi-calendar-date me-1"></i>@projeto.DataCriacao.ToString("dd/MM/yyyy")
-                            </span>
-                        </div>
-                        <div class="projeto-acoes">
-                            <a asp-action="DetalheProjeto" asp-controller="Projeto" asp-route-id="@projeto.Id" class="icone-acao" title="Detalhes">
-                                <i class="bi bi-eye-fill"></i>
-                            </a>
-                            <a asp-action="EditarProjeto" asp-route-id="@projeto.Id" class="icone-acao" title="Editar">
-                                <i class="bi bi-pencil-fill"></i>
-                            </a>
-                            <a asp-action="ExcluirProjeto" asp-route-id="@projeto.Id" class="icone-acao" title="Excluir Projeto" onclick="return confirm('Tem certeza que deseja excluir este projeto?');">
-                                <i class="bi bi-trash2-fill"></i>
-                            </a>
+        @if (projetos != null && projetos.Any())
+        {
+            <div class="projetos-lista">
+                @foreach (var projeto in projetos)
+                {
+                    <div class="projeto-card">
+                        <div class="projeto-topo">
+                            <div class="projeto-info-grupo">
+                                <h5 class="projeto-nome" id="nome-container-@projeto.Id">
+                                    <i class="bi bi-clipboard-data me-2"></i>
+                                    <span class="nome-display projeto-nome" data-id="@projeto.Id">@projeto.NomeProjeto</span>
+                                    <input type="text" class="form-control nome-input d-none" value="@projeto.NomeProjeto" data-id="@projeto.Id" />
+                                </h5>
+
+                                <span class="projeto-data">
+                                    <i class="bi bi-calendar-date me-1"></i>@projeto.DataCriacao.ToString("dd/MM/yyyy")
+                                </span>
+                            </div>
+                            <div class="projeto-acoes">
+                                <a asp-action="DetalheProjeto" asp-controller="Projeto" asp-route-id="@projeto.Id" class="icone-acao" title="Detalhes">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <a href="javascript:void(0);" class="icone-acao editar-btn" data-id="@projeto.Id" title="Editar">
+                                    <i class="bi bi-pencil-fill"></i>
+                                </a>
+                               <form method="post" asp-action="DeletarProjeto" asp-controller="Projeto" style="display:inline;">
+                                    <input type="hidden" name="id" value="@projeto.Id" />
+                                    <input type="hidden" name="pacienteId" value="@projeto.PacienteId" />
+                                    <button type="submit" class="icone-acao" title="Excluir Projeto" onclick="return confirm('Tem certeza que deseja excluir este projeto?');">
+                                        <i class="bi bi-trash2-fill"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-info mt-3">Nenhum projeto associado a este paciente.</div>
-    }
-</div>
+                }
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info mt-3">Nenhum projeto associado a este paciente.</div>
+        }
+    </div>
 
 </div>
 
@@ -205,5 +212,50 @@
                 $(this).prepend('<i class="bi bi-laptop me-1" title="Online"></i>');
             }
         });
+        $(".editar-btn").click(function () {
+                var id = $(this).data("id");
+                var displaySpan = $(".nome-display[data-id='" + id + "']");
+                var input = $(".nome-input[data-id='" + id + "']");
+
+                displaySpan.addClass("d-none");
+                input.removeClass("d-none").focus();
+            });
+
+            $(".nome-input").on("blur", function () {
+                var input = $(this);
+                var id = input.data("id");
+                var novoNome = input.val();
+                var displaySpan = $(".nome-display[data-id='" + id + "']");
+                var token = $('input[name="__RequestVerificationToken"]').val();
+
+                $.ajax({
+                    url: '/Projeto/EditarProjeto', // ajuste se necessário
+                    method: 'POST',
+                    data: {
+                        __RequestVerificationToken: token,
+                        id: id,
+                        NomeProjeto: novoNome
+                    },
+                    success: function () {
+                        displaySpan.text(novoNome);
+                        input.addClass("d-none");
+                        displaySpan.removeClass("d-none");
+                    },
+                    error: function () {
+                        alert("O nome do projeto não pede ficar vazio.");
+                    }
+                });
+            });
+            $(".nome-input").on("blur", function () {
+                salvarNomeProjeto($(this));
+            });
+
+            // Salva ao pressionar Enter
+            $(".nome-input").on("keydown", function (e) {
+                if (e.which === 13) {
+                    e.preventDefault(); // Evita quebra de linha
+                    $(this).blur(); // Força o blur para reaproveitar o código
+                }
+            });
     });
 </script>
