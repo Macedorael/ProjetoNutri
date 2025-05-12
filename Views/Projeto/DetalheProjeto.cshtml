@@ -6,7 +6,11 @@
 
 <h1>Detalhes do Projeto</h1>
 
-<a asp-action="IndexProjeto" asp-route-pacienteId="@Model.PacienteId" class="btn btn-secondary">Voltar para a lista</a> 
+<a asp-action="Detalhe" asp-controller="Paciente" asp-route-id="@Model.PacienteId" class="btn btn-secondary">
+    Voltar para o detalhe
+</a>
+
+ 
 <br>
 <br>
 <div>

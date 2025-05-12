@@ -90,32 +90,32 @@ namespace ProjetoNutri.Controllers
         }
 
         public IActionResult Detalhe(int id)
-{
-    var paciente = _context.Pacientes.Find(id);
-    if (paciente == null)
-    {
-        return RedirectToAction(nameof(Index));
-    }
+        {
+            var paciente = _context.Pacientes.Find(id);
+            if (paciente == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
 
-    // Calcula idade
-    int idade = ProjetoNutri.Services.CalculoIdade.Calcular(paciente.DataNascimento);
-    ViewBag.Idade = idade;
+            // Calcula idade
+            int idade = ProjetoNutri.Services.CalculoIdade.Calcular(paciente.DataNascimento);
+            ViewBag.Idade = idade;
 
-    // Busca os agendamentos desse paciente
-    var agendamentos = _context.Agendamentos
-        .Where(a => a.IdPaciente == id)
-        .OrderByDescending(a => a.Data)
-        .ToList();
-    ViewBag.Agendamentos = agendamentos;
+            // Busca os agendamentos desse paciente
+            var agendamentos = _context.Agendamentos
+                .Where(a => a.IdPaciente == id)
+                .OrderByDescending(a => a.Data)
+                .ToList();
+            ViewBag.Agendamentos = agendamentos;
 
-    // Busca os projetos desse paciente
-    var projetos = _context.Projetos
-        .Where(p => p.PacienteId == id)
-        .ToList();
-    ViewBag.Projetos = projetos;
+            // Busca os projetos desse paciente
+            var projetos = _context.Projetos
+                .Where(p => p.PacienteId == id)
+                .ToList();
+            ViewBag.Projetos = projetos;
 
-    return View(paciente);
-}
+            return View(paciente);
+        }
 
 
         public IActionResult Deletar(int id)
