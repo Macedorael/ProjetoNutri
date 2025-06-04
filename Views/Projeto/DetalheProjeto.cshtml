@@ -4,38 +4,44 @@
     ViewData["Title"] = "Detalhes do Projeto";
 }
 
-<h1>Detalhes do Projeto</h1>
-
-<a asp-action="Detalhe" asp-controller="Paciente" asp-route-id="@Model.PacienteId" class="btn btn-secondary">
-    Voltar para o detalhe
-</a>
-
- 
-<br>
-<br>
+<!-- Botão voltar -->
 <div>
-    <dl class="row">
-        <dt class="col-sm-2">
-            Nome do Projeto
-        </dt>
-        <dd class="col-sm-10">
-            @Model.NomeProjeto
-        </dd>
+    <a asp-action="Detalhe" asp-controller="Paciente" asp-route-id="@Model.PacienteId" class="btn btn-secondary mb-3">
+        Voltar para detalhe
+    </a>
+</div>
 
-        <dt class="col-sm-2">
-            Data de Criação
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DataCriacao.ToString("dd/MM/yyyy")  <!-- Formatação de data, se necessário -->
-        </dd>
+<!-- Wrapper para o detalhe do projeto -->
+<div class="projeto-detalhes-wrapper">
+    <div class="projeto-detalhes-header d-flex justify-content-between align-items-center mb-3">
+        <h2>Detalhes do Projeto</h2>
+        <div class="acoes-projeto">
+            <a asp-action="EditarProjeto" asp-route-id="@Model.Id" title="Editar Projeto" class="btn btn-sm me-2">
+                <i class="bi bi-pencil-fill"></i>
+            </a>
 
-        <dt class="col-sm-2">
-            Paciente
-        </dt>
-        <dd class="col-sm-10">
+            <form asp-action="DeletarProjeto" method="post" class="d-inline" onsubmit="return confirm('Tem certeza que deseja excluir este projeto?');">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="pacienteId" value="@Model.PacienteId" />
+                <button type="submit" class="btn btn-sm me-2" title="Excluir Projeto">
+                    <i class="bi bi-trash2-fill"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <dl class="row projeto-info">
+        <dt class="col-sm-3 fw-bold">Projeto</dt>
+        <dd class="col-sm-9 nome-projeto">@Model.NomeProjeto</dd>
+
+        <dt class="col-sm-3 fw-bold">Data</dt>
+        <dd class="col-sm-9">@Model.DataCriacao.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3 fw-bold">Paciente</dt>
+        <dd class="col-sm-9">
             @if (Model.Paciente != null)
             {
-               @($"{Model.Paciente.Nome} {Model.Paciente.Sobrenome}")
+                @($"{Model.Paciente.Nome} {Model.Paciente.Sobrenome}")
             }
             else
             {
@@ -45,9 +51,7 @@
     </dl>
 </div>
 
-<div>
-    <a asp-action="EditarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Editar</a>  
-    <a asp-action="DeletarProjeto" asp-route-id="@Model.Id" class="btn btn-secondary">Deletar</a>
-    <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary">Antropometria</a>
+<div class="mt-4">
+    <a asp-action="AntropometriaProjeto" asp-route-projetoId="@Model.Id" class="btn btn-secondary me-2">Antropometria</a>
     <a asp-action="IndexRefeicao" asp-controller="Refeicao" asp-route-IdProjeto="@Model.Id" class="btn btn-secondary">Adicionar Planejamento</a>
 </div>

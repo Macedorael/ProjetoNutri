@@ -8,7 +8,6 @@
 <!-- Botão voltar -->
 <div>
     <a asp-action="Index" class="btn btn-secondary">Voltar para a lista</a>
-    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@Model.Id" class="btn btn-secondary">Projetos</a>
 </div>
 
 <!-- Wrapper Flexível -->
@@ -102,7 +101,12 @@
 
     <!-- Projetos do Paciente -->
     <div class="projetos-detalhes">
-        <h2>Projetos de @Model.Nome</h2>
+        <h2>
+            Projetos de @Model.Nome
+            <a href="#" data-bs-toggle="modal" data-bs-target="#modalCriarProjeto" title="Criar novo projeto">
+                <i class="bi bi-clipboard-data"></i>
+            </a>
+        </h2>
 
         @if (projetos != null && projetos.Any())
         {
@@ -190,6 +194,32 @@
         </div>
     </div>
 </div>
+
+<!-- Modal Criar Projeto -->
+<div class="modal fade" id="modalCriarProjeto" tabindex="-1" aria-labelledby="modalCriarProjetoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCriarProjetoLabel">Criar Novo Projeto</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <form asp-controller="Projeto" asp-action="CriarProjeto" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="NomeProjeto">Nome do Projeto</label>
+                        <input type="text" class="form-control" id="NomeProjeto" name="NomeProjeto" required />
+                    </div>
+                    <input type="hidden" name="PacienteId" value="@Model.Id" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-secondary">Criar Projeto</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function () {

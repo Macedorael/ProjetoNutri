@@ -53,7 +53,7 @@
                                     <a asp-action="Detalhe" asp-route-id="@item.Id" class="acoes-paciente-index" title="Ver detalhes">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" class="acoes-paciente-index title="Ver projetos">
+                                    <a asp-action="IndexProjeto" asp-controller="Projeto" asp-route-pacienteId="@item.Id" class="acoes-paciente-index" title="Ver projetos">
                                         <i class="bi bi-folder-fill"></i>
                                     </a>
                                     <form asp-action="Deletar" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este paciente?');">

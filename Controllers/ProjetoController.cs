@@ -71,11 +71,13 @@ namespace ProjetoNutri.Controllers
                 _context.Projetos.Add(projeto);
                 _context.SaveChanges();
 
-                return RedirectToAction("IndexProjeto", new { pacienteId = projeto.PacienteId });
+                return RedirectToAction("Detalhe", "Paciente", new { id = projeto.PacienteId });
             }
 
             return View(projeto);
         }
+
+
 
         public IActionResult DetalheProjeto(int id)
         {

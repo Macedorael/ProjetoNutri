@@ -346,6 +346,27 @@ img {
   cursor: pointer;
 }
 
+.btn-criar-paciente {
+  text-decoration: none;
+  color: black;
+  background-color: #f0f0f0; /* Cor de fundo padrão */
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  display: inline-block;
+  transition: 
+    color 0.3s ease, 
+    background-color 0.3s ease, 
+    transform 0.2s ease;
+}
+
+.btn-criar-paciente:hover {
+  transform: scale(1.1); 
+  cursor: pointer;
+}
+
+
+
 /* Campo de busca */
 .campo-pesquisa input {
   width: 100%;
@@ -424,18 +445,11 @@ img {
   transition: color 0.3s ease, transform 0.2s ease; /* Animação suave */
   display: inline-flex; /* Garantir que todos os ícones estejam alinhados na mesma linha */
   align-items: center; /* Alinhamento vertical central dos ícones */
+  border: none;
 }
 
 /* Removendo borda do botão de excluir */
-button[type="submit"] {
-  border: none;
-  background: none;
-  padding: 0;
-  cursor: pointer;
-  font-size: 17px;
-  color: #333;
-  transition: transform 0.2s ease;
-}
+
 
 /* Estilos para o contêiner de ações (à direita) */
 .icone-acao-index {
@@ -528,13 +542,6 @@ button[type="submit"] {
     height: auto;
   }
 }
-
-
-
-
-
-
-
 
 /* =============================== */
 /* CONTAINER DETALHE - PACIENTE     */
@@ -710,6 +717,24 @@ button[type="submit"] {
 /* DETALHES DOS PROJETOS          */
 /* =============================== */
 
+.projetos-detalhes h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* separa texto e ícone */
+  font-size: 30px; /* mantém tamanho do texto do h2 */
+  margin-bottom: 1rem;
+}
+
+
+.projetos-detalhes h2 a i {
+  font-size: 18px; /* tamanho menor para o ícone */
+  transition: font-size 0.3s ease; /* transição suave */
+}
+
+.projetos-detalhes h2 a:hover i {
+  font-size: 22px; /* aumenta o ícone ao passar o mouse */
+}
+
 .projetos-detalhes {
   background-color: #f9f9f9;
   padding: 20px;
@@ -815,4 +840,52 @@ button[type="submit"] {
   display: flex;
   gap: 10px;
   flex-shrink: 0; /* Impede que os ícones encolham */
+}
+
+
+/* =============================== */
+/* Detalhes do Projeto */
+/* =============================== */
+
+.projeto-detalhes-wrapper {
+    max-width: 500px;  /* largura máxima menor */
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* leve destaque */
+}
+
+.projeto-detalhes-header {
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+.acoes-projeto a.btn i,
+.acoes-projeto button.btn i {
+    font-size: 1rem;  /* tamanho do ícone */
+    margin: 0;        /* remove margens padrão */
+    vertical-align: middle;
+}
+
+.projeto-info dt {
+    white-space: normal; /* permite quebra de linha */
+    overflow: visible;   /* deixa o texto aparecer todo */
+    text-overflow: clip; /* sem reticências */
+}
+
+.projeto-info dd {
+    color: #212529;
+    margin-bottom: 12px;     /* espaçamento abaixo do dd */
+}
+
+.nome-projeto {
+    white-space: nowrap;       /* evita quebra de linha */
+    overflow: hidden;          /* esconde o que ultrapassar */
+    text-overflow: ellipsis;   /* adiciona "..." se não couber */
+    max-width: 100%;           /* limita ao tamanho do container */
+    display: block;            /* garante que funcione corretamente */
+}
+
+.mt-4 a.btn {
+    min-width: 150px;
 }
