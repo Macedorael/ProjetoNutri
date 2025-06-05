@@ -800,7 +800,7 @@ img {
 }
 
 .projeto-nome {
-  font-size: 14px;
+  font-size: 18px;
   font-weight: bold;
   color: #000000;
   margin: 0;
@@ -847,14 +847,39 @@ img {
 /* Detalhes do Projeto */
 /* =============================== */
 
-.projeto-detalhes-wrapper {
-    max-width: 500px;  /* largura máxima menor */
-    padding: 20px;
-    background-color: #f8f9fa;
+/* Classes comuns para containers alinhados */
+.container-projeto, 
+.container-resumo {
+    background-color: white;
     border-radius: 6px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* leve destaque */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
+/* Faz as colunas da row terem mesma altura */
+.row.align-items-stretch {
+    align-items: stretch;
+}
+
+/* Remove padding duplicado da resumo-nutricional, que já tem padding no container */
+.resumo-nutricional {
+    padding: 0;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* preenche container */
+}
+
+/* Ajusta o row interno dentro do resumo nutricional */
+.resumo-nutricional .row {
+    justify-content: space-between;
+    
+}
+
+/* Detalhes do Projeto e Resumo Nutricional - estrutura e espaçamentos */
 .projeto-detalhes-header {
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
@@ -862,30 +887,58 @@ img {
 
 .acoes-projeto a.btn i,
 .acoes-projeto button.btn i {
-    font-size: 1rem;  /* tamanho do ícone */
-    margin: 0;        /* remove margens padrão */
+    font-size: 1rem;
+    margin: 0;
     vertical-align: middle;
 }
 
 .projeto-info dt {
-    white-space: normal; /* permite quebra de linha */
-    overflow: visible;   /* deixa o texto aparecer todo */
-    text-overflow: clip; /* sem reticências */
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
 }
 
 .projeto-info dd {
     color: #212529;
-    margin-bottom: 12px;     /* espaçamento abaixo do dd */
+    margin-bottom: 12px;
 }
 
-.nome-projeto {
-    white-space: nowrap;       /* evita quebra de linha */
-    overflow: hidden;          /* esconde o que ultrapassar */
-    text-overflow: ellipsis;   /* adiciona "..." se não couber */
-    max-width: 100%;           /* limita ao tamanho do container */
-    display: block;            /* garante que funcione corretamente */
-}
-
-.mt-4 a.btn {
+.mt-3 a.btn {
     min-width: 150px;
+}
+
+/* Resumo Nutricional */
+.resumo-nutricional h4 {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+.resumo-nutricional .row > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f1f3f5;
+    border-radius: 6px;
+    padding: 8px 12px;
+    box-shadow: inset 0 0 4px #ddd;
+    font-weight: 600;
+    font-size: 0.85rem;
+    min-width: 100px;
+    text-align: center;
+    white-space: normal;
+}
+
+.resumo-nutricional .row > div strong {
+    margin-bottom: 5px;
+    font-weight: 500;
+    font-size: 15px;
+}
+
+.resumo-nutricional .row > div span {
+    font-size: 0.75rem;
+    font-weight: 400;
+    margin-top: 3px;
+    color: #555;
 }

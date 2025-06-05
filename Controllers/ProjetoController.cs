@@ -82,16 +82,76 @@ namespace ProjetoNutri.Controllers
         public IActionResult DetalheProjeto(int id)
         {
             var projeto = _context.Projetos
-                .Include(p => p.Paciente) // Para carregar os dados do paciente associado ao projeto
+                .Include(p => p.Paciente)
                 .FirstOrDefault(p => p.Id == id);
 
             if (projeto == null)
-            {
-                return RedirectToAction(nameof(IndexProjeto));
-            }
+                return NotFound();
 
-            return View(projeto);
+            // Recupera todas as refeições do projeto
+            var refeicoes = _context.Refeicoes
+                        .Include(r => r.Refeicao_Alimentos)
+                        .ThenInclude(ra => ra.Alimento)
+                        .Where(r => r.IdProjeto == id) // Filtra as refeições pelo ProjetoId
+                        .OrderByDescending(r => r.DataCriacao)
+                        .ToList();
+
+                    // Criando dicionários para armazenar as somas por refeição
+                    var totalProteinaPorRefeicao = refeicoes.ToDictionary(
+                        refeicao => refeicao.Id,
+                        refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Proteina) ?? 0
+                    );
+
+                    var totalLipidioPorRefeicao = refeicoes.ToDictionary(
+                        refeicao => refeicao.Id,
+                        refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Lipidio) ?? 0
+                    );
+
+                    var totalCarboidratoPorRefeicao = refeicoes.ToDictionary(
+                        refeicao => refeicao.Id,
+                        refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Carboidrato) ?? 0
+                    );
+
+                    var totalKcalPorRefeicao = refeicoes.ToDictionary(
+                        refeicao => refeicao.Id,
+                        refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Energia_Kcal) ?? 0
+                    );
+
+                    var totalKjPorRefeicao = refeicoes.ToDictionary(
+                        refeicao => refeicao.Id,
+                        refeicao => refeicao.Refeicao_Alimentos?.Sum(ra => ra.Alimento.Energia_KJ) ?? 0
+                    );
+
+                    // Calculando os totais gerais
+                    double totalProteinaGeral = totalProteinaPorRefeicao.Values.Sum();
+                    double totalLipidioGeral = totalLipidioPorRefeicao.Values.Sum();
+                    double totalCarboidratoGeral = totalCarboidratoPorRefeicao.Values.Sum();
+                    double totalKcalGeral = totalKcalPorRefeicao.Values.Sum();
+                    double totalKjGeral = totalKjPorRefeicao.Values.Sum();
+
+                    // Criando o ViewModel para a View
+                // Criando o ViewModel para a View
+        var viewModel = new ProjetoDietaViewModel
+        {
+            Refeicaos = refeicoes,
+            TotalProteinaPorRefeicao = totalProteinaPorRefeicao,
+            TotalLipidioPorRefeicao = totalLipidioPorRefeicao,
+            TotalCarboidratoPorRefeicao = totalCarboidratoPorRefeicao,
+            TotalKcalPorRefeicao = totalKcalPorRefeicao,
+            TotalKjPorRefeicao = totalKjPorRefeicao,
+            TotalProteinaGeral = totalProteinaGeral,
+            TotalLipidioGeral = totalLipidioGeral,
+            TotalCarboidratoGeral = totalCarboidratoGeral,
+            TotalKcalGeral = totalKcalGeral,
+            TotalKjGeral = totalKjGeral,
+            Projeto = projeto
+        };
+
+        // ✅ Corrigido aqui:
+        return View(viewModel);
+
         }
+
 
         public IActionResult EditarProjeto(int id)
         {
