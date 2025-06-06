@@ -156,7 +156,7 @@ img {
 }
 
 .btn-secondary{
-  background-color: #4B0082;
+  background-color: #4c0082;
 }
 .menor{
   background-color: #4B0082;
@@ -615,6 +615,10 @@ img {
   flex-direction: column;
 }
 
+.alert {
+  background-color: #4c008212; /* Espaço entre o alerta e o conteúdo */
+}
+
 /* Estilizando o cabeçalho do agendamento */
 .agendamento-cabecalho {
   flex-shrink: 0; /* Impede que o cabeçalho seja redimensionado */
@@ -859,6 +863,11 @@ img {
     box-sizing: border-box;
 }
 
+.container-projeto h3 {
+    font-size: 30px;
+    font-weight: bold;
+}
+
 /* Faz as colunas da row terem mesma altura */
 .row.align-items-stretch {
     align-items: stretch;
@@ -908,8 +917,9 @@ img {
 }
 
 /* Resumo Nutricional */
-.resumo-nutricional h4 {
-    font-size: 1.25rem;
+.resumo-nutricional h3 {
+    font-size: 30px;
+    font-weight: bold;
     margin-bottom: 15px;
     text-align: center;
     width: 100%;
@@ -941,4 +951,11 @@ img {
     font-weight: 400;
     margin-top: 3px;
     color: #555;
+}
+
+/* Ajuste de título no container do IMC */
+#detalhe-projeto-imc h3#titulo {
+  font-size: 30px;
+  font-weight: bold;
+  margin-bottom: 1rem;
 }

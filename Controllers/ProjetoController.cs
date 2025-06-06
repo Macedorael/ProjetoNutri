@@ -85,6 +85,45 @@ namespace ProjetoNutri.Controllers
                 .Include(p => p.Paciente)
                 .FirstOrDefault(p => p.Id == id);
 
+            var imc = _context.Imcs.Include(i => i.Projeto).ThenInclude(p => p.Paciente).FirstOrDefault(i => i.IdProjeto == id);
+            // Carregar dados das tabelas associadas (Imcs, Circunferencias, Pregas)
+            var imcs = _context.Imcs.Where(i => i.IdProjeto == id).ToList();
+            var circunferencias = _context.Circunferencias.Where(i => i.IdProjeto == id).ToList();
+             var circunferencia = _context.Circunferencias
+            .Include(c => c.Projeto)       // Inclui o Projeto relacionado
+            .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
+            .FirstOrDefault(c => c.IdProjeto == id);
+
+            if (circunferencia != null)
+            {
+                var (rcq, classificacao) = _calculosCircunferencia.CalcularRCQ(circunferencia.Cintura, circunferencia.Quadril, projeto.Paciente.Sexo);
+                ViewBag.RCQ = rcq;
+                ViewBag.ClassificacaoRCQ = classificacao;
+            }      
+            // Calcula RCQ
+            if (imc != null)
+            {
+                ViewBag.Peso = imc.Peso;
+                ViewBag.Altura = imc.Altura;
+
+                var (imcNovo, classificacaoImc, pesoIdeal) = _calculoImc.CalcularImc(imc.Peso, imc.Altura, projeto.Paciente.Sexo);
+                ViewBag.ValorImc = imcNovo;
+                ViewBag.ClassificacaoImc = classificacaoImc;
+                ViewBag.PesoIdeal = pesoIdeal;
+                if (circunferencia != null)
+                {
+
+                    var (cmb, precentagemCmb, classificacaoCmb) = _calculoImc.CalcularCMBCompleto(circunferencia.Bracodireito, imc.Altura, projeto.Paciente.Sexo);
+                    ViewBag.CMB = cmb;
+                    ViewBag.PorcentagemCMB = precentagemCmb;
+                    ViewBag.ClassificacaoCMB = classificacaoCmb;
+                }
+            }
+            else
+            {
+                ViewBag.MensagemErro = "Dados de IMC ou paciente não encontrados.";
+            }
+
             if (projeto == null)
                 return NotFound();
 

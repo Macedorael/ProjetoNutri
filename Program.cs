@@ -1,7 +1,8 @@
 
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
-
+using DinkToPdf;
+using DinkToPdf.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ClienteContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
 
 // builder.Services.AddDbContext<FocoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ConexaoPadrao")));
-
+builder.Services.AddSingleton(typeof(IConverter), new SynchronizedConverter(new PdfTools()));
 
 
 builder.Services.AddControllersWithViews();
@@ -19,6 +20,8 @@ builder.Services.AddScoped<ProjetoNutri.Services.CalculosDobras>();
 builder.Services.AddScoped<ProjetoNutri.Services.CalculosCircunferencia>();
 builder.Services.AddScoped<ProjetoNutri.Services.CalculoImc>();
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

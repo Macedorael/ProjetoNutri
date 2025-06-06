@@ -17,7 +17,7 @@
     <div class="col-md-6">
         <div class="container-projeto">
             <div class="projeto-detalhes-header d-flex justify-content-between align-items-center mb-3">
-                <h2>Detalhes do Projeto</h2>
+                <h3>Detalhes do Projeto</h3>
                 <div class="acoes-projeto">
                     <a asp-action="EditarProjeto" asp-route-id="@Model.Projeto.Id" title="Editar Projeto" class="btn btn-sm me-2">
                         <i class="bi bi-pencil-fill"></i>
@@ -60,11 +60,11 @@
         </div>
     </div>
 
-    <!-- Coluna 2: Resumo Nutricional -->
-    <div class="col-md-6 d-flex justify-content-center align-items-start">
+    <!-- Coluna 2: Resumo Nutricional + IMC -->
+    <div class="col-md-6 d-flex flex-column align-items-start gap-4">
         <div class="container-resumo">
             <div class="resumo-nutricional">
-                <h4 class="text-center">Resumo Nutricional</h4>
+                <h3 class="text-center">Resumo Nutricional</h3>
                 <div class="row">
                     <div class="col-auto">
                         <strong>💪 Proteína:</strong>
@@ -83,6 +83,22 @@
                         <span>@Model.TotalKcalGeral.ToString("F2") kcal</span>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Bloco de Análises de pesos e medidas -->
+        <div class="container-projeto">
+            <div id="detalhe-projeto-imc">
+                <h3 id="titulo">Análises de pesos e medidas</h3>
+                <p><strong>Peso atual: </strong>@(ViewBag.Peso ?? "—") Kg</p>
+                <p><strong>Altura atual: </strong>@(ViewBag.Altura ?? "—") M</p>
+                <p><strong>Índice de Massa Corporal: </strong>@(ViewBag.ValorImc?.ToString("F2") ?? "—") Kg/m²</p>
+                <p><strong>Classificação do IMC: </strong>@(ViewBag.ClassificacaoImc ?? "—")</p>
+                <p><strong>Faixa de peso ideal: </strong>@(ViewBag.PesoIdeal ?? "—") kg</p>
+                <p><strong>Relação da Cintura/Quadril (RCQ): </strong>@(ViewBag.RCQ?.ToString("F2") ?? "—")</p>
+                <p><strong>Risco Metabólico por RCQ: </strong>@(ViewBag.ClassificacaoRCQ ?? "—")</p>
+                <p><strong>CMB (cm): </strong>@(ViewBag.CMB?.ToString("F2") ?? "—") cm (@(ViewBag.PorcentagemCMB?.ToString("F2") ?? "—")%)</p>
+                <p><strong>Classificação CMB: </strong>@(ViewBag.ClassificacaoCMB ?? "—")</p>
             </div>
         </div>
     </div>
