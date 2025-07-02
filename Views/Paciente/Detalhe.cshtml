@@ -107,7 +107,9 @@
                 <i class="bi bi-clipboard-data"></i>
             </a>
         </h2>
-
+        <div class="mb-3">
+            <input type="text" id="pesquisa-projetos" class="form-control" placeholder="🔍 Pesquisar projetos…" autocomplete="off">
+        </div>
         @if (projetos != null && projetos.Any())
         {
             <div class="projetos-lista">
@@ -287,5 +289,35 @@
                     $(this).blur(); // Força o blur para reaproveitar o código
                 }
             });
+
+        const container = $('.projetos-lista');
+        const cards = $('.projeto-card').toArray();
+
+        cards.sort(function (a, b) {
+            const dataA = $(a).find('.projeto-data').text().trim();
+            const dataB = $(b).find('.projeto-data').text().trim();
+
+            // Converte dd/MM/yyyy para Date
+            const dateA = new Date(dataA.split('/').reverse().join('-'));
+            const dateB = new Date(dataB.split('/').reverse().join('-'));
+
+            return dateB - dateA; // mais recente primeiro
+        });
+
+        container.empty().append(cards);
+
+        $('#pesquisa-projetos').on('input', function () {
+            const termo = $(this).val().toLowerCase().trim();
+
+            $('.projeto-card').each(function () {
+                const nome = $(this)
+                              .find('.nome-display')
+                              .text()
+                              .toLowerCase()
+                              .trim();
+
+                $(this).toggle(nome.includes(termo));
+            });
+        });
     });
 </script>

@@ -43,7 +43,7 @@ namespace ProjetoNutri.Controllers
                 Document document = new Document(PageSize.A4, 25, 25, 150, 30);
                 var writer = PdfWriter.GetInstance(document, ms);
 
-                // Marca d’água personalizada - carimbo no topo
+                // Adicionando carimbo no topo
                 string caminhoImagem = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagens", "adesivos.png");
                 writer.PageEvent = new CarimboTopo(caminhoImagem);
 
@@ -55,7 +55,7 @@ namespace ProjetoNutri.Controllers
                     Alignment = Element.ALIGN_CENTER,
                     SpacingAfter = 1f
                 };
-                title.Add(new Phrase($"Planejamento alimentar", titleFont));
+                title.Add(new Phrase($"Planejamento Alimentar", titleFont));
                 document.Add(title);
 
                 var linha = new LineSeparator(1f, 100f, BaseColor.GRAY, Element.ALIGN_CENTER, -4);

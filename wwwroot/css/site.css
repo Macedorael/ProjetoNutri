@@ -744,7 +744,7 @@ img {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  height: 280px; /* Aumente a altura do contêiner */
+  height: 350px; /* Aumente a altura do contêiner */
   width: 500px; /* Largura fixa */
   overflow: hidden; /* Impede rolagem no contêiner principal */
 }
@@ -893,6 +893,13 @@ img {
     border-bottom: 1px solid #ddd;
     padding-bottom: 10px;
 }
+
+#pesquisa-projetos:focus{
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+
 
 .acoes-projeto a.btn i,
 .acoes-projeto button.btn i {
