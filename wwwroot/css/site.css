@@ -1,3 +1,102 @@
+/* =============================== */
+/* VARIÁVEIS CSS PARA CORES       */
+/* =============================== */
+
+:root {
+  /* CORES PRINCIPAIS */
+  --cor-primaria: #4B0082;           /* Cor roxa principal - usada em:
+                                        - Links hover (.menu-item:hover, .link:hover)
+                                        - Textos de destaque (.menu-item.active, .nome-paciente strong)
+                                        - Botões (.menor)
+                                        - Títulos de seções (.dia-agendamento h2)
+                                        - Texto especial (.texto) */
+                                        
+  --cor-primaria-escura: #4c0082;    /* Variação mais escura da cor primária - usada em:
+                                        - Botões secundários (.btn-secondary) */
+                                        
+  --cor-foco: #258cfb;               /* Cor azul para estados de foco - usada em:
+                                        - Estados de foco de inputs e botões (.btn:focus) */
+  
+  /* CORES DE FUNDO */
+  --cor-fundo-principal: #f1f1f1;    /* Cor de fundo principal da aplicação - usada em:
+                                        - Fundo do body
+                                        - Navegação (.nav)
+                                        - Elementos com classe .cor */
+                                        
+  --cor-fundo-claro: #f8f9fa;        /* Cor cinza muito claro - usada em:
+                                        - Inputs de refeição (.refeicao-nome-custom)
+                                        - Caixas de nutrientes (.nutriente-box)
+                                        - Botões de editar/excluir (.btn-editar-excluir) */
+                                        
+  --cor-fundo-container: #f9f9f9;    /* Cor cinza claro para containers - usada em:
+                                        - Tela de pacientes (.tela-pacientes)
+                                        - Cabeçalho fixo (.cabecalho-fixa)
+                                        - Lista de agendamentos (.lista-agendamento-index)
+                                        - Detalhes do paciente (.paciente-detalhes)
+                                        - Container de agendamento (.agendamento-container)
+                                        - Detalhes dos projetos (.projetos-detalhes) */
+                                        
+  --cor-fundo-card: #f1f1f1;         /* Cor de fundo dos cards - usada em:
+                                        - Cards de paciente (.paciente-card)
+                                        - Cards de agendamento (.agendamento-card)
+                                        - Cards de projeto (.projeto-card) */
+  
+  /* CORES COM TRANSPARÊNCIA */
+  --cor-primaria-transparente: #9470db28;  /* Cor roxa com transparência - usada em:
+                                              - Área de dobras (.DisplayDobras)
+                                              - Seção IMC (#imc)
+                                              - Links especiais (#link)
+                                              - Botões outline (.btn-outline-dark) */
+                                              
+  --cor-primaria-muito-transparente: #9470db08; /* Cor roxa muito transparente - usada em:
+                                                    - Seção total (.total) */
+                                                    
+  --cor-alerta-transparente: #4c008212;    /* Cor roxa transparente para alertas - usada em:
+                                              - Alertas (.alert) */
+  
+  /* CORES DE TEXTO */
+  --cor-texto-principal: #333;       /* Cor principal do texto - usada em:
+                                        - Títulos principais (.cabecalho-tela h1, .cabecalho-agendamento h1)
+                                        - Valores de nutrientes (.nutriente-valor)
+                                        - Ícones de ação (.acoes-paciente-index, .icone-acao-paciente-index)
+                                        - Links de ação (.acoes-paciente a, .icone-acao) */
+                                        
+  --cor-texto-secundario: #6c757d;   /* Cor secundária do texto - usada em:
+                                        - Detalhes de agendamento (.agendamento-detalhes) */
+                                        
+  --cor-texto-preto: #000;          /* Cor preta - usada em:
+                                        - Texto de links (.link)
+                                        - Separadores (span)
+                                        - Detalhes de paciente (.detalhes-paciente)
+                                        - Itens de agendamento (.agendamento-item)
+                                        - Botão criar paciente (.btn-criar-paciente)
+                                        - Nomes e datas de projeto (.projeto-nome, .projeto-data) */
+                                        
+  --cor-texto-branco: white;        /* Cor branca - usada em:
+                                        - Textos sobre fundos escuros (.cara)
+                                        - Botões pequenos (.btn-criar-paciente-small)
+                                        - Estados de foco (.btn:focus) */
+                                        
+  --cor-texto-icone: rgba(0, 0, 0, 0.76); /* Cor dos ícones com transparência - usada em:
+                                              - Ícones Bootstrap (.bi) */
+  
+  /* CORES DE BORDA E SOMBRA */
+  --cor-borda: #ccc;                /* Cor cinza para bordas - usada em:
+                                        - Bordas de agendamento (.cabecalho-agendamento-borda)
+                                        - Estados de foco (#pesquisaPaciente:focus, #pesquisaAgendamento:focus, .Focus-Modal:focus)
+                                        - Inputs (.nome-input) */
+                                        
+  --cor-borda-preta: #000;          /* Cor preta para bordas - usada em:
+                                        - Bordas de containers (.DisplayDobras, #imc, .total) */
+                                        
+  --cor-sombra-leve: rgba(0, 0, 0, 0.1);   /* Sombra leve - usada em:
+                                              - Cards e containers (múltiplas classes)
+                                              - Inputs e botões (.refeicao-nome-custom, .nutriente-box, .btn-editar-excluir) */
+                                              
+  --cor-sombra-media: rgba(0, 0, 0, 0.15); /* Sombra média - usada em:
+                                              - Estados hover dos cards (.paciente-card:hover, .agendamento-card:hover, .projeto-card:hover) */
+}
+
 html {
   font-size: 14px;
 }
@@ -9,7 +108,7 @@ html {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+  box-shadow: 0 0 0 0.1rem var(--cor-texto-branco), 0 0 0 0.25rem var(--cor-foco);
 }
 
 html {
@@ -19,7 +118,7 @@ html {
 
 body {
   margin-bottom: 60px;
-  background-color: #f1f1f1;
+  background-color: var(--cor-fundo-principal);
   
 
 }
@@ -83,17 +182,17 @@ label {
 }
 
 .menu-item:hover {
-  color: #4B0082; /* Cor de destaque ao passar o mouse */
+  color: var(--cor-primaria); /* Cor de destaque ao passar o mouse */
 }
 
 .menu-item.active {
-  color: #4B0082; /* Cor de destaque quando clicado */
+  color: var(--cor-primaria); /* Cor de destaque quando clicado */
   font-weight: bold; /* Destaca ainda mais */
 }
 
 .DisplayDobras{
-  background-color: #9470db28;
-  border: 1px solid #000;
+  background-color: var(--cor-primaria-transparente);
+  border: 1px solid var(--cor-texto-preto);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 20px;
@@ -105,8 +204,8 @@ label {
   text-align: center;
 }
 #imc {
-  background-color: #9470db28;
-  border: 1px solid #000;
+  background-color: var(--cor-primaria-transparente);
+  border: 1px solid var(--cor-texto-preto);
   border-radius: 5px;
   padding: 10px;
   display: inline-block;
@@ -116,25 +215,25 @@ label {
   text-align: center;
   margin-top: 20px;
   text-decoration: none;
-  color: black;
+  color: var(--cor-texto-preto);
   font-size: 20px;
   font-weight: bold;
 }
 .link:hover {
-  color: #4B0082;
+  color: var(--cor-primaria);
   font-weight: bold;
-  border-bottom: 2px solid #4B0082;
+  border-bottom: 2px solid var(--cor-primaria);
 }
 
 span {
   margin-left: 10px; /* Espaço à esquerda do pipe */
   margin-right: 10px; /* Espaço à direita do pipe */
-  color: #000; /* Cor do pipe */
+  color: var(--cor-texto-preto); /* Cor do pipe */
   font-size: 25px;
 }
 
 #link {
-  background-color:#9470db28;
+  background-color: var(--cor-primaria-transparente);
   border: 1px ;
   border-radius: 5px;
   padding: 10px;
@@ -152,14 +251,14 @@ img {
 }
 
 .btn-outline-dark{
-  background-color: #9470db28;
+  background-color: var(--cor-primaria-transparente);
 }
 
 .btn-secondary{
-  background-color: #4c0082;
+  background-color: var(--cor-primaria-escura);
 }
 .menor{
-  background-color: #4B0082;
+  background-color: var(--cor-primaria);
   padding: 8px 10px;
   font-size: 12px;
   line-height: 1;
@@ -167,19 +266,19 @@ img {
 }
 
 .nav{
-  background-color: 	#f1f1f1 ;
+  background-color: var(--cor-fundo-principal);
 }
 
 .total{
-  background-color: #9470db08;
-  border: 1px solid #000;
+  background-color: var(--cor-primaria-muito-transparente);
+  border: 1px solid var(--cor-texto-preto);
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 20px;
 }
 
 .texto{
-  color: #4B0082 !important;
+  color: var(--cor-primaria) !important;
 }
 
 .entrada-quantidade{
@@ -191,15 +290,15 @@ img {
 } 
 
 .cor{
-  background-color: #f1f1f1;
+  background-color: var(--cor-fundo-principal);
 }
 
 /* Input do nome da refeição */
 .refeicao-nome-custom {
   font-weight: bold;                      /* Deixa o texto em negrito */
   border-radius: 0.75rem;                 /* Cantos arredondados */
-  background-color: #f8f9fa;              /* Fundo cinza claro */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  background-color: var(--cor-fundo-claro);              /* Fundo cinza claro */
+  box-shadow: 0 1px 3px var(--cor-sombra-leve); /* Sombra suave */
   outline: none;                          /* Remove contorno azul ao focar */
   font-size: 20px;                        /* Tamanho da fonte */
   padding: 10px 20px;                     /* Espaçamento interno */
@@ -211,10 +310,10 @@ img {
 
 /* Container de cada nutriente (caixa) */
 .nutriente-box {
-  background-color: #f8f9fa;              /* Fundo cinza claro */
+  background-color: var(--cor-fundo-claro);              /* Fundo cinza claro */
   padding: 2px 16px;                      /* Espaço interno da caixa */
   border-radius: 0.75rem;                 /* Cantos arredondados */
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);/* Sombra leve */
+  box-shadow: 0 1px 3px var(--cor-sombra-leve);/* Sombra leve */
   text-align: center;                     /* Centraliza o conteúdo */
   min-width: 120px;                       /* Evita que a caixa fique muito estreita */
   flex: 1 1 auto;                         /* Permite que todas cresçam igualmente */
@@ -234,16 +333,465 @@ img {
 /* Valor do nutriente (número) */
 .nutriente-valor {
   font-size: 15px;                      /* Tamanho da fonte */
-  color: #333;                            /* Cor cinza escura */
+  color: var(--cor-texto-principal);                            /* Cor cinza escura */
 }
 
-/* Linha inteira da refeição (título, nutrientes, botões) */
+/* =============================== */
+/* AJUSTES RESPONSIVOS ADICIONAIS */
+/* =============================== */
+
+/* Flexbox responsivo para nutrientes */
 .refeicao-header {
-  display: flex;                          /* Flex container principal */
-  align-items: center;                    /* Alinha verticalmente */
-  flex-wrap: wrap;                        /* Permite quebrar linha se necessário */
-  gap: 1rem;                              /* Espaço entre os blocos */
-  margin-bottom: 1rem;                    /* Espaço abaixo da linha */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (max-width: 767px) {
+  .refeicao-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+}
+
+/* Container flexível para nutrientes */
+.nutrientes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .nutrientes-container {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Ajustes para botões de ação responsivos */
+.acoes-responsivas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 767px) {
+  .acoes-responsivas {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .acoes-responsivas .btn {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+}
+
+/* Grid responsivo para cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  width: 100%;
+}
+
+@media (max-width: 767px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* Tabelas responsivas */
+.table-responsive-custom {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 767px) {
+  .table-responsive-custom table {
+    font-size: 14px;
+  }
+  
+  .table-responsive-custom th,
+  .table-responsive-custom td {
+    padding: 8px 4px;
+    white-space: nowrap;
+  }
+}
+
+/* Ajustes para imagens responsivas */
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+
+@media (max-width: 767px) {
+  .img-responsive {
+    max-width: 90%;
+  }
+}
+
+/* Container principal responsivo */
+.main-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+@media (max-width: 767px) {
+  .main-container {
+    padding: 0 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-container {
+    padding: 0 10px;
+  }
+}
+
+/* Ajustes para navegação responsiva */
+.nav-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .nav-responsive {
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .nav-responsive .menu-item {
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid var(--cor-borda);
+  }
+}
+
+/* Ajustes para modais responsivos */
+.modal-responsive {
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .modal-responsive {
+    max-width: 95vw;
+    margin: 10px auto;
+  }
+  
+  .modal-responsive .modal-body {
+    padding: 15px;
+  }
+  
+  .modal-responsive .modal-header,
+  .modal-responsive .modal-footer {
+    padding: 10px 15px;
+  }
+}
+
+/* =============================== */
+/* FORMULÁRIOS RESPONSIVOS        */
+/* =============================== */
+
+/* Ajustes gerais para formulários */
+.form-responsive {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-group-responsive {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.form-group-responsive label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+  color: var(--cor-texto-principal);
+}
+
+.form-control-responsive {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--cor-fundo-claro);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control-responsive:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+  box-shadow: 0 0 0 3px rgba(37, 140, 251, 0.1);
+}
+
+/* Ajustes específicos para dispositivos móveis */
+@media (max-width: 767px) {
+  .form-control-responsive {
+    font-size: 16px; /* Evita zoom no iOS */
+    padding: 15px;
+    border-radius: 10px;
+  }
+  
+  .form-group-responsive {
+    margin-bottom: 20px;
+  }
+  
+  .form-group-responsive label {
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+}
+
+/* Grupos de campos lado a lado */
+.form-row-responsive {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.form-col-responsive {
+  flex: 1;
+  min-width: 200px;
+}
+
+@media (max-width: 767px) {
+  .form-row-responsive {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .form-col-responsive {
+    min-width: auto;
+    width: 100%;
+  }
+}
+
+/* Botões de formulário responsivos */
+.form-buttons-responsive {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.btn-form-responsive {
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 120px;
+}
+
+.btn-primary-responsive {
+  background-color: var(--cor-primaria);
+  color: var(--cor-texto-branco);
+}
+
+.btn-primary-responsive:hover {
+  background-color: var(--cor-primaria-escura);
+  transform: translateY(-2px);
+}
+
+.btn-secondary-responsive {
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-texto-principal);
+  border: 1px solid var(--cor-borda);
+}
+
+.btn-secondary-responsive:hover {
+  background-color: var(--cor-fundo-container);
+}
+
+@media (max-width: 767px) {
+  .form-buttons-responsive {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .btn-form-responsive {
+    width: 100%;
+    padding: 15px;
+    font-size: 18px;
+    min-width: auto;
+  }
+}
+
+/* Campos de seleção responsivos */
+.select-responsive {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--cor-fundo-claro);
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-responsive:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+  box-shadow: 0 0 0 3px rgba(37, 140, 251, 0.1);
+}
+
+@media (max-width: 767px) {
+  .select-responsive {
+    padding: 15px;
+    font-size: 16px;
+    background-position: right 15px center;
+  }
+}
+
+/* Checkbox e Radio responsivos */
+.checkbox-responsive,
+.radio-responsive {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.checkbox-responsive input,
+.radio-responsive input {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.checkbox-responsive label,
+.radio-responsive label {
+  cursor: pointer;
+  margin-bottom: 0;
+  font-weight: normal;
+}
+
+@media (max-width: 767px) {
+  .checkbox-responsive,
+  .radio-responsive {
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+  
+  .checkbox-responsive input,
+  .radio-responsive input {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .checkbox-responsive label,
+  .radio-responsive label {
+    font-size: 16px;
+  }
+}
+
+/* Textarea responsivo */
+.textarea-responsive {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: var(--cor-fundo-claro);
+  resize: vertical;
+  min-height: 100px;
+  font-family: inherit;
+}
+
+.textarea-responsive:focus {
+  outline: none;
+  border-color: var(--cor-foco);
+  box-shadow: 0 0 0 3px rgba(37, 140, 251, 0.1);
+}
+
+@media (max-width: 767px) {
+  .textarea-responsive {
+    padding: 15px;
+    font-size: 16px;
+    min-height: 120px;
+  }
+}
+
+/* Mensagens de erro responsivas */
+.error-message-responsive {
+  color: #dc3545;
+  font-size: 14px;
+  margin-top: 5px;
+  display: block;
+}
+
+@media (max-width: 767px) {
+  .error-message-responsive {
+    font-size: 15px;
+    margin-top: 8px;
+  }
+}
+
+/* Ajustes para campos de busca */
+.search-responsive {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-input-responsive {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  border: 1px solid var(--cor-borda);
+  border-radius: 25px;
+  font-size: 16px;
+  background-color: var(--cor-fundo-claro);
+}
+
+.search-icon-responsive {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--cor-texto-secundario);
+  font-size: 18px;
+}
+
+@media (max-width: 767px) {
+  .search-responsive {
+    max-width: 100%;
+  }
+  
+  .search-input-responsive {
+    padding: 15px 50px 15px 20px;
+    font-size: 16px;
+  }
+  
+  .search-icon-responsive {
+    right: 20px;
+    font-size: 20px;
+}
 }
 
 .nomespan{
@@ -251,11 +799,11 @@ img {
 }
 
 .btn-editar-excluir {
-  background-color: #f8f9fa;
+  background-color: var(--cor-fundo-claro);
   font-size: 20px;
   padding: 10px 8px;
   border-radius: 0.75rem;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px var(--cor-sombra-leve);
   text-align: center;
   min-width: 80px;
   flex: 1 1 auto;
@@ -267,11 +815,11 @@ img {
 }
 
 .bi{
-  color: rgba(0, 0, 0, 0.76);
+  color: var(--cor-texto-icone);
 }
 
 .cara{
-  color: white important;
+  color: var(--cor-texto-branco) important;
   cursor: pointer;
 }
 
@@ -293,19 +841,19 @@ img {
 /* =============================== */
 
 .tela-pacientes {
-  background-color: #f9f9f9; /* Diminuído para 30% */
+  background-color: var(--cor-fundo-container); /* Diminuído para 30% */
   max-width: 600px;
   min-width: 500px;
   height: 500px; /* Altura fixa igual à wrapper */
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--cor-sombra-leve);
   display: flex;
   flex-direction: column;
 }
 
 /* Cabeçalho fixo com título e campo de busca */
 .cabecalho-fixa {
-  background-color: #f9f9f9;
+  background-color: var(--cor-fundo-container);
   padding: 20px;
   position: sticky;
   top: 0;
@@ -322,25 +870,25 @@ img {
 
 .cabecalho-tela h1 {
   font-size: 1.8em;
-  color: #333;
+  color: var(--cor-texto-principal);
   margin: 0;
 }
 .cabecalho-agendamento h1 {
   text-align: center;
   font-size: 30px;
-  color: #333;
+  color: var(--cor-texto-principal);
   margin: 0;
   padding-bottom: 10px; /* Espaço entre o texto e a linha */
 }
 .cabecalho-agendamento-borda{
-  border-bottom: 2px solid #ccc; /* Linha inferior */
+  border-bottom: 2px solid var(--cor-borda); /* Linha inferior */
 }
 
 /* Botão pequeno no canto direito do título */
 .btn-criar-paciente-small {
   font-size: 20px;
   padding: 6px 10px;
-  color: white;
+  color: var(--cor-texto-branco);
   border-radius: 5px;
   text-decoration: none;
   cursor: pointer;
@@ -348,7 +896,7 @@ img {
 
 .btn-criar-paciente {
   text-decoration: none;
-  color: black;
+  color: var(--cor-texto-preto);
   background-color: #f0f0f0; /* Cor de fundo padrão */
   padding: 10px 20px;
   border: none;
@@ -388,10 +936,10 @@ img {
 
 /* Card de paciente */
 .paciente-card {
-  background-color: #f1f1f1;
+  background-color: var(--cor-fundo-card);
   padding: 12px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--cor-sombra-leve);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
@@ -400,7 +948,7 @@ img {
 
 .paciente-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px var(--cor-sombra-media);
 }
 
 .informacoes {
@@ -411,7 +959,7 @@ img {
 
 .nome-paciente strong {
   font-size: 15px;
-  color: #4B0082;
+  color: var(--cor-primaria);
   font-weight: 600;
 }
 
@@ -419,7 +967,7 @@ img {
   display: flex;
   gap: 20px;
   font-size: 13px;
-  color: #000000;
+  color: var(--cor-texto-preto);
 }
 
 .fonte-telefone-e-insta {
@@ -430,7 +978,7 @@ img {
 .acoes-paciente-index {
   margin-left: 10px;
   font-size: 18px;
-  color: #333;
+  color: var(--cor-texto-principal);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -438,7 +986,7 @@ img {
 .acoes-paciente-index,
 .icone-acao-paciente-index {
   font-size: 17px; /* Mesma largura para todos os ícones */
-  color: #333; /* Cor padrão */
+  color: var(--cor-texto-principal); /* Cor padrão */
   text-decoration: none; /* Remove o sublinhado */
   margin-left: 10px; /* Espaçamento entre os ícones */
   margin-top: 2px;
@@ -468,18 +1016,18 @@ img {
 /* =============================== */
 
 .lista-agendamento-index {
-  background-color: #f9f9f9;
+  background-color: var(--cor-fundo-container);
   width: 500px;
   height: 400px; /* Aumenta a altura para acomodar mais conteúdo */
   display: flex;
   flex-direction: column;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--cor-sombra-leve);
   margin-left: auto; /* Move a div para a direita */
   overflow-y: auto; /* Permite rolagem se o conteúdo exceder a altura */
 }
 .agendamento-item{
-  color: black;
+  color: var(--cor-texto-preto);
 }
 
 /* Rolagem interna para os cards de agendamento - aplica rolagem quando necessário */
@@ -498,7 +1046,7 @@ img {
 .dia-agendamento h2 {
   font-size: 1.2em;
   font-weight: bold;
-  color: #4B0082;
+  color: var(--cor-primaria);
   margin: 10px 0 5px 0; /* Menor espaço entre o título e os cards */
   text-align: center; /* Centraliza o texto */
 }
@@ -510,18 +1058,18 @@ img {
 #pesquisaPaciente:focus {
   outline: none;
   box-shadow: none;
-  border-color: #ccc;
+  border-color: var(--cor-borda);
 }
 
 #pesquisaAgendamento:focus {
   outline: none;
   box-shadow: none;
-  border-color: #ccc;
+  border-color: var(--cor-borda);
 }
 .Focus-Modal:focus{
   outline: none;
   box-shadow: none;
-  border-color: #ccc;
+  border-color: var(--cor-borda);
 }
 
 .detalles-agendamento-wrapper {
@@ -530,16 +1078,437 @@ img {
   width: 100%;
 }
 
-@media (max-width: 768px) {
+/* =============================== */
+/* MEDIA QUERIES - RESPONSIVIDADE */
+/* =============================== */
+
+/* TABLETS (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  /* Ajustes gerais para tablets */
+  .detalhes-agendamento-wrapper {
+    gap: 15px;
+    height: auto;
+  }
+
+  .tela-pacientes {
+    min-width: 400px;
+    max-width: 500px;
+  }
+
+  .lista-agendamento-index {
+    width: 450px;
+  }
+
+  .paciente-detalhes {
+    width: 450px;
+    max-width: 500px;
+  }
+
+  .agendamento-container {
+    width: 450px;
+  }
+
+  .projetos-detalhes {
+    width: 450px;
+  }
+
+  .projetos-lista {
+    width: 410px;
+  }
+
+  .projeto-card {
+    width: 350px;
+  }
+
+  /* Ajustes para formulários em tablets */
+  .input-small {
+    max-width: 200px;
+  }
+
+  .d-flex {
+    gap: 20px;
+  }
+
+  /* Ajustes para imagem */
+  img {
+    right: 200px;
+    width: 350px;
+  }
+
+  /* Ajustes para containers de projeto */
+  .container-projeto, 
+  .container-resumo {
+    max-width: 450px;
+  }
+}
+
+/* DISPOSITIVOS MÓVEIS (até 767px) */
+@media (max-width: 767px) {
+  /* Layout geral - tudo em coluna */
   .detalhes-agendamento-wrapper {
     flex-direction: column;
     height: auto;
+    gap: 20px;
   }
 
   .tela-pacientes,
   .lista-agendamento-index {
     width: 100%;
+    min-width: auto;
+    max-width: 100%;
     height: auto;
+  }
+
+  .paciente-detalhes {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .agendamento-container {
+    width: 100%;
+    height: auto;
+  }
+
+  .projetos-detalhes {
+    width: 100%;
+    height: auto;
+    min-height: auto; /* Remove altura mínima em mobile */
+    overflow: visible; /* Garante visibilidade do conteúdo */
+  }
+
+  .projetos-lista {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+  }
+
+  .projeto-card {
+    width: 100%;
+  }
+
+  /* Ajustes para cabeçalhos */
+  .cabecalho-tela h1 {
+    font-size: 1.5em;
+  }
+
+  .cabecalho-agendamento h1 {
+    font-size: 24px;
+  }
+
+  .projetos-detalhes h2 {
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Mantém botão à direita em mobile */
+    flex-wrap: nowrap; /* Evita quebra de linha */
+  }
+
+  .projetos-detalhes h2 a {
+    flex-shrink: 0; /* Impede que o botão encolha */
+    margin-left: 10px; /* Espaço mínimo entre título e botão */
+    min-width: 40px; /* Tamanho adequado para toque em mobile */
+    min-height: 40px; /* Tamanho adequado para toque em mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.05); /* Fundo sutil para destacar */
+    border-radius: 50%; /* Botão circular */
+    transition: all 0.3s ease;
+  }
+
+  .projetos-detalhes h2 a:hover {
+    background-color: rgba(0, 0, 0, 0.1); /* Fundo mais escuro no hover */
+    transform: scale(1.1); /* Leve aumento no hover */
+  }
+
+  .projetos-detalhes h2 a i {
+    font-size: 18px;
+    color: #555; /* Cor mais visível em mobile */
+  }
+
+  /* Ajustes para cards */
+  .paciente-card,
+  .agendamento-card {
+    padding: 10px;
+  }
+
+  .nome-paciente strong {
+    font-size: 14px;
+  }
+
+  .detalhes-paciente {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Ajustes para formulários */
+  .oi {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .col-custom {
+    width: 100%;
+    padding-right: 0;
+  }
+
+  .input-small {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .d-flex {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  /* Ajustes para botões */
+  .btn-success, .btn-secondary {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .btn-criar-paciente-small {
+    font-size: 16px;
+    padding: 8px 12px;
+  }
+
+  /* Ajustes para refeições */
+  .refeicao-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+  }
+
+  .refeicao-nome-custom {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nutriente-box {
+    min-width: 100px;
+    flex: 1;
+  }
+
+  /* Ajustes para ações */
+  .acoes-paciente-index,
+  .icone-acao-paciente-index {
+    font-size: 20px;
+    margin-left: 15px;
+  }
+
+  .icone-acao-index {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  /* Ajustes para projeto info */
+  .projeto-info-grupo {
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+  }
+
+  .projeto-nome {
+    font-size: 16px;
+    white-space: normal;
+  }
+
+  .projeto-data {
+    font-size: 13px;
+  }
+
+  .projeto-acoes {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  /* Ajustes para containers de projeto */
+  .container-projeto, 
+  .container-resumo {
+    max-width: 100%;
+    padding: 15px;
+  }
+
+  .container-projeto h3,
+  .resumo-nutricional h3 {
+    font-size: 24px;
+  }
+
+  .resumo-nutricional .row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .resumo-nutricional .row > div {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Ocultar imagem em dispositivos móveis */
+  img {
+    display: none;
+  }
+
+  /* Ajustes para títulos */
+  #titulo {
+    font-size: 20px;
+  }
+
+  .menu-item {
+    font-size: 18px;
+  }
+
+  /* Ajustes para campos de pesquisa */
+  .campo-pesquisa input {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  /* Ajustes para alertas */
+  .alert {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+/* DISPOSITIVOS MUITO PEQUENOS (até 480px) */
+@media (max-width: 480px) {
+  /* Ajustes adicionais para telas muito pequenas */
+  .cabecalho-tela {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cabecalho-tela h1 {
+    font-size: 1.3em;
+    text-align: center;
+  }
+
+  .btn-criar-paciente-small {
+    width: 100%;
+  }
+
+  .agendamento-cabecalho-agenda {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .agendamento-detalhes {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .acoes-paciente-index,
+  .icone-acao-paciente-index {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+
+  .nutriente-titulo {
+    font-size: 11px;
+  }
+
+  .nutriente-valor {
+    font-size: 13px;
+  }
+
+  .btn-editar-excluir {
+    font-size: 16px;
+    min-width: 60px;
+  }
+
+  /* Ajustes específicos para telas muito pequenas */
+  .detalhes-agendamento-wrapper {
+    flex-direction: column;
+    gap: 15px;
+    height: auto;
+    min-height: auto;
+  }
+
+  .projetos-detalhes {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+  }
+
+  .projetos-detalhes h2 {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Mantém botão à direita em telas pequenas */
+      flex-wrap: nowrap; /* Evita quebra de linha */
+    }
+
+    .projetos-detalhes h2 a {
+       flex-shrink: 0; /* Impede que o botão encolha */
+       margin-left: 8px; /* Espaço mínimo entre título e botão */
+       min-width: 36px; /* Tamanho adequado para toque em telas pequenas */
+       min-height: 36px; /* Tamanho adequado para toque em telas pequenas */
+       display: flex;
+       align-items: center;
+       justify-content: center;
+       background-color: rgba(0, 0, 0, 0.08); /* Fundo mais visível em telas pequenas */
+       border-radius: 50%; /* Botão circular */
+       transition: all 0.3s ease;
+     }
+
+     .projetos-detalhes h2 a:hover {
+       background-color: rgba(0, 0, 0, 0.15); /* Fundo mais escuro no hover */
+       transform: scale(1.05); /* Leve aumento no hover */
+     }
+
+     .projetos-detalhes h2 a i {
+       font-size: 16px;
+       color: #444; /* Cor mais visível em telas pequenas */
+     }
+
+  .projetos-lista {
+    width: 100%;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .projeto-card {
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* Cabeçalhos empilhados */
+  .cabecalho-paciente {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .paciente-info-linha {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  /* Botões full-width */
+  .btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  /* Padding reduzido para telas muito pequenas */
+  .paciente-detalhes,
+  .agendamento-container,
+  .projetos-detalhes {
+    padding: 15px;
+  }
+
+  .lista-pacientes {
+    padding: 5px 15px 15px 15px;
+  }
+
+  .cabecalho-fixa {
+    padding: 15px;
   }
 }
 
@@ -549,12 +1518,12 @@ img {
 
 /* Estilizando o container de detalhes do paciente */
 .paciente-detalhes {
-  background-color: #f9f9f9;
+  background-color: var(--cor-fundo-container);
   padding: 10px;
   border-radius: 10px;
   width: 550px; /* Largura ajustada */
   max-width: 750px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--cor-sombra-leve);
   margin-right: 20px; /* Distância entre o paciente e o agendamento */
 }
 
@@ -570,7 +1539,7 @@ img {
 .acoes-paciente a {
   margin-left: 10px;
   font-size: 18px;
-  color: #333;
+  color: var(--cor-texto-principal);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -578,7 +1547,7 @@ img {
 .acoes-paciente a,
 .icone-acao {
   font-size: 17px; /* Mesma largura para todos os ícones */
-  color: #333; /* Cor padrão */
+  color: var(--cor-texto-principal); /* Cor padrão */
   text-decoration: none; /* Remove o sublinhado */
   margin-left: 10px; /* Espaçamento entre os ícones */
   margin-top: 2px;
@@ -605,18 +1574,18 @@ img {
 
 /* Estilo do container de agendamentos */
 .agendamento-container {
-  background-color: #f9f9f9;
+  background-color: var(--cor-fundo-container);
   padding: 20px;
   border-radius: 10px;
   width: 580px;
   height: 218px; /* Altura fixa do container */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px var(--cor-sombra-leve);
   display: flex;
   flex-direction: column;
 }
 
 .alert {
-  background-color: #4c008212; /* Espaço entre o alerta e o conteúdo */
+  background-color: var(--cor-alerta-transparente); /* Espaço entre o alerta e o conteúdo */
 }
 
 /* Estilizando o cabeçalho do agendamento */
@@ -649,10 +1618,10 @@ img {
 
 /* Estilo do card de agendamento */
 .agendamento-card {
-  background-color: #f1f1f1;
+  background-color: var(--cor-fundo-card);
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--cor-sombra-leve);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -662,7 +1631,7 @@ img {
 
 .agendamento-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px var(--cor-sombra-media);
 }
 
 /* Estilo das informações do agendamento */
@@ -677,7 +1646,7 @@ img {
   display: flex;
   gap: 20px;
   font-size: 14px;
-  color: #6c757d;
+  color: var(--cor-texto-secundario);
   flex-wrap: wrap;
 }
 
@@ -714,7 +1683,8 @@ img {
   align-items: flex-start;
   margin-top: 20px;
   flex-wrap: wrap; /* para responsividade em telas menores */
-  height: 700px; /* Altura fixa para o conjunto das colunas */
+  min-height: 500px; /* Altura mínima em vez de fixa */
+  height: auto; /* Permite crescimento automático */
 }
 
 /* =============================== */
@@ -724,7 +1694,7 @@ img {
 .projetos-detalhes h2 {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* separa texto e ícone */
+  justify-content: space-between; /* Separa título à esquerda e botão à direita */
   font-size: 30px; /* mantém tamanho do texto do h2 */
   margin-bottom: 1rem;
 }
@@ -733,20 +1703,23 @@ img {
 .projetos-detalhes h2 a i {
   font-size: 18px; /* tamanho menor para o ícone */
   transition: font-size 0.3s ease; /* transição suave */
+  color: #666; /* Cor mais visível */
 }
 
 .projetos-detalhes h2 a:hover i {
   font-size: 22px; /* aumenta o ícone ao passar o mouse */
+  color: #333; /* Cor mais escura no hover */
 }
 
 .projetos-detalhes {
-  background-color: #f9f9f9;
+  background-color: var(--cor-fundo-container);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  height: 280px; /* Aumente a altura do contêiner */
+  box-shadow: 0 4px 15px var(--cor-sombra-leve);
+  min-height: 280px; /* Altura mínima em vez de fixa */
+  height: auto; /* Permite crescimento automático */
   width: 500px; /* Largura fixa */
-  overflow: hidden; /* Impede rolagem no contêiner principal */
+  overflow: visible; /* Permite que o conteúdo seja visível */
 }
 
 /* =============================== */
@@ -768,10 +1741,10 @@ img {
 /* =============================== */
 
 .projeto-card {
-  background-color: #f1f1f1;
+  background-color: var(--cor-fundo-card);
   padding: 15px;
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px var(--cor-sombra-leve);
   width: 400px;
   display: flex;
   flex-direction: column;
@@ -782,7 +1755,7 @@ img {
 
 .projeto-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 16px var(--cor-sombra-media);
 }
 
 /* =============================== */
@@ -806,7 +1779,7 @@ img {
 .projeto-nome {
   font-size: 18px;
   font-weight: bold;
-  color: #000000;
+  color: var(--cor-texto-preto);
   margin: 0;
   display: flex;
   align-items: center;
@@ -819,7 +1792,7 @@ img {
 
 .projeto-data {
   font-size: 14px;
-  color: #000000;
+  color: var(--cor-texto-preto);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -827,7 +1800,7 @@ img {
 }
 
 .nome-input {
-  border: 1px solid #ccc;
+  border: 1px solid var(--cor-borda);
   height: 24px; /* ou outro valor menor */
   font-size: 14px;
   border-radius: 4px;
@@ -837,7 +1810,7 @@ img {
 .nome-input:focus {
   outline: none;
   box-shadow: none;
-  border-color: #ccc; /* Ou qualquer cor que você preferir */
+  border-color: var(--cor-borda); /* Ou qualquer cor que você preferir */
 }
 
 .projeto-acoes {

@@ -28,7 +28,8 @@ namespace ProjetoNutri.Controllers
                 .Include(r => r.Refeicao_Alimentos)
                 .ThenInclude(ra => ra.Alimento)
                 .Where(r => r.IdProjeto == IdProjeto) // Filtra as refeições pelo ProjetoId
-                .OrderByDescending(r => r.DataCriacao)
+                .OrderBy(r => r.Ordem)
+                .ThenByDescending(r => r.DataCriacao)
                 .ToList();
 
             // Criando dicionários para armazenar as somas por refeição
@@ -232,6 +233,29 @@ namespace ProjetoNutri.Controllers
             _context.SaveChanges();
 
             return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult SalvarOrdemRefeicoes([FromBody] List<int> ordemRefeicoes)
+        {
+            try
+            {
+                for (int i = 0; i < ordemRefeicoes.Count; i++)
+                {
+                    var refeicao = _context.Refeicoes.FirstOrDefault(r => r.Id == ordemRefeicoes[i]);
+                    if (refeicao != null)
+                    {
+                        refeicao.Ordem = i + 1; // Ordem começa em 1
+                    }
+                }
+
+                _context.SaveChanges();
+                return Ok(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { success = false, message = ex.Message });
+            }
         }
 
 

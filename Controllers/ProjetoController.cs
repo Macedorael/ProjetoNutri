@@ -192,6 +192,7 @@ namespace ProjetoNutri.Controllers
         }
 
 
+        [HttpGet]
         public IActionResult EditarProjeto(int id)
         {
             var projeto = _context.Projetos.Find(id);

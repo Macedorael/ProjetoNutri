@@ -22,6 +22,10 @@ namespace ProjetoNutri.Models
         [DataType(DataType.Date)]
         [Display(Name = "Data de Edição")]
         public DateTime DataEdicao { get; set; } = DateTime.Now;
+        
+        [Display(Name = "Ordem")]
+        public int Ordem { get; set; } = 0;
+        
         public virtual ICollection<Refeicao_Alimento> Refeicao_Alimentos { get; set; }
         
         

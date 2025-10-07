@@ -4,13 +4,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoNutri.Models;
+using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
-
+using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
 {
     public class PacienteController : Controller
-     {
+    {
         private readonly ClienteContext _context;
 
         public PacienteController(ClienteContext context)

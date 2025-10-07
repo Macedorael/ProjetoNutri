@@ -80,6 +80,48 @@ namespace ProjetoNutri.Services
 
             return (percentualGordura, somaPregas, densidadeCorporal);
         }
+
+        public (double? PercentualGorduraSiri, double? PercentualGorduraBrozek, double? SomaPrega, double? DensidadeCorporal) CalculoPollock7ComparativoSiriBrozek(Pregas prega)
+        {
+            // Verifica se o sexo está definido
+            if (prega?.Projeto?.Paciente?.Sexo == null)
+            {
+                return (null, null, null, null); // Retorna null se o sexo não estiver definido
+            }
+
+            if (prega.Tricipital == null || prega.Abdominal == null || prega.Subescapular == null || prega.AxilarMedia == null ||
+                prega.SupraIliaca == null || prega.Toracica == null || prega.Coxa == null)
+            {
+                return (null, null, null, null);
+            }
+
+            double somaPregas = prega.Tricipital.Value + prega.Abdominal.Value + prega.Subescapular.Value +
+                                prega.AxilarMedia.Value + prega.SupraIliaca.Value + prega.Toracica.Value + prega.Coxa.Value;
+
+            DateTime dataNascimento = prega.Projeto.Paciente.DataNascimento;
+            int idade = ProjetoNutri.Services.CalculoIdade.Calcular(dataNascimento);
+
+            // Cálculo da densidade corporal usando Pollock 7 (Jackson & Pollock, 1978) - apenas coeficientes masculinos
+            double densidadeCorporal = 1.112 - (0.00043499 * somaPregas) +
+                               (0.00000055 * Math.Pow(somaPregas, 2)) -
+                               (0.00028826 * idade);
+
+            // Cálculo do percentual de gordura usando Siri (1961)
+            double percentualGorduraSiri = (495 / densidadeCorporal) - 450;
+
+            // Cálculo do percentual de gordura usando Brozek (1963)
+            double percentualGorduraBrozek = (457 / densidadeCorporal) - 414.2;
+
+            Console.WriteLine("=== COMPARATIVO SIRI vs BROZEK ===");
+            Console.WriteLine("Soma das pregas: " + somaPregas);
+            Console.WriteLine("Idade: " + idade);
+            Console.WriteLine("Densidade corporal: " + densidadeCorporal.ToString("F3"));
+            Console.WriteLine("Percentual de gordura (Siri): " + percentualGorduraSiri.ToString("F2") + "%");
+            Console.WriteLine("Percentual de gordura (Brozek): " + percentualGorduraBrozek.ToString("F2") + "%");
+            Console.WriteLine("Diferença: " + Math.Abs(percentualGorduraSiri - percentualGorduraBrozek).ToString("F2") + "%");
+
+            return (percentualGorduraSiri, percentualGorduraBrozek, somaPregas, densidadeCorporal);
+        }
         public (double? PercentualGordura, double? SomaPrega, double? DensidadeCorporal) CalculoPetroski(Pregas prega)
         {
             // Verifica se o sexo está definido

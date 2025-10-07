@@ -25,7 +25,8 @@ namespace ProjetoNutri.Controllers
                 .Include(r => r.Refeicao_Alimentos)
                 .ThenInclude(ra => ra.Alimento)
                 .Where(r => r.IdProjeto == idProjeto)
-                .OrderByDescending(r => r.DataCriacao)
+                .OrderBy(r => r.Ordem)
+                .ThenByDescending(r => r.DataCriacao)
                 .ToList();
 
             var projeto = _context.Projetos

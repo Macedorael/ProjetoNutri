@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoNutri.Models;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
-using ProjetoNutri.Models;
 using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
@@ -13,31 +13,25 @@ namespace ProjetoNutri.Controllers
     public class CircunferenciaController : Controller
     {
         private readonly ClienteContext _context;
-        private readonly CalculosCircunferencia _calculosCircunferencia;
 
-        public CircunferenciaController(ClienteContext context, CalculosCircunferencia calculosCircunferencia)
+        public CircunferenciaController(ClienteContext context)
         {
             _context = context;
-            _calculosCircunferencia = calculosCircunferencia;
         }
 
         public IActionResult IndexCircunferencia(int projetoId)
         {
-            var circunferencia = _context.Circunferencias
-                .Include(c => c.Projeto)  // Inclui o Projeto associado à Circuferencia
-                .ThenInclude(projeto => projeto.Paciente)  // Inclui o Paciente associado ao Projeto
-                .Where(c => c.IdProjeto == projetoId)  // Filtra pelo ID do Projeto
-                .ToList();
+            var circunferencias = _context.Circunferencias.Include(c => c.Projeto).ThenInclude(projeto => projeto.Paciente).Where(c => c.IdProjeto == projetoId).ToList();
             ViewData["ProjetoId"] = projetoId;
-            circunferencia.ForEach(p => p.Projeto = _context.Projetos.Find(p.IdProjeto));
+            circunferencias.ForEach(c => c.Projeto = _context.Projetos.Find(c.IdProjeto));
 
-            return View(circunferencia);
+            return View(circunferencias);
         }
 
         public IActionResult CriarCircunferencia(int projetoId)
         {
-            var circulferencia = new Circunferencia { IdProjeto = projetoId };
-            return View(circulferencia);
+            var circunferencia = new Circunferencia { IdProjeto = projetoId };
+            return View(circunferencia);
         }
 
         [HttpPost]
@@ -63,40 +57,27 @@ namespace ProjetoNutri.Controllers
         public IActionResult DetalheCircunferencia(int id)
         {
             var circunferencia = _context.Circunferencias
-            .Include(c => c.Projeto)       // Inclui o Projeto relacionado
-            .ThenInclude(p => p.Paciente)  // Inclui o Paciente relacionado ao Projeto
-            .FirstOrDefault(c => c.Id == id);
-            
-
-
-            if (circunferencia == null)
-            {
-                return RedirectToAction(nameof(Index)); // Redireciona para a listagem
-            }
-            var (rcq, classificacao) = _calculosCircunferencia.CalcularRCQ(circunferencia.Cintura, circunferencia.Quadril, circunferencia.Projeto.Paciente.Sexo);
-
-        // Passa os resultados para a View
-            ViewBag.RCQ = rcq;
-            ViewBag.ClassificacaoRCQ = classificacao;
-
-
-            return View(circunferencia);
-        }
-
-        // GET: Editar Circunferência
-        public IActionResult EditarCircunferencia(int id)
-        {
-            var circunferencia = _context.Circunferencias
-                .Include(c => c.Projeto)  // Inclui o Projeto associado
-                .ThenInclude(projeto => projeto.Paciente) // Inclui o Paciente associado ao Projeto
+                .Include(c => c.Projeto)
+                .ThenInclude(p => p.Paciente)
                 .FirstOrDefault(c => c.Id == id);
 
             if (circunferencia == null)
             {
-                return NotFound(); // Se a Circunferência não for encontrada, retorna erro 404
+                return NotFound();
             }
 
-            return View(circunferencia); // Exibe o formulário de edição
+            return View(circunferencia);
+        }
+
+        public IActionResult EditarCircunferencia(int id, int projetoId)
+        {
+            var circunferencia = _context.Circunferencias.Find(id);
+            if (circunferencia == null)
+            {
+                return NotFound();
+            }
+            ViewData["ProjetoId"] = projetoId;
+            return View(circunferencia);
         }
 
         // POST: Editar Circunferência
@@ -160,11 +141,25 @@ namespace ProjetoNutri.Controllers
             return View(circunferencia);
         }
 
-        [HttpPost]
         public IActionResult DeletarCircunferencia(int id)
         {
-            var circunferencia = _context.Circunferencias.Find(id);
+            var circunferencia = _context.Circunferencias
+                .Include(c => c.Projeto)
+                .ThenInclude(p => p.Paciente)
+                .FirstOrDefault(c => c.Id == id);
 
+            if (circunferencia == null)
+            {
+                return NotFound();
+            }
+
+            return View(circunferencia);
+        }
+
+        [HttpPost]
+        public IActionResult DeletarCircunferencia(int id, bool confirmacao)
+        {
+            var circunferencia = _context.Circunferencias.Find(id);
             if (circunferencia == null)
             {
                 return NotFound();
@@ -173,7 +168,7 @@ namespace ProjetoNutri.Controllers
             _context.Circunferencias.Remove(circunferencia);
             _context.SaveChanges();
 
-            return RedirectToAction("AntropometriaProjeto","Projeto", new { projetoId = circunferencia.IdProjeto });
+            return RedirectToAction("AntropometriaProjeto", "Projeto", new { projetoId = circunferencia.IdProjeto });
         }
     }
 }

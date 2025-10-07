@@ -112,32 +112,32 @@
 
     <script>
         $(document).ready(function () {
-            // Carregar ordem salva
-            function carregarOrdem() {
-                let ordemSalva = localStorage.getItem("ordemRefeicoes");
-                if (ordemSalva) {
-                    let ordem = JSON.parse(ordemSalva);
-                    let container = $("#sortableRefeicoes");
-                    ordem.forEach(function (id) {
-                        let item = container.find(`.refeicao-item[data-id='${id}']`);
-                        container.append(item);
-                    });
-                }
-            }
-
             // Ativar sortable
             $("#sortableRefeicoes").sortable({
                 placeholder: "ui-state-highlight",
                 update: function () {
                     let ordemAtual = [];
                     $(".refeicao-item").each(function () {
-                        ordemAtual.push($(this).attr("data-id"));
+                        ordemAtual.push(parseInt($(this).attr("data-id")));
                     });
-                    localStorage.setItem("ordemRefeicoes", JSON.stringify(ordemAtual));
+                    
+                    // Salvar no banco de dados em vez do localStorage
+                    $.ajax({
+                        url: '/Refeicao/SalvarOrdemRefeicoes',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(ordemAtual),
+                        success: function(response) {
+                            if (response.success) {
+                                console.log('Ordem salva com sucesso');
+                            }
+                        },
+                        error: function() {
+                            alert('Erro ao salvar a ordem das refeições');
+                        }
+                    });
                 }
             }).disableSelection();
-
-            carregarOrdem();
 
             // Excluir refeição
             $('.btn-excluir').click(function (event) {
@@ -145,19 +145,9 @@
                 const id = $(this).data('refeicao-id');
                 const confirmar = confirm("Tem certeza que deseja excluir esta refeição?");
                 if (confirmar) {
-                    removerRefeicaoDoLocalStorage(id);
                     $('#form-excluir-' + id).submit();
                 }
             });
-
-            function removerRefeicaoDoLocalStorage(id) {
-                let ordemSalva = localStorage.getItem("ordemRefeicoes");
-                if (ordemSalva) {
-                    let ordem = JSON.parse(ordemSalva);
-                    ordem = ordem.filter(rid => rid != id);
-                    localStorage.setItem("ordemRefeicoes", JSON.stringify(ordem));
-                }
-            }
 
             // Salvar nome ao pressionar Enter
             $('.refeicao-nome-custom').on('keydown', function (e) {

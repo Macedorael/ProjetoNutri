@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoNutri.Models;
 using Microsoft.EntityFrameworkCore;
 using ProjetoNutri.Context;
-using ProjetoNutri.Models;
+using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
 {
@@ -18,16 +21,42 @@ namespace ProjetoNutri.Controllers
 
         public IActionResult IndexImc(int projetoId)
         {
-            var imcs = _context.Imcs.Include(imc => imc.Projeto).ThenInclude(projeto => projeto.Paciente).Where(imc => imc.IdProjeto == projetoId).ToList();
-            ViewData["ProjetoId"] = projetoId;
-            imcs.ForEach(p => p.Projeto = _context.Projetos.Find(p.IdProjeto));
+            // Buscar o projeto específico
+            var projeto = _context.Projetos
+                .Include(p => p.Paciente) // Carregar os dados do paciente
+                .FirstOrDefault(p => p.Id == projetoId);
 
+            if (projeto == null)
+            {
+                return NotFound($"Projeto com ID {projetoId} não encontrado.");
+            }
+
+            // Buscar todos os IMCs relacionados ao projeto
+            var imcs = _context.Imcs.Where(i => i.IdProjeto == projetoId).ToList();
+
+            ViewData["Projeto"] = projeto;
             return View(imcs);
         }
 
         public IActionResult CriarImc(int projetoId)
         {
-            var imc = new Imc { IdProjeto = projetoId };
+            // Buscar o projeto específico
+            var projeto = _context.Projetos
+                .Include(p => p.Paciente) // Carregar os dados do paciente
+                .FirstOrDefault(p => p.Id == projetoId);
+
+            if (projeto == null)
+            {
+                return NotFound($"Projeto com ID {projetoId} não encontrado.");
+            }
+
+            // Criar um novo IMC com o IdProjeto
+            var imc = new Imc
+            {
+                IdProjeto = projetoId
+            };
+
+            ViewData["Projeto"] = projeto;
             return View(imc);
         }
 
@@ -97,11 +126,16 @@ namespace ProjetoNutri.Controllers
         public IActionResult EditarImc(int id, int projetoId)
         {
             var imc = _context.Imcs.Find(id);
-            if (imc == null)
+            var projeto = _context.Projetos
+                .Include(p => p.Paciente)
+                .FirstOrDefault(p => p.Id == projetoId);
+
+            if (imc == null || projeto == null)
             {
                 return NotFound();
             }
-            ViewData["ProjetoId"] = projetoId;
+
+            ViewData["Projeto"] = projeto;
             return View(imc);
         }
 
@@ -153,15 +187,15 @@ namespace ProjetoNutri.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletarImc(Imc imc)
+        public IActionResult DeletarImc(int id, bool confirmacao)
         {
-            var imcs = _context.Imcs.Find(imc.Id);
-
+            var imc = _context.Imcs.Find(id);
             if (imc == null)
             {
                 return NotFound();
             }
 
+            var imcs = _context.Imcs.FirstOrDefault(i => i.Id == id);
             _context.Imcs.Remove(imcs);
             _context.SaveChanges();
 

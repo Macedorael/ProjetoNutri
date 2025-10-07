@@ -1,7 +1,11 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using ProjetoNutri.Context;
 using ProjetoNutri.Models;
 using Microsoft.EntityFrameworkCore;
+using ProjetoNutri.Context;
 using ProjetoNutri.Services;
 
 namespace ProjetoNutri.Controllers
@@ -9,12 +13,25 @@ namespace ProjetoNutri.Controllers
     public class PregasController : Controller
     {
         private readonly ClienteContext _context;
-        private readonly CalculosDobras _calculosDobras;
 
-        public PregasController(ClienteContext context, CalculosDobras calculosDobras)
+        public PregasController(ClienteContext context)
         {
             _context = context;
-            _calculosDobras = calculosDobras;
+        }
+
+        public IActionResult IndexPregas(int projetoId)
+        {
+            var pregas = _context.Pregas.Include(p => p.Projeto).ThenInclude(projeto => projeto.Paciente).Where(p => p.IdProjeto == projetoId).ToList();
+            ViewData["ProjetoId"] = projetoId;
+            pregas.ForEach(p => p.Projeto = _context.Projetos.Find(p.IdProjeto));
+
+            return View(pregas);
+        }
+
+        public IActionResult CriarPregas(int projetoId)
+        {
+            var pregas = new Pregas { IdProjeto = projetoId };
+            return View(pregas);
         }
 
         // Ação IndexPrega
@@ -30,9 +47,6 @@ namespace ProjetoNutri.Controllers
                 return NotFound();
             }
 
-            // Chama o método de cálculo do percentual de gordura e armazena o valor na variável
-            
-            
             return View(prega);
         }
 
@@ -61,6 +75,17 @@ namespace ProjetoNutri.Controllers
 
             // Se o modelo não for válido, retorna a mesma view com o erro
             return View(prega);
+        }
+
+        public IActionResult EditarPregas(int id, int projetoId)
+        {
+            var pregas = _context.Pregas.Find(id);
+            if (pregas == null)
+            {
+                return NotFound();
+            }
+            ViewData["ProjetoId"] = projetoId;
+            return View(pregas);
         }
 
         public IActionResult EditarPrega(int id)
@@ -112,6 +137,36 @@ namespace ProjetoNutri.Controllers
             }
 
             return View(prega);
+        }
+
+        public IActionResult DeletarPregas(int id)
+        {
+            var pregas = _context.Pregas
+                .Include(p => p.Projeto)
+                .ThenInclude(p => p.Paciente)
+                .FirstOrDefault(p => p.Id == id);
+
+            if (pregas == null)
+            {
+                return NotFound();
+            }
+
+            return View(pregas);
+        }
+
+        [HttpPost]
+        public IActionResult DeletarPregas(int id, bool confirmacao)
+        {
+            var pregas = _context.Pregas.Find(id);
+            if (pregas == null)
+            {
+                return NotFound();
+            }
+
+            _context.Pregas.Remove(pregas);
+            _context.SaveChanges();
+
+            return RedirectToAction("AntropometriaProjeto", "Projeto", new { projetoId = pregas.IdProjeto });
         }
 
         [HttpPost]
