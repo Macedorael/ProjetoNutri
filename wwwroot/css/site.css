@@ -1867,6 +1867,13 @@ img {
     padding-bottom: 10px;
 }
 
+#pesquisa-projetos:focus{
+  outline: none;
+  box-shadow: none;
+  border-color: #ccc;
+}
+
+
 .acoes-projeto a.btn i,
 .acoes-projeto button.btn i {
     font-size: 1rem;
